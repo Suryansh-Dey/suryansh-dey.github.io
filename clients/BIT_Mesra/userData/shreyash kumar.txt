@@ -1,0 +1,4 @@
+ result of student name shreyash kumar is  8.7 SCGP.
+ attandance of student name shreyash kumar is  95%.
+ class of student name shreyash kumar is  12th.
+ section of student name shreyash kumar is  H.
