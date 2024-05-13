@@ -47,7 +47,7 @@ function initBot(userType) {
     "themeName": "prism",
     "botName": "SBPS assistant",
     "avatarUrl": "https://yt3.ggpht.com/a/AGF-l79JPm-7oPv0JHz0RuNcGsTV4DSKfuQZ2sM_=s900-mo-c-c0xffffffff-rj-k-no",
-    "stylesheet": "https://webchat-styler-css.botpress.app/prod/code/579edc8e-19c8-4a58-bef1-140dfeb66404/v43048/style.css",
+    "stylesheet": "https://webchat-styler-css.botpress.app/prod/code/201f3ad7-f9a0-482c-b330-cd66cd48402d/v77824/style.css",
     "frontendVersion": "v1",
     "useSessionStorage": true,
     "enableConversationDeletion": true,
