@@ -100,7 +100,32 @@ function initBot(userType) {
     return;
   bot = new Bot("../../clients/BIT_Mesra/site/resources/doodle.png",
     "Ask me about BIT Mesra",
-    "https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo"
+    "https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
+    {
+      "quick access": {
+        'callBack': () => (Bot.updateQuickAccess({
+          "water": {
+            'callBack': (self) => {
+              self.style.display = 'none'
+            }
+          },
+          "air": {
+            'callBack': (self) => {
+              Bot.updateQuickAccess({
+                "send": { 'callBack': () => { Bot.reply("quick access working!") }, 'skipBack': true },
+                "send jam": { 'callBack': () => { Bot.reply("awesomly working!") } },
+                "end": {
+                  'callBack': () => {
+                    Bot.reply("bye")
+                    Bot.resetQuickAccess()
+                  }
+                }
+              })
+            }
+          }
+        }))
+      }
+    }
   )
   botActivated = 1
   document.getElementById("loginForm").style.display = 'none';

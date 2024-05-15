@@ -1,4 +1,0 @@
- result of student name suryansh dey is  8.92 SCGP.
- attandance of student name suryansh dey is  91%.
- class of student name suryansh dey is  12th.
- section of student name suryansh dey is  H.
