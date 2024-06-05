@@ -9,3 +9,9 @@ Reservations:
 [In case sufficient numbers of suitable candidates from any group are not available, the Institute reserves the right to fill the seats from the other group].
 
 However, the final reservation proportion will depend on notification, if any, issued by competent authority and as accepted by the Institute.
+
+Note: Please select the state of eligibility while filling the application form. (Examples):
+
+Qualifying examination (graduation) from Jharkhand State of Eligibility Jharkhand
+Qualifying examination (graduation) from Rajasthan State of Eligibility Rajasthan
+Qualifying examination (graduation) from West Bengal State of Eligibility West Bengal
