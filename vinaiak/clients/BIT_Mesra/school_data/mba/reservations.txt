@@ -12,6 +12,6 @@ However, the final reservation proportion will depend on notification, if any, i
 
 Note: Please select the state of eligibility while filling the application form. (Examples):
 
-Qualifying examination (graduation) from Jharkhand State of Eligibility Jharkhand
-Qualifying examination (graduation) from Rajasthan State of Eligibility Rajasthan
-Qualifying examination (graduation) from West Bengal State of Eligibility West Bengal
+- Qualifying examination (graduation) from Jharkhand State of Eligibility Jharkhand
+- Qualifying examination (graduation) from Rajasthan State of Eligibility Rajasthan
+- Qualifying examination (graduation) from West Bengal State of Eligibility West Bengal
