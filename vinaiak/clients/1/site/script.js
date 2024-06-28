@@ -1,133 +1,113 @@
+import { quickAccesses, mcq } from './mcqs.js';
+const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
+
 let injectjs = document.createElement('script')
 injectjs.src = "../../../chatbot/frontend/inject.js"
 document.body.appendChild(injectjs)
-document.head.innerHTML += `
-<link rel="stylesheet" href="styles.css">
-`
-document.body.insertAdjacentHTML('afterbegin', `
-<div class="container" id="loginContainer">
-<div id="loginIcon">
-    <img src="resources//bot.png" alt="Login Icon" width="60" height="50">
-</div>
-<div id="loginForm">
-    <h2>BIT login</h2>
-    <form id="userForm">
-        <input type="text" id="username" name="username" placeholder="username" style="margin-bottom: 7%" class="login-input" autocomplete="on"><br>
-        <input type="email" id="email" name="email" placeholder="email ID" class="login-input" autocomplete="on"><br><br>
-        <button type="button" id="nextButton">Next</button>
-    </form>
-</div>
-</div>
-`)
-let bot;
-let botActivated = 0;
-let userName = ""
-let userId = -1
-const users = [["suryansh dey", 123], ["shreyash kumar", 1234], ["ankur panjwani", 69]];
-const teacherIdx = 2
-
-document.addEventListener('click', (event) => {
-  if (botActivated) return
-  let element = document.getElementById("loginForm")
-  if (!element.contains(event.target) && !document.getElementById("loginIcon").contains(event.target))
-    element.style.display = 'none';
-}, true)
-document.getElementById('loginIcon').addEventListener('click', function () {
-  if (!botActivated)
-    document.getElementById('loginForm').style.display = 'block';
-  else Bot.openFrame()
-});
+let captchaScript = document.createElement('script')
+captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
+captchaScript.id = 'captcha'
+document.body.appendChild(captchaScript)
+document.head.innerHTML += '<link rel="stylesheet" href="styles.css">'
+document.body.innerHTML += '\
+        <div id="loginIcon">\
+            <img src="resources/bot.png" alt="Login Icon" onclick="initBot()">\
+			<div id="popup">Hi! I\'m your assistant</div>\
+        </div>\
+'
 setTimeout(() => {
-  document.getElementById('loginIcon').addEventListener('mouseover', function () {
-    if (!botActivated)
-      document.getElementById('loginForm').style.display = 'block';
-  });
-}, 1000);
+	document.getElementById('popup').style.display = 'block'
+}, 1000)
 
-document.getElementById('nextButton').addEventListener('click', nextClick);
-document.addEventListener('keydown', nextEnter)
-
-//Functions
-function validateUser() {
-  for (let i = 0; i < users.length; i++) {
-    if (userName.toLowerCase() == users[i][0]) {
-      userId = i
-      return true
-    }
-  }
-  return false;
-}
-
-function validatePassword() {
-  return users[userId][1] == document.getElementById("password").value
-}
-
-function loginClick() {
-  if (validatePassword()) {
-    initBot(userId < teacherIdx ? '1' : '2');
-  } else {
-    alert('Invalid password. Please try again.');
-  }
-}
-function nextClick() {
-  document.removeEventListener('keydown', nextEnter)
-  document.getElementById('nextButton').removeEventListener('click', nextClick)
-  userName = document.getElementById("username").value
-  if (validateUser()) {
-    document.getElementById('loginForm').innerHTML = `
-    <h2>Welcome back!</h2>
-    <form id="passwordForm">
-    <input type="password" id="password" name="password" placeholder="password" class="login-input"><br><br>
-    <button type="button" id="loginButton">Login</button>
-    </form>
-    `;
-    document.getElementById('loginButton').addEventListener('click', loginClick);
-    document.addEventListener('keydown', (event) => {
-      if (event.key == 'Enter') {
-        event.preventDefault()
-        loginClick()
-      }
-    })
-  } else {
-    initBot('0');
-  }
-}
-function nextEnter(event) {
-  if (event.key == 'Enter') nextClick()
-}
-function initBot(userType) {
-  if (botActivated == 1 || userName == "")
-    return;
-  bot = new Bot("../../clients/BIT_Mesra/site/resources/doodle.png",
-    "Ask me about BIT Mesra",
-    "https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
-    {
-      "quick access": {
-        'callBack': () => (Bot.updateQuickAccess({
-          "water": {
-            'callBack': (self) => {
-              self.style.display = 'none'
-            }
-          },
-          "air": {
-            'callBack': (self) => {
-              Bot.updateQuickAccess({
-                "send": { 'callBack': () => { Bot.reply("quick access working!") }, 'skipBack': true },
-                "send jam": { 'callBack': () => { Bot.reply("awesomly working!") } },
-                "end": {
-                  'callBack': () => {
-                    Bot.reply("bye")
-                    Bot.resetQuickAccess()
-                  }
-                }
-              })
-            }
-          }
-        }))
-      }
-    }
-  )
-  botActivated = 1
-  document.getElementById("loginForm").style.display = 'none';
-  console.log("Logged in to chat bot")
+window.initBot = () => {
+	if (Bot.exists) {
+		Bot.openFrame()
+		return
+	}
+	document.getElementById('popup').style.display = 'none'
+	let customCss = document.createElement('style')
+	customCss.textContent = `
+	#loginForm{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	#loginForm input{
+		width: 96%;
+		height: 1.5em;
+		margin-top: 0.5em;
+		border-radius: 5px;
+		border: none;
+		background-color: #fbe7d1;
+	}
+	#loginForm input:focus {
+		background-color: #fbe7d1;
+		outline: none;
+	}
+	#loginForm input:-webkit-autofill{
+		-webkit-box-shadow: 0 0 0px 1000px #fbe7d1 inset;
+	}
+	button[type="button"] {
+		width: 100%;
+		padding: 10px;
+		background-color: #ff9029;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		margin-top: 0.6em;
+		cursor: pointer;
+	  }
+	button[type="button"]:hover {
+		background-color: #fead61;
+	  }`
+	new Bot(1,
+		"Ask me about BIT Mesra",
+		"BIT Admission Assistant",
+		"https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
+		quickAccesses,
+		() => {
+			window.addEventListener('beforeunload', AI.quit)
+			Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'none'
+			Bot.iframe.contentDocument.getElementById('text-input').style.display = 'none'
+			Bot.iframe.contentDocument.getElementById('send').style.display = 'none'
+			Bot.startWaiting()
+			setTimeout(() => {
+				Bot.stopWaiting()
+				Bot.createBox('<div id="loginForm">\
+					<h3 style="margin: 0">Introduce yourself</h3>\
+					<input type="text" id="username" name="username" placeholder="Name" autocomplete="on">\
+					<input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">\
+					<button type="button" id="submit">Submit</button>\
+					</div>', 'bot', false)
+				Bot.iframe.contentDocument.getElementById('username').focus()
+				Bot.iframe.contentDocument.getElementById('username').addEventListener('keydown', (event) => {
+					if (event.key === 'Enter')
+						Bot.iframe.contentDocument.getElementById('email').focus()
+				})
+				Bot.iframe.contentDocument.getElementById('email').addEventListener('keydown', (event) => {
+					if (event.key === 'Enter')
+						Bot.iframe.contentDocument.getElementById('submit').dispatchEvent(new Event('click'))
+				})
+				Bot.iframe.contentDocument.getElementById('submit').addEventListener('click', (event) => {
+					event.preventDefault()
+					const xhr = new XMLHttpRequest()
+					grecaptcha.enterprise.ready(async () => {
+						const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
+						xhr.open('POST', server + '/verify', false)
+						xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+						xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
+						if (xhr.status != 200)
+							Bot.reply('Tum ek insaan nhi bn paye. Orders ka paln kr kr ke ek machine bn gye ho!')
+					})
+					const name = Bot.iframe.contentDocument.getElementById('username').value
+					Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
+					Bot.reply(`Hi ${name}! Which program are you intrested in?`)
+					Bot.createMcq(mcq)
+				})
+			}, 1000)
+			Bot.customiseCss(customCss)
+			Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
+		}
+	)
+	console.log("Logged in to chat bot")
 }

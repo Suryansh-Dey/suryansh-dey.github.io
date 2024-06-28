@@ -17,28 +17,34 @@ main {
 #text-input {
   position: fixed;
   bottom: 3dvh;
-  left: 4dvw;
+  left: 0.9dvw;
   width: 90dvw;
   height: 7dvh;
   border-radius: 10px;
   font-size: 3dvh;
   resize: vertical;
-  border: 1px solid rgb(89, 88, 88);
+  border: 1px solid rgb(88, 88, 88);
+  animation: slideUp 0.5s ease-out;
 }
 
 #text-input::placeholder {
   color: rgba(0, 0, 0, 0.4);
 }
 
+#text-input:focus {
+  outline: 1px solid rgb(88, 88, 88);
+}
+
 #send {
   position: fixed;
   bottom: 4.5dvh;
-  right: 6dvw;
+  right: 0.5dvw;
   height: 5dvh;
   width: 5dvh;
   background-color: #FFDE00;
   border-radius: 100%;
   border: 1px solid #F15922;
+  animation: slideUp 0.5s ease-out;
 }
 
 #send img {
@@ -61,17 +67,17 @@ main {
   height: 12dvh;
   background-color: #F15922;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#heading .title {
   color: white;
-  font-size: 5dvw;
   text-align: center;
-  align-content: center;
 }
 
 #close {
-  position: absolute;
-  right: 2%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   background: transparent;
   border: none;
   border-radius: 100%;
@@ -86,21 +92,14 @@ main {
 }
 
 .avtar {
-  position: absolute;
-  top: 50%;
-  left: 12%;
   aspect-ratio: 1;
   height: 80%;
   width: auto;
-  transform: translate(-50%, -50%);
   border-radius: 100%;
   background-size: cover;
 }
 
 .avtar.bot {
-  position: relative;
-  top: 0;
-  left: 0;
   height: 5dvh;
   width: 5dvh;
   background-size: cover;
@@ -144,6 +143,7 @@ main {
   border: 2dvw solid #EF8812;
   margin-left: 2dvh;
   border-top-left-radius: 0;
+  animation: largerFont 0.3s ease-out;
 }
 
 .box.bot.waiting {
@@ -151,7 +151,6 @@ main {
   align-items: center;
   justify-content: center;
 }
-
 
 .dot {
   width: 0.5rem;
@@ -185,23 +184,47 @@ main {
   position: fixed;
   bottom: 11.5dvh;
   left: 0;
-  width: 100dvw;
   display: flex;
   flex-wrap: wrap;
+  animation: slideRight 0.5s ease-out;
+}
+
+#mcq {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+  animation: slideRight 0.5s ease-out;
 }
 
 .option {
   font-size: 1.3em;
-  height: 1.3em;
-  margin: 1dvw;
-  background-color: #f9a23f;
+  margin: 1dvh;
+  background-color: #fead61;
   border-radius: 10px;
   border: none;
   animation: comeOut 0.4s ease-out;
 }
 
 .option:hover {
-  background-color: #EF8812;
+  background-color: #ff9029;
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -10dvh;
+    color: rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    left: -20dvh;
+  }
+
+  100% {
+    left: 0;
+  }
 }
 
 @keyframes comeOut {
@@ -209,11 +232,35 @@ main {
     color: #f9a23f00;
   }
 }
+
+@keyframes smallerFont {
+  100% {
+    font-size: 0;
+  }
+}
+
+@keyframes largerFont {
+  0% {
+    font-size: 0;
+  }
+}
+
 .option.navigator {
   animation: none;
   position: absolute;
+  bottom: -1.4em;
+  height: 1.3em;
+}
+
+#quick-access .option.navigator {
   top: -1.4em;
 }
-.option.navigator:nth-child(2){
-  left: 1.3em;
+
+.option.navigator:nth-child(2) {
+  left: 2em;
+}
+
+.media {
+  width: 100%;
+  height: auto;
 }

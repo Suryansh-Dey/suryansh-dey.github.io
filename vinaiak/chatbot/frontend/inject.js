@@ -1,30 +1,87 @@
+const server = "https://tlct8t1s-3000.inc1.devtunnels.ms"
+const xhr = new XMLHttpRequest()
+
+function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 class AI {
     static replyNo = 0
-    answer(text) {
+    static clientId
+    static context = ''
+    static keepAliveXhr
+    constructor(organisationId) {
+        AI.keepAliveXhr = new XMLHttpRequest()
+        xhr.open('POST', server + '/login', false)
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.send(JSON.stringify({ orgId: organisationId }))
+        AI.clientId = xhr.responseText
+        if (xhr.status != 200)
+            throw Error("Server refused to login")
+    }
+    static setContext(context) {
+        if (AI.context != '' && !arraysEqual(AI.context, context)) {
+            xhr.open('POST', server + '/forget', true)
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+            xhr.send(JSON.stringify({ id: AI.clientId }))
+        }
+        AI.context = context
+    }
+    static answer(query) {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                AI.replyNo++
-                resolve("The backend is under development. This is a hard coded reply. Reply number = " + AI.replyNo)
-            }, 1000)
+            const xhr = new XMLHttpRequest()
+            xhr.open('POST', server + `/ask`, true)
+            xhr.onload = () => {
+                if (xhr.status == 200)
+                    resolve(JSON.parse(xhr.responseText).content)
+                else resolve("An error occured! Try logging in again to the chatbot")
+            }
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+            xhr.send(JSON.stringify({ id: AI.clientId, query: query, context: AI.context }))
         })
+    }
+    static remember(query, reply) {
+        xhr.open('POST', `${server}/remember`, true)
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.send(JSON.stringify({ query: query, reply: reply, id: AI.clientId }))
+    }
+    static keepAlive() {
+        AI.keepAliveXhr.open('POST', server + '/keepAlive', true)
+        AI.keepAliveXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        AI.keepAliveXhr.send(JSON.stringify({ id: AI.clientId }))
+    }
+    static quit() {
+        xhr.open('POST', server + '/quit', true)
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.send(JSON.stringify({ id: AI.clientId }))
     }
 }
 class Bot {
+    static landscapeWidth = 35
+    static mobileWidth = 98
+    static height = 98
     static exists = false
     static replying = false
-    static ai = new AI()
-    static botIframe
+    static iframe
     static optionsCallBacks = {}
-    static closeFrameListener() {
-        Bot.botIframe.style.display = 'none'
-        Bot.botIframe.removeEventListener('animationend', Bot.closeFrameListener)
+    static queue = []
+    static hideFrame() {
+        Bot.iframe.style.display = 'none'
+        Bot.iframe.removeEventListener('animationend', Bot.hideFrame)
     }
     static closeFrame() {
-        Bot.botIframe.addEventListener('animationend', Bot.closeFrameListener)
-        Bot.botIframe.style.animation = "frame-closing 0.3s ease-out"
+        Bot.iframe.addEventListener('animationend', Bot.hideFrame)
+        Bot.iframe.style.animation = "frame-closing 0.3s ease-out"
     }
     static generateFrameAnimation() {
-        let width = (window.innerHeight > window.innerWidth ? window.innerWidth * 0.95 : window.innerWidth * 0.40)
+        let width = (window.innerHeight > window.innerWidth ? window.innerWidth * Bot.mobileWidth / 100 : window.innerWidth * Bot.landscapeWidth / 100)
         return `
         @keyframes frame-opening {
             0%{
@@ -42,10 +99,9 @@ class Bot {
         `
     }
     static resizeIframe() {
-        Bot.botIframe.style.width = (window.innerHeight > window.innerWidth ? "95dvw" : "40dvw")
+        Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
         document.getElementById('frame-animation').textContent = Bot.generateFrameAnimation()
     }
-
     static createWaiting() {
         let waitingBox = document.createElement('div')
         waitingBox.className = 'box bot waiting'
@@ -56,166 +112,247 @@ class Bot {
             dot.textContent = '.'
             waitingBox.appendChild(dot)
         }
-        Bot.botIframe.contentDocument.getElementById('chat-area').appendChild(waitingBox)
+        Bot.iframe.contentDocument.getElementById('chat-area').appendChild(waitingBox)
     }
     static startWaiting() {
-        let waiting = Bot.botIframe.contentDocument.querySelector('.box.bot.waiting')
+        let waiting = Bot.iframe.contentDocument.querySelector('.box.bot.waiting')
         waiting.parentNode.removeChild(waiting)
         waiting.style.display = 'flex'
-        Bot.botIframe.contentDocument.getElementById('chat-area').appendChild(waiting)
-        Bot.botIframe.contentDocument.getElementById('chat-area').scrollTo({
-            top: Bot.botIframe.contentDocument.getElementById('chat-area').scrollHeight,
+        Bot.iframe.contentDocument.getElementById('chat-area').appendChild(waiting)
+        Bot.iframe.contentDocument.getElementById('chat-area').scrollTo({
+            top: Bot.iframe.contentDocument.getElementById('chat-area').scrollHeight,
             behavior: 'smooth'
         })
+        Bot.replying = true
     }
     static stopWaiting() {
-        Bot.botIframe.contentDocument.querySelector('.box.bot.waiting').style.display = 'none'
+        Bot.iframe.contentDocument.querySelector('.box.bot.waiting').style.display = 'none'
+        Bot.replying = false
     }
     static createAvtar() {
-        let avtar = document.createElement('div')
+        let avtar = document.createElement('img')
+        avtar.src = Bot.avtarPath
         avtar.className = 'avtar bot'
-        let emptyBox = document.createElement('div')
-        emptyBox.style.width = '2rem'
-        emptyBox.style.height = '2rem'
-        avtar.appendChild(emptyBox)
-        Bot.botIframe.contentDocument.getElementById('chat-area').appendChild(avtar)
+        avtar.style.width = '2rem'
+        avtar.style.height = '2rem'
+        Bot.iframe.contentDocument.getElementById('chat-area').appendChild(avtar)
     }
-    static createBox(text, type) {
+    static wrapLinks(text) {
+        text = text.replace(/(?<!http:\/\/|https:\/\/)www\./g, 'https://www.')
+        const fileTag = {
+            "png": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" style="cursor:pointer" onclick="window.open(this.src, '_blank')">`],
+            "jpg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" style="cursor:pointer" onclick="window.open(this.src, '_blank')">`],
+            "mp4": ['<video autoplay muted controls class="media"><source src="', '" type="video/mp4">\
+            pta chla ki galat leke main pta nikla.\
+        </video>']
+        }
+        let trigger = "https://"
+        let matchedCount = 0
+        for (let i = 0; i < text.length; i++) {
+            if (text[i].toLowerCase() == trigger[matchedCount])
+                matchedCount++
+            else if (trigger[matchedCount] == 's') {
+                matchedCount++
+                i--
+                continue
+            }
+            else matchedCount = 0
+            if (matchedCount == trigger.length) {
+                let start = i - trigger.length + 1
+                let fileExtension
+                let got1stBracket = 0, got2ndBracket = 0
+                for (; i < text.length && !(text[i] === ' ' || text[i] === '"' || text[i] === '\n'|| text[i] === '\r' || text[i] === ',' || (text[i] == '.' && text[i + 1] == ' ') || (!got1stBracket && text[i] == ')') || (!got2ndBracket && text[i] == ']')); i++) {
+                    got1stBracket += '(' === text[i]
+                    got2ndBracket += '[' === text[i]
+                    got1stBracket -= ')' === text[i]
+                    got2ndBracket -= ']' === text[i]
+                    if (text[i] == '.') fileExtension = ''
+                    else fileExtension += text[i]
+                }
+                let link = text.slice(start, i)
+                if (link[link.length - 1] == '.')
+                    link = link.slice(0, -1)
+                if (fileTag.hasOwnProperty(fileExtension.toLowerCase()))
+                    text = text.slice(0, start) + fileTag[fileExtension][0] + link + fileTag[fileExtension][1] + text.slice(i)
+                else text = text.slice(0, start) + `<a href="${link}" target="_blank">click here</a>` + text.slice(i)
+            }
+        }
+        return text
+    }
+    static createBox(text, type, format, callBack) {
+        if (Bot.replying) {
+            Bot.queue.push({ text: text, type: type, format: format, callBack: callBack })
+            return
+        }
+        const chats = Bot.iframe.contentDocument.getElementById('chat-area').children
+        if (type == 'bot' && chats.length > 1 && (chats[chats.length - 1].className == 'box user' ||
+            (chats[chats.length - 1].className == 'box bot waiting' && chats[chats.length - 2].className == 'box user')
+        ))
+            Bot.createAvtar()
         let box = document.createElement('div')
         box.className = 'box ' + type
-        box.textContent = text
-        Bot.botIframe.contentDocument.getElementById('chat-area').appendChild(box)
-        Bot.botIframe.contentDocument.getElementById('chat-area').scrollTo({
-            top: Bot.botIframe.contentDocument.getElementById('chat-area').scrollHeight,
+        box.innerHTML = (type == 'bot' && format == undefined) || format ? Bot.wrapLinks(text).replace(/^- /gm, '<div style="font-weight:bold;font-size:larger; display:inline">• </div>').
+            replace(/^\d+\.\s/gm, (match) => {
+                return `<div style="font-weight:bold;display:inline">${match}</div>`
+            }).
+            replace(/\n/g, "<br>") : text
+        Bot.iframe.contentDocument.getElementById('chat-area').appendChild(box)
+        Bot.iframe.contentDocument.getElementById('chat-area').scrollTo({
+            top: Bot.iframe.contentDocument.getElementById('chat-area').scrollHeight,
             behavior: 'smooth'
         })
+        if (callBack != undefined)
+            callBack()
+        if (Bot.queue.length) {
+            const { text, type, format, callBack } = Bot.queue[0]
+            Bot.queue.shift()
+            this.createBox(text, type, format, callBack)
+        }
     }
     static createOptions(options, containerClassId, optionClassName) {
         if (!Bot.optionsCallBacks.hasOwnProperty(containerClassId))
-            Bot.optionsCallBacks[containerClassId] = [[options, () => {
+            Bot.optionsCallBacks[containerClassId] = [() => {
                 let creator = Bot.optionsCallBacks[containerClassId][0]
                 Bot.optionsCallBacks[containerClassId] = [creator]
-                Bot.botIframe.contentDocument.getElementById(containerClassId).parentNode.replaceChild(this.createOptions(options, containerClassId, optionClassName), Bot.botIframe.contentDocument.getElementById(containerClassId))
-            }]]
+                Bot.iframe.contentDocument.getElementById(containerClassId).parentNode.replaceChild(this.createOptions(options, containerClassId, optionClassName), Bot.iframe.contentDocument.getElementById(containerClassId))
+            }]
         let optionContainer = document.createElement('div')
         optionContainer.id = containerClassId
         if (this.optionsCallBacks[containerClassId].length > 1) {
-            let exit = document.createElement('button')
-            exit.className = 'option navigator'
-            exit.innerHTML = '×'
-            exit.addEventListener('click', Bot.optionsCallBacks[containerClassId][0][1])
-            optionContainer.appendChild(exit)
-        }
-        if (this.optionsCallBacks[containerClassId].length > 2) {
             let back = document.createElement('button')
             back.className = 'option navigator'
-            back.innerHTML = '&#x2190;'
+            back.textContent = '\u2190'
+            back.title = 'previous menu'
             back.addEventListener('click', async () => {
                 Bot.optionsCallBacks[containerClassId].pop()
-                let prevCallBack = Bot.optionsCallBacks[containerClassId][Bot.optionsCallBacks[containerClassId].length - 1]
-                await prevCallBack[1](prevCallBack[0])
+                await Bot.optionsCallBacks[containerClassId][Bot.optionsCallBacks[containerClassId].length - 1]()
             })
             optionContainer.appendChild(back)
+        }
+        if (this.optionsCallBacks[containerClassId].length > 2) {
+            let exit = document.createElement('button')
+            exit.className = 'option navigator'
+            exit.textContent = '×'
+            exit.title = 'start menu'
+            exit.addEventListener('click', Bot.optionsCallBacks[containerClassId][0])
+            optionContainer.appendChild(exit)
         }
         let optionNames = Object.keys(options)
         for (let optionName of optionNames) {
             let option = document.createElement('button')
             option.className = optionClassName
             option.textContent = optionName
+            if (options[optionName]['id'])
+                option.id = options[optionName]['id']
             option.addEventListener('click', async () => {
                 if (!options[optionName]['skipBack'])
-                    Bot.optionsCallBacks[containerClassId].push([option, options[optionName]['callBack']])
-                await options[optionName]['callBack'](option)
+                    Bot.optionsCallBacks[containerClassId].push(options[optionName]['callBack'])
+                await options[optionName]['callBack']()
             })
             optionContainer.appendChild(option)
         }
         return optionContainer
     }
-    constructor(backgroundImg, placeholder, avtarPath, quickAccesses) {
+    constructor(organisationId, placeholder, title, avtarPath, quickAccesses, onload) {
         if (Bot.exists)
             throw new Error("Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists")
         Bot.exists = true
+        new AI(organisationId)
+        Bot.avtarPath = avtarPath
         let frameStyles = document.createElement('style')
         frameStyles.id = "frame-animation"
         frameStyles.textContent = Bot.generateFrameAnimation()
         document.head.appendChild(frameStyles)
-        Bot.botIframe = document.createElement('iframe')
-        Bot.botIframe.title = "chat bot frame"
-        Bot.botIframe.src = "../../../chatbot/frontend/inject.html"
-        Bot.botIframe.id = 'bot-iframe'
-        Bot.botIframe.style.position = "fixed"
-        Bot.botIframe.style.bottom = 0
-        Bot.botIframe.style.right = 0
-        Bot.botIframe.style.width = 0
-        Bot.botIframe.style.height = "95dvh"
-        Bot.botIframe.style.overflow = "hidden"
-        Bot.botIframe.style.border = "none"
-        Bot.botIframe.style.borderRadius = "10px"
-        Bot.botIframe.onload = () => {
-            Bot.botIframe.contentDocument.getElementById('background-img').src = backgroundImg
-            Bot.botIframe.contentDocument.getElementById('text-input').placeholder = placeholder
-            Bot.botIframe.contentDocument.getElementById('close').addEventListener('click', Bot.closeFrame)
-            Bot.botIframe.contentDocument.getElementById('send').addEventListener('click', Bot.reply)
-            Bot.botIframe.contentDocument.getElementById('text-input').addEventListener('keydown', (event) => {
+        Bot.iframe = document.createElement('iframe')
+        Bot.iframe.title = "chat bot frame"
+        Bot.iframe.src = "../../../chatbot/frontend/inject.html"
+        Bot.iframe.id = 'bot-iframe'
+        Bot.iframe.style.position = "fixed"
+        Bot.iframe.style.bottom = '1dvh'
+        Bot.iframe.style.right = '1px'
+        Bot.iframe.style.width = 0
+        Bot.iframe.style.height = Bot.height + 'dvh'
+        Bot.iframe.style.overflow = "hidden"
+        Bot.iframe.style.border = "none"
+        Bot.iframe.style.boxShadow = "0 0 5px rgb(100,100,100)"
+        Bot.iframe.style.borderRadius = "10px"
+        Bot.iframe.onload = () => {
+            Bot.iframe.contentDocument.getElementById('background-img').src = "resources/doodle.svg"
+            Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
+            Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
+            Bot.iframe.contentDocument.getElementById('close').addEventListener('click', Bot.closeFrame)
+            Bot.iframe.contentDocument.getElementById('send').addEventListener('click', (event) => {
+                event.preventDefault()
+                Bot.reply()
+            })
+            Bot.iframe.contentDocument.getElementById('text-input').addEventListener('keydown', (event) => {
                 if (event.key == 'Enter' && !event.shiftKey) {
                     event.preventDefault()
                     Bot.reply()
                 }
             })
-            let avtarUrl = document.createElement('style')
-            avtarUrl.textContent = `
-            .avtar {
-                background-image: url(${avtarPath})
-            }
-            `
-            Bot.botIframe.contentDocument.head.appendChild(avtarUrl)
-            Bot.botIframe.contentDocument.querySelector('main').appendChild(Bot.createOptions(quickAccesses, 'quick-access', 'option'))
+            Bot.iframe.contentDocument.querySelector('#heading .avtar').src = avtarPath
+            Bot.iframe.contentDocument.querySelector('main').appendChild(Bot.createOptions(quickAccesses, 'quick-access', 'option'))
             Bot.createWaiting()
-            Bot.botIframe.style.width = (window.innerHeight > window.innerWidth ? "95dvw" : "40dvw")
+            Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
             Bot.openFrame()
             window.addEventListener('resize', Bot.resizeIframe)
+            onload(Bot.iframe)
         }
-        document.body.appendChild(Bot.botIframe)
+        document.body.appendChild(Bot.iframe)
     }
     static destructor() {
         if (!Bot.exists)
             throw new Error("Invalid call to Bot.destructor(). Bot already doesn't exist")
-        Bot.botIframe.parentNode.removeChild(Bot.botIframe)
+        Bot.iframe.parentNode.removeChild(Bot.iframe)
         Bot.exists = false
     }
     //public
     static openFrame() {
-        Bot.botIframe.style.animation = "frame-opening 0.5s ease-out"
-        Bot.botIframe.style.display = 'block'
-        Bot.botIframe.contentDocument.getElementById('text-input').focus()
+        Bot.iframe.style.animation = "frame-opening 0.5s ease-out"
+        Bot.iframe.style.display = 'block'
+        Bot.iframe.contentDocument.getElementById('text-input').focus()
     }
     static updateQuickAccess(options) {
-        Bot.botIframe.contentDocument.querySelector('main').replaceChild(Bot.createOptions(options, 'quick-access', 'option'), Bot.botIframe.contentDocument.getElementById('quick-access'))
+        Bot.iframe.contentDocument.querySelector('main').replaceChild(Bot.createOptions(options, 'quick-access', 'option'), Bot.iframe.contentDocument.getElementById('quick-access'))
     }
     static resetQuickAccess() {
-        Bot.optionsCallBacks['quick-access'][0][1]()
+        Bot.optionsCallBacks['quick-access'][0]()
     }
     static async reply(text) {
         if (Bot.replying) {
             console.log("Bot.reply() failed. one Bot.reply() call is aready processing")
             return
         }
-        Bot.replying = true
+        let inputText
         if (!text) {
-            let inputText = Bot.botIframe.contentDocument.getElementById('text-input').value
+            inputText = Bot.iframe.contentDocument.getElementById('text-input').value
             if (!inputText) {
-                Bot.replying = false
                 return
             }
-            Bot.botIframe.contentDocument.getElementById('text-input').value = ''
+            Bot.iframe.contentDocument.getElementById('text-input').value = ''
             Bot.createBox(inputText, 'user')
         }
-        if (Bot.botIframe.contentDocument.getElementById('chat-area').children[Bot.botIframe.contentDocument.getElementById('chat-area').children.length - 1].className != 'box bot')
-            Bot.createAvtar()
         Bot.startWaiting()
-        let replyText = text || await Bot.ai.answer()
-        Bot.createBox(replyText, 'bot')
+        let replyText = text || await AI.answer(inputText)
         Bot.stopWaiting()
-        Bot.replying = false
+        Bot.createBox(replyText, 'bot')
+    }
+    static createMcq(options) {
+        Bot.iframe.contentDocument.getElementById('chat-area').appendChild(Bot.createOptions(options, 'mcq', 'option'))
+    }
+    static updateMcq(options) {
+        Bot.iframe.contentDocument.getElementById('chat-area').replaceChild(Bot.createOptions(options, 'mcq', 'option'), Bot.iframe.contentDocument.getElementById('mcq'))
+    }
+    static removeMcq() {
+        Bot.iframe.contentDocument.querySelector('#mcq .option').addEventListener('animationend', () => {
+            Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('mcq'))
+        })
+        let options = Bot.iframe.contentDocument.querySelectorAll('#mcq .option')
+        for (let option of options)
+            option.style.animation = "smallerFont 0.3s ease-in"
+    }
+    static customiseCss(css) {
+        Bot.iframe.contentDocument.head.appendChild(css)
     }
 }
