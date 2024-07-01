@@ -24,8 +24,10 @@ Always try to put a descriptive topic name to a `topic` to get better response f
 
 
 Example: Name like `events` doesn't make anything immediatly clear about it's content. So if you put data about college fests in it, chatbot will never be able to guess that.  
-Rather try making a folder of name `events`, and within that make the file of name `college fests` and put the relevent data in that file.  
+Rather try making a folder of name `college events`, and within that make the file of name `college fests` and put the relevent data in that file.  
 If the college fest data is too much like more than a page, try breaking it into further `topics` like for every college fest `BITotsav`, `Pantheon`, `vinotsav` etc. and there put their respective data.
+
+But try avoiding making deep hierarchy, generally not more than 3 levels if all of them is to be guessed by AI. If you ask about the context about which question is to be asked in beginning of conversation and AI has to guess about 3 levels of hierarchy then it's okay. Rather try creating many `topics` in single line is recommended.
 ### Modify
 To modify an existing `topic` of type `file`.  
 Modifying an `file`:
@@ -58,7 +60,7 @@ Renaming a `topic`:
 1. Navigate to the `file` by choosing parent `topics`
 2. Click on the `topic`
 3. Hit F2 key to rename the `topic`  
-If the `topic` is a file then `editor` will open but you can still hit F to close and rename the file
+If the `topic` is a file then `editor` will open but you can still hit F2 to close `editor` and rename the file
 4. Type the new name following naming tip provided under create heading.
 5. Hit Enter key to rename the file
 
@@ -88,5 +90,7 @@ The list contains the `operation` you have made and the `topic` name in hierarch
 
 Now clicking on it again, while list is open, will save the changes on server and it **CANNOT BE REVERSED!!** since old files are deleted and are replaced by your new files.
 So think twice before clicking that
+#### Tip
+Don't wait to save till your all work is finished since you are just one refresh away from vanishing your all work!
 # Thank you
 We are proud to be choosen by you. If you have any doubt about anything, just put it on github issues. We will try resolving it ASAP!
