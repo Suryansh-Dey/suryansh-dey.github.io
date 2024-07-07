@@ -1,4 +1,4 @@
-const server = "https://tlct8t1s-3000.inc1.devtunnels.ms"
+const server = "http://65.0.171.81:3000"
 const xhr = new XMLHttpRequest()
 
 function arraysEqual(arr1, arr2) {
@@ -65,7 +65,7 @@ class AI {
 }
 class Bot {
     static landscapeWidth = 35
-    static mobileWidth = 98
+    static mobileWidth = 100
     static height = 98
     static exists = false
     static replying = false
@@ -140,8 +140,8 @@ class Bot {
     static wrapLinks(text) {
         text = text.replace(/(?<!http:\/\/|https:\/\/)www\./g, 'https://www.')
         const fileTag = {
-            "png": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" style="cursor:pointer" onclick="window.open(this.src, '_blank')">`],
-            "jpg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" style="cursor:pointer" onclick="window.open(this.src, '_blank')">`],
+            "png": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
+            "jpg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
             "mp4": ['<video autoplay muted controls class="media"><source src="', '" type="video/mp4">\
             pta chla ki galat leke main pta nikla.\
         </video>']
@@ -158,10 +158,10 @@ class Bot {
             }
             else matchedCount = 0
             if (matchedCount == trigger.length) {
-                let start = i - trigger.length + 1
+                let start = i - trigger.length + 1 + (text[i - 3] != 's')
                 let fileExtension
                 let got1stBracket = 0, got2ndBracket = 0
-                for (; i < text.length && !(text[i] === ' ' || text[i] === '"' || text[i] === '\n'|| text[i] === '\r' || text[i] === ',' || (text[i] == '.' && text[i + 1] == ' ') || (!got1stBracket && text[i] == ')') || (!got2ndBracket && text[i] == ']')); i++) {
+                for (; i < text.length && !(text[i] === ' ' || text[i] === '"' || text[i] === '\n' || text[i] === '\r' || text[i] === ',' || (text[i] == '.' && text[i + 1] == ' ') || (!got1stBracket && text[i] == ')') || (!got2ndBracket && text[i] == ']')); i++) {
                     got1stBracket += '(' === text[i]
                     got2ndBracket += '[' === text[i]
                     got1stBracket -= ')' === text[i]
@@ -170,11 +170,13 @@ class Bot {
                     else fileExtension += text[i]
                 }
                 let link = text.slice(start, i)
+                let remaining = text.length - i
                 if (link[link.length - 1] == '.')
                     link = link.slice(0, -1)
                 if (fileTag.hasOwnProperty(fileExtension.toLowerCase()))
                     text = text.slice(0, start) + fileTag[fileExtension][0] + link + fileTag[fileExtension][1] + text.slice(i)
                 else text = text.slice(0, start) + `<a href="${link}" target="_blank">click here</a>` + text.slice(i)
+                i = text.length - remaining - 1
             }
         }
         return text
@@ -280,6 +282,7 @@ class Bot {
             Bot.iframe.contentDocument.getElementById('background-img').src = "resources/doodle.svg"
             Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
             Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
+            Bot.iframe.contentDocument.querySelector('#heading .credit a').href = server
             Bot.iframe.contentDocument.getElementById('close').addEventListener('click', Bot.closeFrame)
             Bot.iframe.contentDocument.getElementById('send').addEventListener('click', (event) => {
                 event.preventDefault()

@@ -9,9 +9,10 @@ html {
     position: fixed;
     bottom: 1vh;
     right: 1vw;
-    width: 7dvw;
+    width: 5rem;
     cursor: pointer;
     animation: loginIntro 1s ease-in-out;
+    z-index: 100;
 }
 
 #loginIcon img:hover {
@@ -20,14 +21,15 @@ html {
 
 #popup {
     position: absolute;
-    bottom: 5dvw;
-    right: 7dvw;
+    bottom: 4rem;
+    right: 5rem;
     background-color: rgb(159, 250, 220);
     border: 0.7em solid rgb(159, 250, 220);
     border-radius: 20px;
     border-bottom-right-radius: 0;
     animation: largerFont 0.5s ease-in-out;
     display: none;
+    z-index: 100;
 }
 
 @keyframes largerFont {

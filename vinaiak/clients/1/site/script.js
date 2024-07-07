@@ -81,12 +81,16 @@ window.initBot = () => {
 					</div>', 'bot', false)
 				Bot.iframe.contentDocument.getElementById('username').focus()
 				Bot.iframe.contentDocument.getElementById('username').addEventListener('keydown', (event) => {
-					if (event.key === 'Enter')
+					if (event.key === 'Enter') {
+						event.preventDefault()
 						Bot.iframe.contentDocument.getElementById('email').focus()
+					}
 				})
 				Bot.iframe.contentDocument.getElementById('email').addEventListener('keydown', (event) => {
-					if (event.key === 'Enter')
+					if (event.key === 'Enter') {
+						event.preventDefault()
 						Bot.iframe.contentDocument.getElementById('submit').dispatchEvent(new Event('click'))
+					}
 				})
 				Bot.iframe.contentDocument.getElementById('submit').addEventListener('click', (event) => {
 					event.preventDefault()
@@ -107,6 +111,7 @@ window.initBot = () => {
 			}, 1000)
 			Bot.customiseCss(customCss)
 			Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
+			Bot.iframe.style.zIndex = 101
 		}
 	)
 	console.log("Logged in to chat bot")

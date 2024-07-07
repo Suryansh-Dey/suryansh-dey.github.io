@@ -76,6 +76,16 @@ main {
   color: white;
   text-align: center;
 }
+#heading .credit {
+  position: absolute;
+  color: yellow;
+  text-align: center;
+  margin: auto;
+  transform: translate(0, 1em);
+}
+#heading .credit a {
+  color: yellow;
+}
 
 #close {
   background: transparent;
@@ -263,4 +273,5 @@ main {
 .media {
   width: 100%;
   height: auto;
+  cursor: pointer;
 }
