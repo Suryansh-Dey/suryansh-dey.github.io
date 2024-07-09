@@ -10,7 +10,7 @@ function initChatting() {
     Bot.iframe.contentDocument.getElementById('text-input').style.display = 'block'
     Bot.iframe.contentDocument.getElementById('send').style.display = 'block'
     Bot.iframe.contentDocument.getElementById('text-input').focus()
-    Bot.reply('Awesome! how may I assist you?')
+    Bot.reply('How may I assist you?')
 }
 function remember() {
     let children = Bot.iframe.contentDocument.getElementById('chat-area').children
