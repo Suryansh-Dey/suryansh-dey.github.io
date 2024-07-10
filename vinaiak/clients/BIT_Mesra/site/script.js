@@ -2,7 +2,7 @@ import { quickAccesses, mcq } from './mcqs.js';
 const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
 let injectjs = document.createElement('script')
-injectjs.src = "../../../chatbot/frontend/inject.js"
+injectjs.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js"
 document.body.appendChild(injectjs)
 let captchaScript = document.createElement('script')
 captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
@@ -11,7 +11,7 @@ document.body.appendChild(captchaScript)
 document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
 document.body.innerHTML += '\
         <div id="loginIcon">\
-            <img src="resources/bot.png" alt="Login Icon" onclick="initBot()">\
+            <img src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/bot.png" alt="Login Icon" onclick="initBot()">\
 			<div id="popup">Hi! I\'m your assistant</div>\
         </div>\
 '
