@@ -8,7 +8,7 @@ let captchaScript = document.createElement('script')
 captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 captchaScript.id = 'captcha'
 document.body.appendChild(captchaScript)
-document.head.innerHTML += '<link rel="stylesheet" href="styles.css">'
+document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
 document.body.innerHTML += '\
         <div id="loginIcon">\
             <img src="resources/bot.png" alt="Login Icon" onclick="initBot()">\
