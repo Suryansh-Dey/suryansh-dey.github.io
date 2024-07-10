@@ -267,7 +267,7 @@ class Bot {
         document.head.appendChild(frameStyles)
         Bot.iframe = document.createElement('iframe')
         Bot.iframe.title = "chat bot frame"
-        Bot.iframe.src = "../../../chatbot/frontend/inject.html"
+        Bot.iframe.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.html"
         Bot.iframe.id = 'bot-iframe'
         Bot.iframe.style.position = "fixed"
         Bot.iframe.style.bottom = '1dvh'
@@ -279,7 +279,7 @@ class Bot {
         Bot.iframe.style.boxShadow = "0 0 5px rgb(100,100,100)"
         Bot.iframe.style.borderRadius = "10px"
         Bot.iframe.onload = () => {
-            Bot.iframe.contentDocument.getElementById('background-img').src = "resources/doodle.svg"
+            Bot.iframe.contentDocument.getElementById('background-img').src = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/doodle.svg"
             Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
             Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
             Bot.iframe.contentDocument.querySelector('#heading .credit a').href = server
