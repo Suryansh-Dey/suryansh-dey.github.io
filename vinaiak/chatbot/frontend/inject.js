@@ -279,7 +279,7 @@ class Bot {
         Bot.iframe.style.boxShadow = "0 0 5px rgb(100,100,100)"
         Bot.iframe.style.borderRadius = "10px"
         Bot.iframe.onload = () => {
-            Bot.iframe.contentDocument.getElementById('background-img').src = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/doodle.svg"
+            Bot.iframe.contentDocument.getElementById('background-img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/doodle.svg"
             Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
             Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
             Bot.iframe.contentDocument.querySelector('#heading .credit a').href = server
