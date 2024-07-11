@@ -10,13 +10,13 @@ captchaScript.id = 'captcha'
 document.body.appendChild(captchaScript)
 document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
 document.body.innerHTML += '\
-        <div id="loginIcon">\
+        <div id="bot-loginIcon">\
             <img src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/bot.png" alt="Login Icon" onclick="initBot()">\
-			<div id="popup">Hi! I\'m your assistant</div>\
+			<div id="bot-popup">Hi! I\'m your assistant</div>\
         </div>\
 '
 setTimeout(() => {
-	document.getElementById('popup').style.display = 'block'
+	document.getElementById('bot-popup').style.display = 'block'
 }, 1000)
 
 window.initBot = () => {
@@ -24,7 +24,7 @@ window.initBot = () => {
 		Bot.openFrame()
 		return
 	}
-	document.getElementById('popup').style.display = 'none'
+	document.getElementById('bot-popup').style.display = 'none'
 	let customCss = document.createElement('style')
 	customCss.textContent = `
 	#loginForm{

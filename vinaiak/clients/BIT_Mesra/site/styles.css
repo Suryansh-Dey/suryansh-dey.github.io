@@ -1,11 +1,4 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-#loginIcon img {
+#bot-loginIcon img {
     position: fixed;
     bottom: 1vh;
     right: 1vw;
@@ -15,12 +8,12 @@ html {
     z-index: 100;
 }
 
-#loginIcon img:hover {
+#bot-loginIcon img:hover {
     transform: scale(1.1);
 }
 
-#popup {
-    position: absolute;
+#bot-popup {
+    position: fixed;
     bottom: 4rem;
     right: 5rem;
     background-color: rgb(159, 250, 220);
