@@ -8,14 +8,14 @@ let captchaScript = document.createElement('script')
 captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 captchaScript.id = 'captcha'
 document.body.appendChild(captchaScript)
-document.head.innerHTML += '<link rel="stylesheet" href="styles.css">'
+document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
 document.body.innerHTML += '\
         <div id="bot-loginIcon" onclick="initBot()">\
-            <video muted class="popup"><source src="resources/namaste.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="looking" style="display:none"><source src="resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="jump" style="display:none"><source src="resources/Jump.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="hover" style="display:none"><source src="resources/onHover.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="click" style="display:none"><source src="resources/onClick.mp4" type="video/mp4">AI assistants</video>\
+            <video muted class="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
+            <video muted class="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
+            <video muted class="jump" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Jump.mp4" type="video/mp4">AI assistants</video>\
+            <video muted class="hover" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onHover.mp4" type="video/mp4">AI assistants</video>\
+            <video muted class="click" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onClick.mp4" type="video/mp4">AI assistants</video>\
 			<img src="https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo">\
         </div>\
 '
@@ -30,7 +30,7 @@ document.querySelector('#bot-loginIcon img').addEventListener('animationend', ()
 	video.src = "resources/popup.mp4"
 	video.play()
 	setInterval(() => {
-		if (startWaiting){
+		if (startWaiting) {
 			startWaiting = true
 			return
 		}
@@ -62,17 +62,21 @@ document.getElementById('bot-loginIcon').addEventListener('mouseenter', () => {
 	loginIcon.querySelector('.hover').style.display = "block"
 	loginIcon.querySelector('.hover').play()
 })
-document.getElementById('bot-loginIcon').addEventListener('mouseleave',()=>{
+document.getElementById('bot-loginIcon').addEventListener('mouseleave', () => {
 	startWaiting = false
 })
 
 window.initBot = () => {
+	const onClick = loginIcon.querySelector('.click')
+	onClick.style.display = 'block'
+	onClick.play()
+	onClick.onended =()=>{
+		onClick.style.display = 'none'
+	}
 	if (Bot.exists) {
 		Bot.openFrame()
 		return
 	}
-	loginIcon.querySelector('.click').style.display = 'block'
-	loginIcon.querySelector('.click').play()
 	let customCss = document.createElement('style')
 	customCss.textContent = `
 	#loginForm{
