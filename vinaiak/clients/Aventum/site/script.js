@@ -1,8 +1,7 @@
-import { quickAccesses, mcq } from './mcqs.js';
 const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
 let injectjs = document.createElement('script')
-injectjs.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js"
+injectjs.src = "../../../chatbot/frontend/inject.js"
 document.body.appendChild(injectjs)
 let captchaScript = document.createElement('script')
 captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
@@ -10,75 +9,28 @@ captchaScript.id = 'captcha'
 document.body.appendChild(captchaScript)
 document.head.innerHTML += '<link rel="stylesheet" href="styles.css">'
 document.body.innerHTML += '\
-        <div id="bot-loginIcon" onclick="initBot()">\
-            <video muted class="popup"><source src="resources/namaste.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="looking" style="display:none"><source src="resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="jump" style="display:none"><source src="resources/Jump.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="hover" style="display:none"><source src="resources/onHover.mp4" type="video/mp4">AI assistants</video>\
-            <video muted class="click" style="display:none"><source src="resources/onClick.mp4" type="video/mp4">AI assistants</video>\
-			<img src="https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo">\
+        <div id="loginIcon">\
+            <img src="resources/bot.png" alt="Login Icon" onclick="initBot()">\
+			<div id="popup">Hi! I\'m your assistant</div>\
         </div>\
 '
-const loginIcon = document.getElementById("bot-loginIcon")
-loginIcon.querySelector('img').onload = () => {
-	loginIcon.querySelector('video').play()
-}
-let startWaiting = false
-document.querySelector('#bot-loginIcon img').addEventListener('animationend', () => {
-	loginIcon.removeChild(loginIcon.querySelector('img'))
-	const video = loginIcon.querySelector('video')
-	video.src = "resources/popup.mp4"
-	video.play()
-	setInterval(() => {
-		if (startWaiting){
-			startWaiting = true
-			return
-		}
-		if (loginIcon.querySelector('.popup'))
-			loginIcon.removeChild(loginIcon.querySelector('.popup'))
-		loginIcon.querySelector('.hover').style.display = "none"
-		loginIcon.querySelector('.click').style.display = "none"
-		let video = loginIcon.querySelector('video')
-		if (Math.random() < 0.6) {
-			video = loginIcon.querySelector('.looking')
-			loginIcon.querySelector('.jump').style.display = "none"
-		}
-		else {
-			video = loginIcon.querySelector('.jump')
-			loginIcon.querySelector('.looking').style.display = "none"
-		}
-		video.style.display = "block"
-		video.play()
-	}, 3000)
-})
-document.getElementById('bot-loginIcon').addEventListener('mouseenter', () => {
-	startWaiting = true
-	if (loginIcon.querySelector('.popup'))
-		document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('.popup'))
-	if (loginIcon.querySelector('img'))
-		document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('img'))
-	loginIcon.querySelector('.looking').style.display = "none"
-	loginIcon.querySelector('.jump').style.display = "none"
-	loginIcon.querySelector('.hover').style.display = "block"
-	loginIcon.querySelector('.hover').play()
-})
-document.getElementById('bot-loginIcon').addEventListener('mouseleave',()=>{
-	startWaiting = false
-})
+setTimeout(() => {
+	document.getElementById('popup').style.display = 'block'
+}, 1000)
 
 window.initBot = () => {
 	if (Bot.exists) {
 		Bot.openFrame()
 		return
 	}
-	loginIcon.querySelector('.click').style.display = 'block'
-	loginIcon.querySelector('.click').play()
+	document.getElementById('popup').style.display = 'none'
 	let customCss = document.createElement('style')
 	customCss.textContent = `
 	#loginForm{
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		color: white
 	}
 	#loginForm input{
 		width: 96%;
@@ -98,7 +50,7 @@ window.initBot = () => {
 	button[type="button"] {
 		width: 100%;
 		padding: 10px;
-		background-color: #ff9029;
+		background-color: rgb(50, 50, 255);
 		color: #fff;
 		border: none;
 		border-radius: 5px;
@@ -106,18 +58,36 @@ window.initBot = () => {
 		cursor: pointer;
 	  }
 	button[type="button"]:hover {
-		background-color: #fead61;
-	  }`
-	new Bot(1,
-		"Ask me about BIT Mesra",
-		"BIT Admission Assistant",
-		"https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
-		quickAccesses,
+		background-color: #blue;
+	  }
+	#heading {
+	background-color: rgb(0, 0, 150);
+	}
+	a {
+	color: yellow}
+	.box{
+	color: white
+	}
+	.box.bot {
+	background-color: blue;
+	border: 2dvh solid blue;
+	}
+	.box.user {
+	background-color: rgb(50, 50, 255);
+	border: 2dvh solid rgb(50, 50, 255);
+	}
+	`
+	new Bot(3,
+		"Ask me about Aventum",
+		"Aventum Admission Assistant",
+		"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuez9j5jliXTLKpWHADI8-BQSYZk_VIqgWvw&s",
+		{},
 		() => {
 			window.addEventListener('beforeunload', AI.quit)
 			Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'none'
 			Bot.iframe.contentDocument.getElementById('text-input').style.display = 'none'
 			Bot.iframe.contentDocument.getElementById('send').style.display = 'none'
+			Bot.iframe.style.zIndex = 10
 			Bot.startWaiting()
 			setTimeout(() => {
 				Bot.stopWaiting()
@@ -129,13 +99,13 @@ window.initBot = () => {
 					</div>', 'bot', false)
 				Bot.iframe.contentDocument.getElementById('username').focus()
 				Bot.iframe.contentDocument.getElementById('username').addEventListener('keydown', (event) => {
-					if (event.key === 'Enter') {
+					if (event.key === 'Enter'){
 						event.preventDefault()
 						Bot.iframe.contentDocument.getElementById('email').focus()
 					}
 				})
 				Bot.iframe.contentDocument.getElementById('email').addEventListener('keydown', (event) => {
-					if (event.key === 'Enter') {
+					if (event.key === 'Enter'){
 						event.preventDefault()
 						Bot.iframe.contentDocument.getElementById('submit').dispatchEvent(new Event('click'))
 					}
@@ -153,13 +123,15 @@ window.initBot = () => {
 					})
 					const name = Bot.iframe.contentDocument.getElementById('username').value
 					Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
-					Bot.reply(`Hi ${name}! Which program are you intrested in?`)
-					Bot.createMcq(mcq)
+					AI.setContext([])
+					Bot.reply(`Hi ${name}! what would you like to know about us?`)
+					Bot.iframe.contentDocument.getElementById('text-input').style.display = 'block'
+					Bot.iframe.contentDocument.getElementById('send').style.display = 'block'
+					Bot.iframe.contentDocument.getElementById('text-input').focus()
 				})
 			}, 1000)
 			Bot.customiseCss(customCss)
 			Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
-			Bot.iframe.style.zIndex = 101
 		}
 	)
 	console.log("Logged in to chat bot")

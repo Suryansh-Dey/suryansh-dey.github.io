@@ -1,33 +1,41 @@
-#bot-loginIcon img {
+#bot-loginIcon {
     position: fixed;
     bottom: 1vh;
     right: 1vw;
-    width: 5rem;
     cursor: pointer;
-    animation: loginIntro 1s ease-in-out;
     z-index: 100;
 }
 
-#bot-loginIcon img:hover {
-    transform: scale(1.1);
+#bot-loginIcon:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s;
+}
+#bot-loginIcon *{
+    width: 5rem;
+    border-radius: 100px;
+}
+#bot-loginIcon img{
+    position: absolute;
+    width: 2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100px;
+    animation: enlarge 4s ease;
 }
 
-#bot-popup {
-    position: fixed;
-    bottom: 4rem;
-    right: 5rem;
-    background-color: rgb(159, 250, 220);
-    border: 0.7em solid rgb(159, 250, 220);
-    border-radius: 20px;
-    border-bottom-right-radius: 0;
-    animation: largerFont 0.5s ease-in-out;
-    display: none;
-    z-index: 100;
-}
-
-@keyframes largerFont {
-    0% {
-        font-size: 0;
+@keyframes enlarge {
+    0%{
+        width: 0;
+        height: auto;
+    }
+    60% {
+        width: 0;
+        height: auto;
+    }
+    100%{
+        width: 100%;
+        height: auto;
     }
 }
 
