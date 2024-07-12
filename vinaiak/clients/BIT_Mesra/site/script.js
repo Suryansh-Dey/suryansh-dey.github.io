@@ -27,7 +27,7 @@ let startWaiting = true
 document.querySelector('#bot-loginIcon img').addEventListener('animationend', () => {
 	loginIcon.removeChild(loginIcon.querySelector('img'))
 	const video = loginIcon.querySelector('video')
-	video.src = "resources/popup.mp4"
+	video.src = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/popup.mp4"
 	video.play()
 	startWaiting = false
 })
@@ -68,104 +68,119 @@ document.getElementById('bot-loginIcon').addEventListener('mouseleave', () => {
 })
 
 window.initBot = () => {
+	startWaiting = true
 	const onClick = loginIcon.querySelector('.click')
 	onClick.style.display = 'block'
 	onClick.play()
 	onClick.onended = () => {
 		onClick.style.display = 'none'
-		if (Bot.exists) {
+		startWaiting = false
+	}
+	if (Bot.exists) {
+		setTimeout(() => {
 			Bot.openFrame()
-			return
-		}
-		let customCss = document.createElement('style')
-		customCss.textContent = `
-	#loginForm{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+			setTimeout(() => { document.getElementById('bot-loginIcon').style.display = 'none' }, 400)
+		}, 600)
+		return
 	}
-	#loginForm input{
-		width: 96%;
-		height: 1.5em;
-		margin-top: 0.5em;
-		border-radius: 5px;
-		border: none;
-		background-color: #fbe7d1;
+	else {
+		setTimeout(() => {
+			Bot.openFrame()
+			document.getElementById('bot-loginIcon').style.display = 'none'
+		}, 2000)
 	}
-	#loginForm input:focus {
-		background-color: #fbe7d1;
-		outline: none;
-	}
-	#loginForm input:-webkit-autofill{
-		-webkit-box-shadow: 0 0 0px 1000px #fbe7d1 inset;
-	}
-	button[type="button"] {
-		width: 100%;
-		padding: 10px;
-		background-color: #ff9029;
-		color: #fff;
-		border: none;
-		border-radius: 5px;
-		margin-top: 0.6em;
-		cursor: pointer;
+	let customCss = document.createElement('style')
+	customCss.textContent = `
+	  #loginForm{
+		  display: flex;
+		  flex-direction: column;
+		  align-items: center;
 	  }
-	button[type="button"]:hover {
-		background-color: #fead61;
-	  }`
-		new Bot(1,
-			"Ask me about BIT Mesra",
-			"BIT Admission Assistant",
-			"https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
-			quickAccesses,
-			() => {
-				window.addEventListener('beforeunload', AI.quit)
-				Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'none'
-				Bot.iframe.contentDocument.getElementById('text-input').style.display = 'none'
-				Bot.iframe.contentDocument.getElementById('send').style.display = 'none'
-				Bot.startWaiting()
-				setTimeout(() => {
-					Bot.stopWaiting()
-					Bot.createBox('<div id="loginForm">\
-					<h3 style="margin: 0">Introduce yourself</h3>\
-					<input type="text" id="username" name="username" placeholder="Name" autocomplete="on">\
-					<input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">\
-					<button type="button" id="submit">Submit</button>\
-					</div>', 'bot', false)
-					Bot.iframe.contentDocument.getElementById('username').focus()
-					Bot.iframe.contentDocument.getElementById('username').addEventListener('keydown', (event) => {
-						if (event.key === 'Enter') {
-							event.preventDefault()
-							Bot.iframe.contentDocument.getElementById('email').focus()
-						}
-					})
-					Bot.iframe.contentDocument.getElementById('email').addEventListener('keydown', (event) => {
-						if (event.key === 'Enter') {
-							event.preventDefault()
-							Bot.iframe.contentDocument.getElementById('submit').dispatchEvent(new Event('click'))
-						}
-					})
-					Bot.iframe.contentDocument.getElementById('submit').addEventListener('click', (event) => {
+	  #loginForm input{
+		  width: 96%;
+		  height: 1.5em;
+		  margin-top: 0.5em;
+		  border-radius: 5px;
+		  border: none;
+		  background-color: #fbe7d1;
+	  }
+	  #loginForm input:focus {
+		  background-color: #fbe7d1;
+		  outline: none;
+	  }
+	  #loginForm input:-webkit-autofill{
+		  -webkit-box-shadow: 0 0 0px 1000px #fbe7d1 inset;
+	  }
+	  button[type="button"] {
+		  width: 100%;
+		  padding: 10px;
+		  background-color: #ff9029;
+		  color: #fff;
+		  border: none;
+		  border-radius: 5px;
+		  margin-top: 0.6em;
+		  cursor: pointer;
+		}
+	  button[type="button"]:hover {
+		  background-color: #fead61;
+		}`
+	new Bot(1,
+		"Ask me about BIT Mesra",
+		"BIT Admission Assistant",
+		"https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
+		quickAccesses,
+		() => {
+			Bot.hideFrame()
+			window.addEventListener('beforeunload', AI.quit)
+			Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'none'
+			Bot.iframe.contentDocument.getElementById('text-input').style.display = 'none'
+			Bot.iframe.contentDocument.getElementById('send').style.display = 'none'
+			Bot.iframe.contentDocument.getElementById('close').addEventListener('click', () => {
+				document.getElementById('bot-loginIcon').style.display = 'block'
+			})
+			Bot.startWaiting()
+			setTimeout(() => {
+				Bot.stopWaiting()
+				Bot.createBox('<div id="loginForm">\
+					  <h3 style="margin: 0">Introduce yourself</h3>\
+					  <input type="text" id="username" name="username" placeholder="Name" autocomplete="on">\
+					  <input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">\
+					  <button type="button" id="submit">Submit</button>\
+					  </div>', 'bot', false)
+				Bot.iframe.contentDocument.getElementById('username').focus()
+				Bot.iframe.contentDocument.getElementById('username').addEventListener('keydown', (event) => {
+					if (event.key === 'Enter') {
 						event.preventDefault()
-						const xhr = new XMLHttpRequest()
-						grecaptcha.enterprise.ready(async () => {
-							const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
-							xhr.open('POST', server + '/verify', false)
-							xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-							xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
-							if (xhr.status != 200)
-								Bot.reply('Tum ek insaan nhi bn paye. Orders ka paln kr kr ke ek machine bn gye ho!')
-						})
-						const name = Bot.iframe.contentDocument.getElementById('username').value
-						Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
-						Bot.reply(`Hi ${name}! Which program are you intrested in?`)
-						Bot.createMcq(mcq)
+						Bot.iframe.contentDocument.getElementById('email').focus()
+					}
+				})
+				Bot.iframe.contentDocument.getElementById('email').addEventListener('keydown', (event) => {
+					if (event.key === 'Enter') {
+						event.preventDefault()
+						Bot.iframe.contentDocument.getElementById('submit').dispatchEvent(new Event('click'))
+					}
+				})
+				Bot.iframe.contentDocument.getElementById('submit').addEventListener('click', (event) => {
+					event.preventDefault()
+					const xhr = new XMLHttpRequest()
+					grecaptcha.enterprise.ready(async () => {
+						const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
+						xhr.open('POST', server + '/verify', false)
+						xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+						xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
+						if (xhr.status != 200)
+							Bot.reply('Tum ek insaan nhi bn paye. Orders ka paln kr kr ke ek machine bn gye ho!')
 					})
-				}, 1000)
-				Bot.customiseCss(customCss)
-				Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
-				Bot.iframe.style.zIndex = 101
-			}
-		)
-		console.log("Logged in to chat bot")
-	}
+					const name = Bot.iframe.contentDocument.getElementById('username').value
+					Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
+					Bot.reply(`Hi ${name}! Which program are you intrested in?`)
+					Bot.createMcq(mcq)
+				})
+			}, 3000)
+			Bot.customiseCss(customCss)
+			Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
+			Bot.iframe.style.zIndex = 101
+		}
+	)
+	console.log("Logged in to chat bot")
 }
