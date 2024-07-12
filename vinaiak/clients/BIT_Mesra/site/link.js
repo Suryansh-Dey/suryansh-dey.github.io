@@ -695,34 +695,35 @@ const loginIcon = document.getElementById("bot-loginIcon")
 loginIcon.querySelector('img').onload = () => {
   loginIcon.querySelector('video').play()
 }
-let startWaiting = false
+let startWaiting = true
 document.querySelector('#bot-loginIcon img').addEventListener('animationend', () => {
   loginIcon.removeChild(loginIcon.querySelector('img'))
   const video = loginIcon.querySelector('video')
   video.src = "resources/popup.mp4"
   video.play()
-  setInterval(() => {
-    if (startWaiting) {
-      startWaiting = true
-      return
-    }
-    if (loginIcon.querySelector('.popup'))
-      loginIcon.removeChild(loginIcon.querySelector('.popup'))
-    loginIcon.querySelector('.hover').style.display = "none"
-    loginIcon.querySelector('.click').style.display = "none"
-    let video = loginIcon.querySelector('video')
-    if (Math.random() < 0.6) {
-      video = loginIcon.querySelector('.looking')
-      loginIcon.querySelector('.jump').style.display = "none"
-    }
-    else {
-      video = loginIcon.querySelector('.jump')
-      loginIcon.querySelector('.looking').style.display = "none"
-    }
-    video.style.display = "block"
-    video.play()
-  }, 3000)
+  startWaiting = false
 })
+setInterval(() => {
+  if (startWaiting) {
+    startWaiting = false
+    return
+  }
+  if (loginIcon.querySelector('.popup'))
+    loginIcon.removeChild(loginIcon.querySelector('.popup'))
+  loginIcon.querySelector('.hover').style.display = "none"
+  loginIcon.querySelector('.click').style.display = "none"
+  let video = loginIcon.querySelector('video')
+  if (Math.random() < 0.6) {
+    video = loginIcon.querySelector('.looking')
+    loginIcon.querySelector('.jump').style.display = "none"
+  }
+  else {
+    video = loginIcon.querySelector('.jump')
+    loginIcon.querySelector('.looking').style.display = "none"
+  }
+  video.style.display = "block"
+  video.play()
+}, 3000)
 document.getElementById('bot-loginIcon').addEventListener('mouseenter', () => {
   startWaiting = true
   if (loginIcon.querySelector('.popup'))
