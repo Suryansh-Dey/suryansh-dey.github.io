@@ -701,7 +701,7 @@ document.querySelector('#bot-loginIcon img').addEventListener('animationend', ()
   const video = loginIcon.querySelector('video')
   video.src = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/popup.mp4"
   video.play()
-  startWaiting = false
+  video.onended = () => { startWaiting = false }
 })
 setInterval(() => {
   if (startWaiting) {
