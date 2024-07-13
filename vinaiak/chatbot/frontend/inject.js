@@ -64,7 +64,7 @@ class AI {
     }
 }
 class Bot {
-    static landscapeWidth = 35
+    static landscapeWidth = 30
     static mobileWidth = 100
     static height = 98
     static exists = false

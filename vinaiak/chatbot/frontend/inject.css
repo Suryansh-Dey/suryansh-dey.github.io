@@ -16,15 +16,22 @@ main {
 
 #text-input {
   position: fixed;
-  bottom: 3dvh;
-  left: 0.9dvw;
-  width: 90dvw;
-  height: 7dvh;
-  border-radius: 10px;
+  bottom: 0;
+  left: 0;
+  width: 91dvw;
+  height: 6dvh;
   font-size: 3dvh;
   resize: vertical;
-  border: 1px solid rgb(88, 88, 88);
+  border: none;
   animation: slideUp 0.5s ease-out;
+  border-top: 1px solid rgb(150, 150, 150);
+  border-bottom: 2dvh transparent;
+  padding-top: 0.5dvh;
+  padding-bottom: 2dvh;
+  padding-right: 7dvh;
+  padding-left: 2dvh;
+  background-color: white;
+  align-content: center;
 }
 
 #text-input::placeholder {
@@ -32,26 +39,23 @@ main {
 }
 
 #text-input:focus {
-  outline: 1px solid rgb(88, 88, 88);
+  outline: none;
+  border-top: 1px solid rgb(90, 90, 90);
 }
 
 #send {
   position: fixed;
-  bottom: 4.5dvh;
+  bottom: 2dvh;
   right: 0.5dvw;
-  height: 5dvh;
-  width: 5dvh;
-  background-color: #FFDE00;
+  background-color: transparent;
   border-radius: 100%;
-  border: 1px solid #F15922;
+  border: none;
   animation: slideUp 0.5s ease-out;
 }
 
 #send img {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  transform: translate(-60%, -60%);
+  width: 6dvw;
+  height: auto;
 }
 
 #send:hover {
@@ -61,10 +65,10 @@ main {
 
 #heading {
   position: fixed;
-  top: 3dvh;
-  left: 4dvw;
-  width: 90dvw;
-  height: 12dvh;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 15dvh;
   background-color: #F15922;
   border-radius: 10px;
   display: flex;
@@ -76,15 +80,18 @@ main {
   color: white;
   text-align: center;
 }
+
 #heading .credit {
   position: absolute;
-  color: #ffffffc4;;
+  color: #ffffffc4;
   text-align: center;
-  transform: translate(0, 1em);
   font-size: small;
+  bottom: 1dvh;
 }
+
 #heading .credit a {
-  color: #ffffffc4;;
+  color: #ffffffc4;
+  ;
 }
 
 #close {
@@ -127,6 +134,10 @@ main {
   flex-direction: column;
 }
 
+#chat-area::-webkit-scrollbar {
+  display: none;
+}
+
 .box {
   position: relative;
   border-radius: 10px;
@@ -145,13 +156,14 @@ main {
   background-color: #f9a23f;
   border: 2dvw solid #f9a23f;
   border-top-right-radius: 0;
+  margin-right: 2dvw;
 }
 
 .box.bot {
   align-self: flex-start;
   background-color: #EF8812;
   border: 2dvw solid #EF8812;
-  margin-left: 2dvh;
+  margin-left: 3dvw;
   border-top-left-radius: 0;
   animation: largerFont 0.3s ease-out;
 }
@@ -258,12 +270,12 @@ main {
 .option.navigator {
   animation: none;
   position: absolute;
-  bottom: -1.4em;
+  bottom: -1.75em;
   height: 1.3em;
 }
 
 #quick-access .option.navigator {
-  top: -1.4em;
+  top: -1.75em;
 }
 
 .option.navigator:nth-child(2) {
