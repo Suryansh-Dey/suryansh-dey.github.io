@@ -1,0 +1,277 @@
+main {
+  position: fixed;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: white;
+}
+
+#background-img {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100dvh;
+  width: auto;
+  overflow: hidden;
+}
+
+#text-input {
+  position: fixed;
+  bottom: 3dvh;
+  left: 0.9dvw;
+  width: 90dvw;
+  height: 7dvh;
+  border-radius: 10px;
+  font-size: 3dvh;
+  resize: vertical;
+  border: 1px solid rgb(88, 88, 88);
+  animation: slideUp 0.5s ease-out;
+}
+
+#text-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+#text-input:focus {
+  outline: 1px solid rgb(88, 88, 88);
+}
+
+#send {
+  position: fixed;
+  bottom: 4.5dvh;
+  right: 0.5dvw;
+  height: 5dvh;
+  width: 5dvh;
+  background-color: #FFDE00;
+  border-radius: 100%;
+  border: 1px solid #F15922;
+  animation: slideUp 0.5s ease-out;
+}
+
+#send img {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  transform: translate(-60%, -60%);
+}
+
+#send:hover {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+#heading {
+  position: fixed;
+  top: 3dvh;
+  left: 4dvw;
+  width: 90dvw;
+  height: 12dvh;
+  background-color: #F15922;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#heading .title {
+  color: white;
+  text-align: center;
+}
+#heading .credit {
+  position: absolute;
+  color: #ffffffc4;;
+  text-align: center;
+  transform: translate(0, 1em);
+  font-size: small;
+}
+#heading .credit a {
+  color: #ffffffc4;;
+}
+
+#close {
+  background: transparent;
+  border: none;
+  border-radius: 100%;
+  color: white;
+  font-size: 7dvh;
+  font-weight: 1;
+}
+
+#close:hover {
+  color: rgb(89, 88, 88);
+  cursor: pointer;
+}
+
+.avtar {
+  aspect-ratio: 1;
+  height: 80%;
+  width: auto;
+  border-radius: 100%;
+  background-size: cover;
+}
+
+.avtar.bot {
+  height: 5dvh;
+  width: 5dvh;
+  background-size: cover;
+  transform: none;
+}
+
+#chat-area {
+  position: absolute;
+  top: 17dvh;
+  left: 1dvw;
+  height: 70dvh;
+  width: 98dvw;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.box {
+  position: relative;
+  border-radius: 10px;
+  font-size: medium;
+  overflow-wrap: break-word;
+  margin-bottom: 1dvh;
+  max-width: 80dvw;
+}
+
+.box:last-child {
+  margin-bottom: 20dvh;
+}
+
+.box.user {
+  align-self: flex-end;
+  background-color: #f9a23f;
+  border: 2dvw solid #f9a23f;
+  border-top-right-radius: 0;
+}
+
+.box.bot {
+  align-self: flex-start;
+  background-color: #EF8812;
+  border: 2dvw solid #EF8812;
+  margin-left: 2dvh;
+  border-top-left-radius: 0;
+  animation: largerFont 0.3s ease-out;
+}
+
+.box.bot.waiting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  width: 0.5rem;
+  font-size: large;
+  animation: wavyAnimation 1.5s infinite ease-in-out;
+}
+
+@keyframes wavyAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+#quick-access {
+  position: fixed;
+  bottom: 11.5dvh;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  animation: slideRight 0.5s ease-out;
+}
+
+#mcq {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+  animation: slideRight 0.5s ease-out;
+}
+
+.option {
+  font-size: 1.3em;
+  margin: 1dvh;
+  background-color: #fead61;
+  border-radius: 10px;
+  border: none;
+  animation: comeOut 0.4s ease-out;
+}
+
+.option:hover {
+  background-color: #ff9029;
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -10dvh;
+    color: rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    left: -20dvh;
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes comeOut {
+  0% {
+    color: #f9a23f00;
+  }
+}
+
+@keyframes smallerFont {
+  100% {
+    font-size: 0;
+  }
+}
+
+@keyframes largerFont {
+  0% {
+    font-size: 0;
+  }
+}
+
+.option.navigator {
+  animation: none;
+  position: absolute;
+  bottom: -1.4em;
+  height: 1.3em;
+}
+
+#quick-access .option.navigator {
+  top: -1.4em;
+}
+
+.option.navigator:nth-child(2) {
+  left: 2em;
+}
+
+.media {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
