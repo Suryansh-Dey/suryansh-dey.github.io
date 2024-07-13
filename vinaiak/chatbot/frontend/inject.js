@@ -267,7 +267,12 @@ class Bot {
         document.head.appendChild(frameStyles)
         Bot.iframe = document.createElement('iframe')
         Bot.iframe.title = "chat bot frame"
-        Bot.iframe.src = "../../../chatbot/frontend/inject.html"
+        //Bot.iframe.src = "../../../chatbot/frontend/inject.html"
+        fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.html").then(response => { return response.text() }).then(data => {
+            Bot.iframe.contentDocument.open()
+            Bot.iframe.contentDocument.write(data)
+            Bot.iframe.contentDocument.close()
+        })
         Bot.iframe.id = 'bot-iframe'
         Bot.iframe.style.position = "fixed"
         Bot.iframe.style.bottom = '1dvh'
