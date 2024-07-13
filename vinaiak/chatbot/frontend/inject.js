@@ -258,7 +258,6 @@ class Bot {
     constructor(organisationId, placeholder, title, avtarPath, quickAccesses, onload) {
         if (Bot.exists)
             throw new Error("Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists")
-        Bot.exists = true
         new AI(organisationId)
         Bot.avtarPath = avtarPath
         let frameStyles = document.createElement('style')
@@ -272,6 +271,7 @@ class Bot {
             Bot.iframe.contentDocument.open()
             Bot.iframe.contentDocument.write(data)
             Bot.iframe.contentDocument.close()
+            Bot.exists = true
         })
         Bot.iframe.id = 'bot-iframe'
         Bot.iframe.style.position = "fixed"
@@ -284,7 +284,8 @@ class Bot {
         Bot.iframe.style.boxShadow = "0 0 5px rgb(100,100,100)"
         Bot.iframe.style.borderRadius = "10px"
         Bot.iframe.onload = () => {
-            Bot.iframe.contentDocument.getElementById('background-img').src = "resources/doodle.svg"
+            if(!Bot.exists) return
+            Bot.iframe.contentDocument.getElementById('background-img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/doodle.svg"
             Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
             Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
             Bot.iframe.contentDocument.querySelector('#heading .credit a').href = server
