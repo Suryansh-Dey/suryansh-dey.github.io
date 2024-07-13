@@ -186,10 +186,10 @@
 						Bot.reply(`Hi ${name}! Which program are you intrested in?`)
 						Bot.createMcq(mcq)
 					})
-				}, 3000)
+				}, 2000)
 				Bot.customiseCss(customCss)
 				Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
-				Bot.iframe.style.zIndex = 101
+				Bot.iframe.style.zIndex = 10000
 			}
 		)
 		console.log("Logged in to chat bot")
