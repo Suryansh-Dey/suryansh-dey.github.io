@@ -199,7 +199,7 @@ let AI, Bot
 				}, 2000)
 				Bot.customiseCss(customCss)
 				Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
-				Bot.iframe.style.zIndex = 99
+				Bot.iframe.style.zIndex = 10000
 			}
 		)
 		console.log("Logged in to chat bot")

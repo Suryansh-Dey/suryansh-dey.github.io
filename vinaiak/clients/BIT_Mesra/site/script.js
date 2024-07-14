@@ -181,13 +181,13 @@ window.initBot = () => {
 						xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
 					})
 					Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
-					Bot.reply(`Hi ${name}! Which program are you intrested in?`)
+					Bot.reply(`Hi ${name.split(' ')[0]}! Which program are you intrested in?`)
 					Bot.createMcq(mcq)
 				})
 			}, 3000)
 			Bot.customiseCss(customCss)
 			Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
-			Bot.iframe.style.zIndex = 99
+			Bot.iframe.style.zIndex = 10000
 		}
 	)
 	console.log("Logged in to chat bot")
