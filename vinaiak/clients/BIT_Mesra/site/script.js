@@ -162,16 +162,23 @@ window.initBot = () => {
 				})
 				Bot.iframe.contentDocument.getElementById('submit').addEventListener('click', (event) => {
 					event.preventDefault()
+					const name = Bot.iframe.contentDocument.getElementById('username').value
 					const xhr = new XMLHttpRequest()
 					grecaptcha.enterprise.ready(async () => {
 						const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
-						xhr.open('POST', server + '/verify', false)
+						xhr.open('POST', server + '/verify', true)
 						xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+						xhr.onload = () => {
+							if (xhr.status != 200) {
+								Bot.reply('Tum ek insaan nhi bn paye. Smaaj ka blueprint follow kr kr ek machine bn gye ho!')
+								return
+							}
+							xhr.open('POST', server + '/commonData', true)
+							xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+							xhr.send(JSON.stringify({ id: AI.clientId, data: 'name ' + name }))
+						}
 						xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
-						if (xhr.status != 200)
-							Bot.reply('Tum ek insaan nhi bn paye. Orders ka paln kr kr ke ek machine bn gye ho!')
 					})
-					const name = Bot.iframe.contentDocument.getElementById('username').value
 					Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
 					Bot.reply(`Hi ${name}! Which program are you intrested in?`)
 					Bot.createMcq(mcq)
