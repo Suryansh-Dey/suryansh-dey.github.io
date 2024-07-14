@@ -187,8 +187,8 @@ class Bot {
             return
         }
         const chats = Bot.iframe.contentDocument.getElementById('chat-area').children
-        if (type == 'bot' && chats.length > 1 && (chats[chats.length - 1].className == 'box user' ||
-            (chats[chats.length - 1].className == 'box bot waiting' && chats[chats.length - 2].className == 'box user')
+        if (type == 'bot' && (chats.length <= 1 || (chats[chats.length - 1].className == 'box user' ||
+            (chats[chats.length - 1].className == 'box bot waiting' && chats[chats.length - 2].className == 'box user'))
         ))
             Bot.createAvtar()
         let box = document.createElement('div')

@@ -1,8 +1,15 @@
 main {
   position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100dvw;
   height: 100dvh;
   background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: blueviolet;
 }
 
 #background-img {
@@ -12,6 +19,7 @@ main {
   height: 100dvh;
   width: auto;
   overflow: hidden;
+  opacity: 50%;
 }
 
 #text-input {
@@ -125,9 +133,9 @@ main {
 
 #chat-area {
   position: absolute;
-  top: 15dvh;
+  top: 16dvh;
   left: 1dvw;
-  height: 75dvh;
+  height: 74dvh;
   width: 98dvw;
   overflow-y: scroll;
   display: flex;
@@ -153,17 +161,19 @@ main {
 
 .box.user {
   align-self: flex-end;
-  background-color: #f9a23f;
-  border: 2dvw solid #f9a23f;
+  background-color: #ffb056;
+  border: 2dvw solid #ffb056;
   border-top-right-radius: 0;
-  margin-right: 2dvw;
+  margin-right: 1dvw;
 }
 
 .box.bot {
   align-self: flex-start;
-  background-color: #EF8812;
-  border: 2dvw solid #EF8812;
+  background-color: white;
+  box-shadow: 0 0 2dvh #EF8812;
+  padding: 1dvh;
   margin-left: 3dvw;
+  margin-top: 0.5dvh;
   border-top-left-radius: 0;
   animation: largerFont 0.3s ease-out;
 }
@@ -220,16 +230,17 @@ main {
 }
 
 .option {
-  font-size: 1.3em;
+  font-size: 1em;
   margin: 1dvh;
-  background-color: #fead61;
+  background-color: white;
+  box-shadow: 0 0 1dvh #f9a23f;
   border-radius: 10px;
   border: none;
   animation: comeOut 0.4s ease-out;
 }
 
 .option:hover {
-  background-color: #ff9029;
+  background-color: #f9a23f;
 }
 
 @keyframes slideUp {

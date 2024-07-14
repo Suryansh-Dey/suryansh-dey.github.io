@@ -334,7 +334,7 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Admission process', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "admission process"]), 'bot', true, remember)
+                                    Bot.createBox(getData(['phd', 'admission', "admission procedure"]), 'bot', true, remember)
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -725,7 +725,7 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Admission process', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "admission process"]), 'bot', true, remember)
+                        Bot.createBox(getData(['phd', 'admission', "admission procedure"]), 'bot', true, remember)
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
