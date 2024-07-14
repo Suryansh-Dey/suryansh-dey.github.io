@@ -170,7 +170,7 @@ window.initBot = () => {
 						xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 						xhr.onload = () => {
 							if (xhr.status != 200) {
-								Bot.reply('Tum ek insaan nhi bn paye. Smaaj ka blueprint follow kr kr ek machine bn gye ho!')
+								Bot.reply('Error: Invalid session. Please try logging in again otherwise some features may not work')
 								return
 							}
 							xhr.open('POST', server + '/commonData', true)

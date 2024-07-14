@@ -125,9 +125,9 @@ main {
 
 #chat-area {
   position: absolute;
-  top: 17dvh;
+  top: 15dvh;
   left: 1dvw;
-  height: 70dvh;
+  height: 75dvh;
   width: 98dvw;
   overflow-y: scroll;
   display: flex;
@@ -204,7 +204,7 @@ main {
 
 #quick-access {
   position: fixed;
-  bottom: 11.5dvh;
+  bottom: 10dvh;
   left: 0;
   display: flex;
   flex-wrap: wrap;
