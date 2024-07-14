@@ -187,7 +187,7 @@ window.initBot = () => {
 			}, 3000)
 			Bot.customiseCss(customCss)
 			Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
-			Bot.iframe.style.zIndex = 10000
+			Bot.iframe.style.zIndex = 99
 		}
 	)
 	console.log("Logged in to chat bot")

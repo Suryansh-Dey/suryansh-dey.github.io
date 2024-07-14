@@ -3,7 +3,7 @@
     bottom: 1vh;
     right: 1vw;
     cursor: pointer;
-    z-index: 9999;
+    z-index: 98;
 }
 
 #bot-loginIcon:hover {
