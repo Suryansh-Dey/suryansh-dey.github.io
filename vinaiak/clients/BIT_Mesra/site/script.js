@@ -175,6 +175,7 @@ window.initBot = () => {
 							}
 							xhr.open('POST', server + '/commonData', true)
 							xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+							xhr.onload = null
 							xhr.send(JSON.stringify({ id: AI.clientId, data: 'name ' + name }))
 						}
 						xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
