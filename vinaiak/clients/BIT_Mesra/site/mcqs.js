@@ -374,8 +374,7 @@ export const quickAccesses = {
                     }
                 }
             })
-        },
-        'id':'change-program'
+        }
     }
 }
 export const mcq = {

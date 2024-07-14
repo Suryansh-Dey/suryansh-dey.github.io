@@ -151,7 +151,6 @@ let AI, Bot
 				frame.getElementById('close').addEventListener('click', () => {
 					document.getElementById('bot-loginIcon').style.display = 'block'
 				})
-				frame.getElementById('change-program').style.backgroundColor = '#f9a23f'
 				Bot.startWaiting()
 				setTimeout(() => {
 					Bot.stopWaiting()
