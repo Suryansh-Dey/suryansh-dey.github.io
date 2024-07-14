@@ -142,39 +142,41 @@ let AI, Bot
 			"BIT Admission Assistant",
 			"https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
 			quickAccesses,
-			() => {
+			(frame) => {
 				Bot.hideFrame()
 				window.addEventListener('beforeunload', AI.quit)
-				Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'none'
-				Bot.iframe.contentDocument.getElementById('text-input').style.display = 'none'
-				Bot.iframe.contentDocument.getElementById('send').style.display = 'none'
-				Bot.iframe.contentDocument.getElementById('close').addEventListener('click', () => {
+				frame.getElementById('quick-access').style.display = 'none'
+				frame.getElementById('text-input').style.display = 'none'
+				frame.getElementById('send').style.display = 'none'
+				frame.getElementById('close').addEventListener('click', () => {
 					document.getElementById('bot-loginIcon').style.display = 'block'
 				})
+				frame.getElementById('change-program').style.backgroundColor = '#f9a23f'
 				Bot.startWaiting()
 				setTimeout(() => {
 					Bot.stopWaiting()
 					Bot.createBox('<div id="loginForm">\
-					  <h3 style="margin: 0">Introduce yourself</h3>\
-					  <input type="text" id="username" name="username" placeholder="Name" autocomplete="on">\
-					  <input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">\
-					  <button type="button" id="submit">Submit</button>\
-					  </div>', 'bot', false)
-					Bot.iframe.contentDocument.getElementById('username').focus()
-					Bot.iframe.contentDocument.getElementById('username').addEventListener('keydown', (event) => {
+						<h3 style="margin: 0">Introduce yourself</h3>\
+						<input type="text" id="username" name="username" placeholder="Name" autocomplete="on">\
+						<input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">\
+						<button type="button" id="submit">Submit</button>\
+						</div>', 'bot', false)
+					frame.getElementById('username').focus()
+					frame.getElementById('username').addEventListener('keydown', (event) => {
 						if (event.key === 'Enter') {
 							event.preventDefault()
-							Bot.iframe.contentDocument.getElementById('email').focus()
+							frame.getElementById('email').focus()
 						}
 					})
-					Bot.iframe.contentDocument.getElementById('email').addEventListener('keydown', (event) => {
+					frame.getElementById('email').addEventListener('keydown', (event) => {
 						if (event.key === 'Enter') {
 							event.preventDefault()
-							Bot.iframe.contentDocument.getElementById('submit').dispatchEvent(new Event('click'))
+							frame.getElementById('submit').dispatchEvent(new Event('click'))
 						}
 					})
-					Bot.iframe.contentDocument.getElementById('submit').addEventListener('click', (event) => {
+					frame.getElementById('submit').addEventListener('click', (event) => {
 						event.preventDefault()
+						const name = frame.getElementById('username').value
 						const xhr = new XMLHttpRequest()
 						grecaptcha.enterprise.ready(async () => {
 							const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
@@ -182,7 +184,7 @@ let AI, Bot
 							xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
 							xhr.onload = () => {
 								if (xhr.status != 200) {
-									Bot.reply('Tum ek insaan nhi bn paye. Smaaj ka blueprint follow kr kr ek machine bn gye ho!')
+									Bot.reply('Error: Invalid session. Please try logging in again otherwise some features may not work')
 									return
 								}
 								xhr.open('POST', server + '/commonData', true)
@@ -192,14 +194,13 @@ let AI, Bot
 							}
 							xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
 						})
-						const name = Bot.iframe.contentDocument.getElementById('username').value
-						Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('chat-area').lastChild)
-						Bot.reply(`Hi ${name}! Which program are you intrested in?`)
+						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
+						Bot.reply(`Hi ${name.split(' ')[0]}! Which program are you intrested in?`)
 						Bot.createMcq(mcq)
 					})
 				}, 2000)
 				Bot.customiseCss(customCss)
-				Bot.iframe.contentDocument.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
+				frame.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
 				Bot.iframe.style.zIndex = 10000
 			}
 		)

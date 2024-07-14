@@ -250,7 +250,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Selection procedure', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox(getData(['BSc and MSc', 'admission', "selection procedure"]), 'bot', true, remember)
+                                                Bot.createBox(getData(['BSc and MSc', 'admission', "admission and selection procedure"]), 'bot', true, remember)
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -346,11 +346,11 @@ export const quickAccesses = {
                                     Bot.resetQuickAccess()
                                 }
                             },
-                            "Exam of admission": {
+                            "Exam for admission": {
                                 'callBack': () => {
-                                    Bot.createBox('Exam of admission', 'user')
+                                    Bot.createBox('Exam for admission', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "exam of admission"]), 'bot', true, remember)
+                                    Bot.createBox(getData(['phd', 'admission', "exam for admission"]), 'bot', true, remember)
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -374,7 +374,8 @@ export const quickAccesses = {
                     }
                 }
             })
-        }
+        },
+        'id':'change-program'
     }
 }
 export const mcq = {
@@ -633,7 +634,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Selection procedure', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox(getData(['BSc and MSc', 'admission', "selection procedure"]), 'bot', true, remember)
+                                    Bot.createBox(getData(['BSc and MSc', 'admission', "admission and selection procedure"]), 'bot', true, remember)
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -739,11 +740,11 @@ export const mcq = {
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
                 },
-                "Exam of admission": {
+                "Exam for admission": {
                     'callBack': () => {
-                        Bot.createBox('Exam of admission', 'user')
+                        Bot.createBox('Exam for admission', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "exam of admission"]), 'bot', true, remember)
+                        Bot.createBox(getData(['phd', 'admission', "exam for admission"]), 'bot', true, remember)
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }

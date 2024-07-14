@@ -306,7 +306,7 @@ class Bot {
             Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
             Bot.openFrame()
             window.addEventListener('resize', Bot.resizeIframe)
-            onload(Bot.iframe)
+            onload(Bot.iframe.contentDocument)
         }
         document.body.appendChild(Bot.iframe)
     }
