@@ -1,7 +1,7 @@
 let AI, Bot
 const server = "https://vinaiak.ddns.net"
-const xhr = new XMLHttpRequest();
-
+const xhr = new XMLHttpRequest()
+document.addEventListener('scrollend', AI.keepAlive);
 (() => {
 	let quickAccesses, mcq
 	import('https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/mcqs.js').then((module) => {
