@@ -14,7 +14,7 @@
     width: 5rem;
     border-radius: 100px;
 }
-#bot-loginIcon .click{
+#bot-loginIcon #click{
     position: absolute;
     top: 0;
     width: 5rem;

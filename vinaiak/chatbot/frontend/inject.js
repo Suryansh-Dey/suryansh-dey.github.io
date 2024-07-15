@@ -288,7 +288,6 @@ class Bot {
             Bot.iframe.contentDocument.getElementById('background-img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/doodle.svg"
             Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
             Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
-            Bot.iframe.contentDocument.querySelector('#heading .credit a').href = server
             Bot.iframe.contentDocument.getElementById('close').addEventListener('click', Bot.closeFrame)
             Bot.iframe.contentDocument.getElementById('send').addEventListener('click', (event) => {
                 event.preventDefault()

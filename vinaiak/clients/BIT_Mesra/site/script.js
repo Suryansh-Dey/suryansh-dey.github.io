@@ -11,11 +11,11 @@ document.body.appendChild(captchaScript)
 document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
 document.body.innerHTML += '\
         <div id="bot-loginIcon" onclick="initBot()">\
-            <video muted disablePictureInPicture class="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
-            <video muted disablePictureInPicture class="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
-            <video muted disablePictureInPicture class="jump" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Jump.mp4" type="video/mp4">AI assistants</video>\
-            <video muted disablePictureInPicture class="hover" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onHover.mp4" type="video/mp4">AI assistants</video>\
-            <video muted disablePictureInPicture class="click" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onClick.mp4" type="video/mp4">AI assistants</video>\
+            <video muted disablePictureInPicture id="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
+            <video muted disablePictureInPicture id="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
+            <video muted disablePictureInPicture id="jump" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Jump.mp4" type="video/mp4">AI assistants</video>\
+            <video muted disablePictureInPicture id="hover" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onHover.mp4" type="video/mp4">AI assistants</video>\
+            <video muted disablePictureInPicture id="click" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onClick.mp4" type="video/mp4">AI assistants</video>\
 			<img src="https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo">\
         </div>\
 '
@@ -36,32 +36,32 @@ setInterval(() => {
 		startWaiting = false
 		return
 	}
-	if (loginIcon.querySelector('.popup'))
-		loginIcon.removeChild(loginIcon.querySelector('.popup'))
-	loginIcon.querySelector('.hover').style.display = "none"
-	loginIcon.querySelector('.click').style.display = "none"
+	if (loginIcon.querySelector('#popup'))
+		loginIcon.removeChild(loginIcon.querySelector('#popup'))
+	loginIcon.querySelector('#hover').style.display = "none"
+	loginIcon.querySelector('#click').style.display = "none"
 	let video = loginIcon.querySelector('video')
 	if (Math.random() < 0.6) {
-		video = loginIcon.querySelector('.looking')
-		loginIcon.querySelector('.jump').style.display = "none"
+		video = loginIcon.querySelector('#looking')
+		loginIcon.querySelector('#jump').style.display = "none"
 	}
 	else {
-		video = loginIcon.querySelector('.jump')
-		loginIcon.querySelector('.looking').style.display = "none"
+		video = loginIcon.querySelector('#jump')
+		loginIcon.querySelector('#looking').style.display = "none"
 	}
 	video.style.display = "block"
 	video.play()
 }, 5000)
 document.getElementById('bot-loginIcon').addEventListener('mouseenter', () => {
 	startWaiting = true
-	if (loginIcon.querySelector('.popup'))
-		document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('.popup'))
+	if (loginIcon.querySelector('#popup'))
+		document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('#popup'))
 	if (loginIcon.querySelector('img'))
 		document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('img'))
-	loginIcon.querySelector('.looking').style.display = "none"
-	loginIcon.querySelector('.jump').style.display = "none"
-	loginIcon.querySelector('.hover').style.display = "block"
-	loginIcon.querySelector('.hover').play()
+	loginIcon.querySelector('#looking').style.display = "none"
+	loginIcon.querySelector('#jump').style.display = "none"
+	loginIcon.querySelector('#hover').style.display = "block"
+	loginIcon.querySelector('#hover').play()
 })
 document.getElementById('bot-loginIcon').addEventListener('mouseleave', () => {
 	startWaiting = false
@@ -69,7 +69,7 @@ document.getElementById('bot-loginIcon').addEventListener('mouseleave', () => {
 
 window.initBot = () => {
 	startWaiting = true
-	const onClick = loginIcon.querySelector('.click')
+	const onClick = loginIcon.querySelector('#click')
 	onClick.style.display = 'block'
 	onClick.play()
 	onClick.onended = () => {
