@@ -1,4 +1,6 @@
 let AI, Bot
+const server = "https://vinaiak.ddns.net"
+const xhr = new XMLHttpRequest()
 (() => {
 	let quickAccesses, mcq
 	import('https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/mcqs.js').then((module) => {
@@ -6,7 +8,6 @@ let AI, Bot
 		mcq = module.mcq
 	})
 	const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
-	const server = "https://vinaiak.ddns.net"
 
 	fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(response => {
 		response.text().then(data => {
