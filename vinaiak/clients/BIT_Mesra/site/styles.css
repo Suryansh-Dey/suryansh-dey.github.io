@@ -15,7 +15,7 @@
     transition: transform 0.3s;
 }
 
-#bot-loginicon * {
+#bot-loginIcon * {
     width: fit-content;
     height: fit-content;
     border-radius: 100%;
