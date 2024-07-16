@@ -15,6 +15,12 @@
     transition: transform 0.3s;
 }
 
+#bot-loginicon * {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 100%;
+}
+
 #bot-loginIcon #click {
     position: absolute;
     top: 0;
