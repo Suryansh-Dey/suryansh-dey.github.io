@@ -4,13 +4,17 @@
     right: 1vw;
     cursor: pointer;
     z-index: 9999;
-    width: 5rem;
-    border-radius: 100%;
 }
 
 #bot-loginIcon:hover {
     transform: scale(1.2);
     transition: transform 0.3s;
+}
+
+#bot-loginIcon * {
+    width: 5rem;
+    height: auto;
+    border-radius: 100%;
 }
 
 #bot-loginIcon #click {
