@@ -22,30 +22,26 @@ function addBot(targetElement) {
 	document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
 	const loginIcon = document.createElement('div')
 	loginIcon.id = "bot-loginIcon"
-	loginIcon.innerHTML += '\
+	loginIcon.innerHTML = '\
             <video muted disablePictureInPicture preload="auto" id="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="jump" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Jump.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="hover" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onHover.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="click" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onClick.mp4" type="video/mp4">AI assistants</video>\
-			<img src="https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo">\
 '
 	targetElement.appendChild(loginIcon)
 	let captchaScript = document.createElement('script')
 	captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 	captchaScript.id = 'captcha'
 	targetElement.appendChild(captchaScript)
-	loginIcon.querySelector('img').onload = () => {
-		loginIcon.querySelector('video').play()
-	}
+	loginIcon.querySelector('#popup').play()
 	let startWaiting = true
-	document.querySelector('#bot-loginIcon img').addEventListener('animationend', () => {
-		loginIcon.removeChild(loginIcon.querySelector('img'))
-		const video = loginIcon.querySelector('video')
+	loginIcon.querySelector('#popup').onended = () => {
+		const video = loginIcon.querySelector('#popup')
 		video.src = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/popup.mp4"
 		video.play()
 		video.onended = () => { startWaiting = false }
-	})
+	}
 	setInterval(() => {
 		if (startWaiting) {
 			startWaiting = false
@@ -71,8 +67,6 @@ function addBot(targetElement) {
 		startWaiting = true
 		if (loginIcon.querySelector('#popup'))
 			document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('#popup'))
-		if (loginIcon.querySelector('img'))
-			document.getElementById('bot-loginIcon').removeChild(loginIcon.querySelector('img'))
 		loginIcon.querySelector('#looking').style.display = "none"
 		loginIcon.querySelector('#jump').style.display = "none"
 		loginIcon.querySelector('#hover').style.display = "block"

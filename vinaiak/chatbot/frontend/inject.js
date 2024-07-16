@@ -19,12 +19,14 @@ class AI {
     static keepAliveXhr
     constructor(organisationId) {
         AI.keepAliveXhr = new XMLHttpRequest()
-        xhr.open('POST', server + '/login', false)
+        xhr.open('POST', server + '/login', true)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.onload = () => {
+            AI.clientId = xhr.responseText
+            if (xhr.status != 200)
+                throw Error("Server refused to login")
+        }
         xhr.send(JSON.stringify({ orgId: organisationId }))
-        AI.clientId = xhr.responseText
-        if (xhr.status != 200)
-            throw Error("Server refused to login")
     }
     static setContext(context) {
         if (AI.context != '' && !arraysEqual(AI.context, context)) {
@@ -284,7 +286,7 @@ class Bot {
         Bot.iframe.style.boxShadow = "0 0 5px rgb(100,100,100)"
         Bot.iframe.style.borderRadius = "10px"
         Bot.iframe.onload = () => {
-            if(!Bot.exists) return
+            if (!Bot.exists) return
             Bot.iframe.contentDocument.getElementById('background-img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/doodle.svg"
             Bot.iframe.contentDocument.getElementById('text-input').placeholder = placeholder
             Bot.iframe.contentDocument.querySelector('#heading .title').innerHTML = title
