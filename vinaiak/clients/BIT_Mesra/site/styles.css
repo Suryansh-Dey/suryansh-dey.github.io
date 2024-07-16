@@ -4,47 +4,20 @@
     right: 1vw;
     cursor: pointer;
     z-index: 9999;
+    width: 5rem;
+    border-radius: 100%;
 }
 
 #bot-loginIcon:hover {
     transform: scale(1.2);
     transition: transform 0.3s;
 }
-#bot-loginIcon *{
-    width: 5rem;
-    border-radius: 100px;
-}
-#bot-loginIcon #click{
+
+#bot-loginIcon #click {
     position: absolute;
     top: 0;
-    width: 5rem;
-    border-radius: 100px;
-}
-#bot-loginIcon img{
-    position: absolute;
-    width: 2rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 100px;
-    animation: enlarge 4s ease;
 }
 
-@keyframes enlarge {
-    0%{
-        width: 0;
-        height: auto;
-    }
-    65% {
-        width: 0;
-        height: auto;
-    }
-    100%{
-        width: 100%;
-        height: auto;
-    }
-}
-
-.grecaptcha-badge{
+.grecaptcha-badge {
     display: none !important;
 }

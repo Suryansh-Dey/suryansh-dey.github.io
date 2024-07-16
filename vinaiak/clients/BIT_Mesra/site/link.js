@@ -19,7 +19,12 @@ function addBot(targetElement) {
 	targetElement = targetElement || document.body
 	const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
-	document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
+	{
+		const styles = document.createElement('link')
+		styles.rel = "stylesheet"
+		styles.href = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css"
+		document.head.appendChild(styles)
+	}
 	const loginIcon = document.createElement('div')
 	loginIcon.id = "bot-loginIcon"
 	loginIcon.innerHTML = '\

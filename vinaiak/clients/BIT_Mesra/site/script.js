@@ -8,7 +8,12 @@ let captchaScript = document.createElement('script')
 captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 captchaScript.id = 'captcha'
 document.body.appendChild(captchaScript)
-document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
+{
+	const styles = document.createElement('link')
+	styles.rel = "stylesheet"
+	styles.href = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css"
+	document.head.appendChild(styles)
+}
 function addBot(targetElement) {
 	targetElement = targetElement || document.body
 	const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
@@ -28,7 +33,7 @@ function addBot(targetElement) {
 	captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 	captchaScript.id = 'captcha'
 	targetElement.appendChild(captchaScript)
-		loginIcon.querySelector('#popup').play()
+	loginIcon.querySelector('#popup').play()
 	let startWaiting = true
 	loginIcon.querySelector('#popup').onended = () => {
 		const video = loginIcon.querySelector('#popup')
