@@ -19,6 +19,7 @@ class AI {
     static keepAliveXhr
     constructor(organisationId) {
         AI.keepAliveXhr = new XMLHttpRequest()
+        AI.keepAliveXhr.onload = null
         xhr.open('POST', server + '/login', true)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
         xhr.onload = () => {
@@ -32,6 +33,7 @@ class AI {
         if (AI.context != '' && !arraysEqual(AI.context, context)) {
             xhr.open('POST', server + '/forget', true)
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+            xhr.onload = null
             xhr.send(JSON.stringify({ id: AI.clientId }))
         }
         AI.context = context
@@ -52,6 +54,7 @@ class AI {
     static remember(query, reply) {
         xhr.open('POST', `${server}/remember`, true)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.onload = null
         xhr.send(JSON.stringify({ query: query, reply: reply, id: AI.clientId }))
     }
     static keepAlive() {
@@ -63,6 +66,7 @@ class AI {
         xhr.open('POST', server + '/quit', true)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
         xhr.send(JSON.stringify({ id: AI.clientId }))
+        xhr.onload = null
     }
 }
 class Bot {
