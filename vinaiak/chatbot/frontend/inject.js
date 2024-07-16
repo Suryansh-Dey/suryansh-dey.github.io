@@ -255,7 +255,7 @@ class Bot {
         }
         return optionContainer
     }
-    constructor(organisationId, placeholder, title, avtarPath, quickAccesses, onload) {
+    constructor(organisationId, placeholder, title, avtarPath, quickAccesses, onload, targetElement) {
         if (Bot.exists)
             throw new Error("Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists")
         new AI(organisationId)
@@ -307,7 +307,7 @@ class Bot {
             window.addEventListener('resize', Bot.resizeIframe)
             onload(Bot.iframe.contentDocument)
         }
-        document.body.appendChild(Bot.iframe)
+        (targetElement || document.body).appendChild(Bot.iframe)
     }
     static destructor() {
         if (!Bot.exists)

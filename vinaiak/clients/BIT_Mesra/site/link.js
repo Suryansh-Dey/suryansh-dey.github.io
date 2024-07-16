@@ -1,29 +1,30 @@
 let AI, Bot
+let quickAccesses, mcq
 const server = "https://vinaiak.ddns.net"
-const xhr = new XMLHttpRequest();
-(() => {
-	let quickAccesses, mcq
-	import('https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/mcqs.js').then((module) => {
-		quickAccesses = module.quickAccesses
-		mcq = module.mcq
+const xhr = new XMLHttpRequest()
+fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(response => {
+	response.text().then(data => {
+		let Bot1, AI1
+		data = data + ';Bot1 = Bot;AI1 = AI'
+		eval(data)
+		AI = AI1
+		Bot = Bot1
 	})
+})
+import('https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/mcqs.js').then((module) => {
+	quickAccesses = module.quickAccesses
+	mcq = module.mcq
+})
+function addBot(targetElement) {
+	targetElement = targetElement || document.body
 	const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
-	fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(response => {
-		response.text().then(data => {
-			let Bot1, AI1
-			data = data + ';Bot1 = Bot;AI1 = AI'
-			eval(data)
-			AI = AI1
-			Bot = Bot1
-		})
-	})
 	let captchaScript = document.createElement('script')
 	captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 	captchaScript.id = 'captcha'
-	document.body.appendChild(captchaScript)
+	targetElement.appendChild(captchaScript)
 	document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
-	document.body.innerHTML += '\
+	targetElement.innerHTML += '\
         <div id="bot-loginIcon" onclick="initBot()">\
             <video muted disablePictureInPicture id="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture id="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
@@ -80,7 +81,7 @@ const xhr = new XMLHttpRequest();
 	document.getElementById('bot-loginIcon').addEventListener('mouseleave', () => {
 		startWaiting = false
 	})
-	
+
 	window.initBot = () => {
 		startWaiting = true
 		const onClick = loginIcon.querySelector('#click')
@@ -204,8 +205,9 @@ const xhr = new XMLHttpRequest();
 				frame.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
 				document.addEventListener('scrollend', AI.keepAlive)
 				Bot.iframe.style.zIndex = 10000
-			}
+			},
+			targetElement
 		)
 		console.log("Logged in to chat bot")
 	}
-})()
+}
