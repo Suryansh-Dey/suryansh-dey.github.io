@@ -24,17 +24,17 @@ function addBot(targetElement) {
 	captchaScript.id = 'captcha'
 	targetElement.appendChild(captchaScript)
 	document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
-	targetElement.innerHTML += '\
-        <div id="bot-loginIcon" onclick="initBot()">\
+	const loginIcon = document.createElement('div')
+	loginIcon.id = "bot-loginIcon"
+	loginIcon.innerHTML += '\
             <video muted disablePictureInPicture id="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture id="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture id="jump" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Jump.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture id="hover" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onHover.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture id="click" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onClick.mp4" type="video/mp4">AI assistants</video>\
 			<img src="https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo">\
-        </div>\
 '
-	const loginIcon = document.getElementById("bot-loginIcon")
+	targetElement.appendChild(loginIcon)
 	loginIcon.querySelector('img').onload = () => {
 		loginIcon.querySelector('video').play()
 	}
@@ -82,7 +82,7 @@ function addBot(targetElement) {
 		startWaiting = false
 	})
 
-	window.initBot = () => {
+	loginIcon.onclick = () => {
 		startWaiting = true
 		const onClick = loginIcon.querySelector('#click')
 		onClick.style.display = 'block'
