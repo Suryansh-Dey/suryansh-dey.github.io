@@ -187,7 +187,10 @@ function addBot(targetElement) {
 								xhr.onload = null
 								xhr.send(JSON.stringify({ id: AI.clientId, data: 'name ' + name }))
 							}
-							xhr.send(JSON.stringify({ id: AI.clientId, token: token }))
+							xhr.send(JSON.stringify({
+								id: AI.clientId, token: token,
+								personalData: { name: name, email: frame.getElementById('email').value }
+							}))
 						})
 						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
 						Bot.reply(`Hi ${name.split(' ')[0]}! Which program are you intrested in?`)
