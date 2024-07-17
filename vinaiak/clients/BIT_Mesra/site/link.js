@@ -178,6 +178,7 @@ function addBot(targetElement) {
 					frame.getElementById('submit').addEventListener('click', (event) => {
 						event.preventDefault()
 						const name = frame.getElementById('username').value
+						const email = frame.getElementById('email').value
 						const xhr = new XMLHttpRequest()
 						grecaptcha.enterprise.ready(async () => {
 							const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
@@ -195,7 +196,7 @@ function addBot(targetElement) {
 							}
 							xhr.send(JSON.stringify({
 								id: AI.clientId, token: token,
-								personalData: { name: name, email: frame.getElementById('email').value }
+								personalData: { name: name, email: email}
 							}))
 						})
 						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
