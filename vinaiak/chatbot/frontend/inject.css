@@ -56,11 +56,13 @@ a {
 #send {
   position: fixed;
   bottom: 2dvh;
-  right: -0.7dvw;
+  right: 0.5dvw;
   background-color: transparent;
   border: none;
   border-left: 1px solid rgb(150, 150, 150);
   animation: slideUp 0.5s ease-out;
+  padding: 0;
+  padding-left: 1dvw;
 }
 
 #send img {
