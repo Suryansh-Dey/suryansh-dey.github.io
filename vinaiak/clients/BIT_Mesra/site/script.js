@@ -2,23 +2,22 @@ import { quickAccesses, mcq } from './mcqs.js';
 const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
 let injectjs = document.createElement('script')
-injectjs.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js"
+injectjs.src = "/vinaiak/chatbot/frontend/inject.js"
 document.body.appendChild(injectjs)
 let captchaScript = document.createElement('script')
 captchaScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey
 captchaScript.id = 'captcha'
 document.body.appendChild(captchaScript)
-{
-	const styles = document.createElement('link')
-	styles.rel = "stylesheet"
-	styles.href = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css"
-	document.head.appendChild(styles)
-}
 function addBot(targetElement) {
 	targetElement = targetElement || document.body
 	const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
-	document.head.innerHTML += '<link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css">'
+	{
+		const styles = document.createElement('link')
+		styles.rel = "stylesheet"
+		styles.href = "/vinaiak/clients/BIT_Mesra/site/styles.css"
+		document.head.appendChild(styles)
+	}
 	const loginIcon = document.createElement('div')
 	loginIcon.id = "bot-loginIcon"
 	loginIcon.innerHTML = '\

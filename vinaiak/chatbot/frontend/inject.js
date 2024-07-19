@@ -359,12 +359,7 @@ class Bot {
         Bot.iframe.contentDocument.getElementById('chat-area').replaceChild(Bot.createOptions(options, 'mcq', 'option'), Bot.iframe.contentDocument.getElementById('mcq'))
     }
     static removeMcq() {
-        Bot.iframe.contentDocument.querySelector('#mcq .option').addEventListener('animationend', () => {
-            Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('mcq'))
-        })
-        let options = Bot.iframe.contentDocument.querySelectorAll('#mcq .option')
-        for (let option of options)
-            option.style.animation = "smallerFont 0.3s ease-in"
+        Bot.iframe.contentDocument.getElementById('chat-area').removeChild(Bot.iframe.contentDocument.getElementById('mcq'))
     }
     static customiseCss(css) {
         Bot.iframe.contentDocument.head.appendChild(css)
