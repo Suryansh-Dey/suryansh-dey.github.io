@@ -671,19 +671,19 @@ export const mcq = {
                 "M.Pharma": {
                     "callBack": () => {
                         Bot.createBox("M.Pharma", 'user')
-                        Bot.createBox("Error: not trained on this section yet", "bot")
+                        Bot.createBox("Sorry, I am not trained on this section yet", "bot")
                     }
                 },
                 "M.Tech/M.Urban Planning/MSc": {
                     "callBack": () => {
                         Bot.createBox("M.Tech/M.Urban Planning/MSc", 'user')
-                        Bot.createBox("Error: not trained on this section yet", "bot")
+                        Bot.createBox("Sorry, I am not trained on this section yet", "bot")
                     }
                 },
                 "MCA": {
                     "callBack": () => {
                         Bot.createBox("MCA", 'user')
-                        Bot.createBox("Error: not trained on this section yet", "bot")
+                        Bot.createBox("Sorry, I am not trained on this section yet", "bot")
                     }
                 }
             })

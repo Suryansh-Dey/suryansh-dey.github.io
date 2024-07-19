@@ -55,7 +55,7 @@ a {
 
 #send {
   position: fixed;
-  bottom: 2dvh;
+  bottom: 1dvh;
   right: 0.5dvw;
   background-color: transparent;
   border: none;
