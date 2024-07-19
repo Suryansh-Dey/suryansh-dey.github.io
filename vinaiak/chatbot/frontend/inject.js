@@ -89,14 +89,14 @@ class Bot {
     static generateFrameAnimation() {
         let width = (window.innerHeight > window.innerWidth ? window.innerWidth * Bot.mobileWidth / 100 : window.innerWidth * Bot.landscapeWidth / 100)
         return `
-        @keyframes frame-opening {
-            0%{
-                right: -${width}px;
-            }
-            100%{
-              right: 0;
-            }
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+          }    
+          100% {
+            opacity: 1;
           }
+        }
         @keyframes frame-closing {
             100%{
               right: -${width}px;
@@ -323,7 +323,7 @@ class Bot {
     }
     //public
     static openFrame() {
-        Bot.iframe.style.animation = "frame-opening 0.5s ease-out"
+        Bot.iframe.style.animation = "fadeIn 0.5s ease-out"
         Bot.iframe.style.display = 'block'
         Bot.iframe.contentDocument.getElementById('text-input').focus()
     }
