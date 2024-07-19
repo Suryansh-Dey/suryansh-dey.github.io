@@ -73,6 +73,12 @@ class Bot {
     static landscapeWidth = 30
     static mobileWidth = 100
     static height = 98
+    static audios = {
+        openFrame: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Open.wav'),
+        reply: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Bot_Reply.wv'),
+        ask: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/User_Send.wv'),
+        closeFrame: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/window_close.wav')
+    }
     static exists = false
     static replying = false
     static iframe
@@ -85,6 +91,7 @@ class Bot {
     static closeFrame() {
         Bot.iframe.addEventListener('animationend', Bot.hideFrame)
         Bot.iframe.style.animation = "frame-closing 0.3s ease-out"
+        Bot.audios.closeFrame.play()
     }
     static generateFrameAnimation() {
         let width = (window.innerHeight > window.innerWidth ? window.innerWidth * Bot.mobileWidth / 100 : window.innerWidth * Bot.landscapeWidth / 100)
@@ -195,8 +202,10 @@ class Bot {
         const chats = Bot.iframe.contentDocument.getElementById('chat-area').children
         if (type == 'bot' && (chats.length <= 1 || (chats[chats.length - 1].className == 'box user' ||
             (chats[chats.length - 1].className == 'box bot waiting' && chats[chats.length - 2].className == 'box user'))
-        ))
+        )) {
             Bot.createAvtar()
+            Bot.audios.reply.play()
+        }
         let box = document.createElement('div')
         box.className = 'box ' + type
         box.innerHTML = (type == 'bot' && format == undefined) || format ? Bot.wrapLinks(text).replace(/^- /gm, '<div style="font-weight:bold;font-size:larger; display:inline">• </div>').
@@ -212,9 +221,8 @@ class Bot {
         if (callBack != undefined)
             callBack()
         if (Bot.queue.length) {
-            const { text, type, format, callBack } = Bot.queue[0]
             Bot.queue.shift()
-            this.createBox(text, type, format, callBack)
+            this.createBox(...Bot.queue[0])
         }
     }
     static createOptions(options, containerClassId, optionClassName) {
@@ -326,6 +334,7 @@ class Bot {
         Bot.iframe.style.animation = "fadeIn 0.5s ease-out"
         Bot.iframe.style.display = 'block'
         Bot.iframe.contentDocument.getElementById('text-input').focus()
+        Bot.audios.openFrame.play()
     }
     static updateQuickAccess(options) {
         Bot.iframe.contentDocument.querySelector('main').replaceChild(Bot.createOptions(options, 'quick-access', 'option'), Bot.iframe.contentDocument.getElementById('quick-access'))
@@ -347,6 +356,7 @@ class Bot {
             Bot.iframe.contentDocument.getElementById('text-input').value = ''
             Bot.createBox(inputText, 'user')
         }
+        Bot.audios.ask.play()
         Bot.startWaiting()
         let replyText = text || await AI.answer(inputText)
         Bot.stopWaiting()

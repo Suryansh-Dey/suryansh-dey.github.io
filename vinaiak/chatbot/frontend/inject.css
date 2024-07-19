@@ -68,6 +68,10 @@ a {
   height: auto;
 }
 
+#send img:hover {
+  transform: scale(0.8);
+}
+
 #send:hover {
   background-color: white;
   transform: scale(1.1);
@@ -237,10 +241,12 @@ a {
   box-shadow: 0 0 2px 2px #f9a23f;
   border-radius: 10px;
   border: none;
+  transition: background-color 0.3s;
 }
 
 .option:hover {
   background-color: #f9a23f;
+  transition: background-color 0.5s;
 }
 
 @keyframes fadeIn {
