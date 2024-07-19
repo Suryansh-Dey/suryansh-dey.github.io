@@ -202,7 +202,7 @@ function addBot(targetElement) {
 							}))
 						})
 						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
-						Bot.reply(`Hi ${name.split(' ')[0]}! Which program are you intrested in?`)
+						Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! Which program are you intrested in?`)
 						Bot.createMcq(mcq)
 					})
 				}, 2000)

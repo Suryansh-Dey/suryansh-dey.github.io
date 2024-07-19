@@ -32,7 +32,6 @@ a {
   resize: vertical;
   border: none;
   border-top: 1px solid rgb(150, 150, 150);
-  animation: slideUp 0.5s ease-out;
   padding-top: 0.5dvh;
   padding-bottom: 2dvh;
   padding-right: 8dvw;
@@ -55,12 +54,11 @@ a {
 
 #send {
   position: fixed;
-  bottom: 1.8dvh;
+  bottom: 2dvh;
   right: 0.5dvw;
   background-color: transparent;
   border: none;
   border-left: 1px solid rgb(150, 150, 150);
-  animation: slideUp 0.5s ease-out;
   padding: 0;
   padding-left: 1dvw;
 }
@@ -222,7 +220,7 @@ a {
   left: 0;
   display: flex;
   flex-wrap: wrap;
-  animation: slideRight 0.5s ease-out;
+  animation: fadeIn 0.5s ease-out;
 }
 
 #mcq {
@@ -230,14 +228,14 @@ a {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 2em;
-  animation: slideRight 0.5s ease-out;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .option {
   font-size: 1em;
   margin: 1dvh;
   background-color: white;
-  box-shadow: 0 0 1dvh #f9a23f;
+  box-shadow: 0 0 2px 2px #f9a23f;
   border-radius: 10px;
   border: none;
   animation: comeOut 0.4s ease-out;
@@ -247,20 +245,13 @@ a {
   background-color: #f9a23f;
 }
 
-@keyframes slideUp {
+@keyframes fadeIn {
   0% {
-    bottom: -10dvh;
-    color: rgba(0, 0, 0, 0);
-  }
-}
-
-@keyframes slideRight {
-  0% {
-    left: -20dvh;
+    opacity: 0;
   }
 
   100% {
-    left: 0;
+    opacity: 1;
   }
 }
 
