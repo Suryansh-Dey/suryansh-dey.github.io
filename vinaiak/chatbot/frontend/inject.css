@@ -177,7 +177,6 @@ a {
   margin-left: 3dvw;
   margin-top: 0.5dvh;
   border-top-left-radius: 0;
-  animation: largerFont 0.3s ease-out;
 }
 
 .box.bot.waiting {
@@ -238,7 +237,6 @@ a {
   box-shadow: 0 0 2px 2px #f9a23f;
   border-radius: 10px;
   border: none;
-  animation: comeOut 0.4s ease-out;
 }
 
 .option:hover {
@@ -252,24 +250,6 @@ a {
 
   100% {
     opacity: 1;
-  }
-}
-
-@keyframes comeOut {
-  0% {
-    color: #f9a23f00;
-  }
-}
-
-@keyframes smallerFont {
-  100% {
-    font-size: 0;
-  }
-}
-
-@keyframes largerFont {
-  0% {
-    font-size: 0;
   }
 }
 
