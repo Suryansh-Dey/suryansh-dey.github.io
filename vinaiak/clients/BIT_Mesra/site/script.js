@@ -138,7 +138,6 @@ function addBot(targetElement) {
 			"https://yt3.ggpht.com/a/AATXAJwOzthsWc__jFGypZvbWTdrVKBNCsMIv-Y6ofuk=s900-c-k-c0xffffffff-no-rj-mo",
 			quickAccesses,
 			(frame) => {
-				Bot.hideFrame()
 				window.addEventListener('beforeunload', AI.quit)
 				frame.getElementById('quick-access').style.display = 'none'
 				frame.getElementById('text-input').style.display = 'none'
@@ -204,7 +203,8 @@ function addBot(targetElement) {
 				document.addEventListener('scrollend', AI.keepAlive)
 				Bot.iframe.style.zIndex = 10000
 			},
-			targetElement
+			targetElement,
+			false
 		)
 		console.log("Logged in to chat bot")
 	}

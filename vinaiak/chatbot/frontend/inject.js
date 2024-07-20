@@ -269,7 +269,7 @@ class Bot {
         }
         return optionContainer
     }
-    constructor(organisationId, placeholder, title, avtarPath, quickAccesses, onload, targetElement) {
+    constructor(organisationId, placeholder, title, avtarPath, quickAccesses, onload, targetElement, openOnLoad) {
         if (Bot.exists)
             throw new Error("Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists")
         new AI(organisationId)
@@ -314,10 +314,10 @@ class Bot {
                 }
             })
             Bot.iframe.contentDocument.querySelector('#heading .avtar').src = avtarPath
-            Bot.iframe.contentDocument.querySelector('main').appendChild(Bot.createOptions(quickAccesses, 'quick-access', 'option'))
+            Bot.iframe.contentDocument.querySelector('main').appendChild(Bot.createOptions(quickAccesses || {}, 'quick-access', 'option'))
             Bot.createWaiting()
             Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
-            Bot.openFrame()
+            if (openOnLoad === undefined || openOnLoad) Bot.openFrame()
             window.addEventListener('resize', Bot.resizeIframe)
             onload(Bot.iframe.contentDocument)
         }
