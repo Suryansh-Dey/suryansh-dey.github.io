@@ -1,4 +1,4 @@
-const server = "https://vinaiak.ddns.net"
+const server = "http://localhost:3000"
 const xhr = new XMLHttpRequest()
 
 function arraysEqual(arr1, arr2) {
@@ -75,8 +75,8 @@ class Bot {
     static height = 98
     static audios = {
         openFrame: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Open.wav'),
-        reply: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Bot_Reply.wv'),
-        ask: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/User_Send.wv'),
+        reply: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Bot_Reply.wav'),
+        ask: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/User_Send.wav'),
         closeFrame: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/window_close.wav')
     }
     static exists = false
