@@ -291,7 +291,8 @@ class Bot {
         Bot.iframe.style.position = "fixed"
         Bot.iframe.style.bottom = '1dvh'
         Bot.iframe.style.right = '1px'
-        Bot.iframe.style.width = 0
+        Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
+        Bot.iframe.style.display = 'none'
         Bot.iframe.style.height = Bot.height + 'dvh'
         Bot.iframe.style.overflow = "hidden"
         Bot.iframe.style.border = "none"
@@ -316,7 +317,6 @@ class Bot {
             Bot.iframe.contentDocument.querySelector('#heading .avtar').src = avtarPath
             Bot.iframe.contentDocument.querySelector('main').appendChild(Bot.createOptions(quickAccesses || {}, 'quick-access', 'option'))
             Bot.createWaiting()
-            Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
             if (openOnLoad === undefined || openOnLoad) Bot.openFrame()
             window.addEventListener('resize', Bot.resizeIframe)
             onload(Bot.iframe.contentDocument)
