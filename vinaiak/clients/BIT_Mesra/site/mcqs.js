@@ -49,7 +49,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('How to apply', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "how to apply"]), 'bot', true, remember)
+                                                Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "application procedure"]), 'bot', true, remember)
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -409,7 +409,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('How to apply', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "how to apply"]), 'bot', true, remember)
+                                    Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "application procedure"]), 'bot', true, remember)
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -509,6 +509,7 @@ export const mcq = {
                                     AI.setContext(['bhmct', 'admission'])
                                     Bot.createBox(getData(['bhmct', 'admission', "reservation criteria"]), 'bot', true, remember)
                                     Bot.removeMcq()
+                                    Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
                             }
                         })

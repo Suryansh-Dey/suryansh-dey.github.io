@@ -139,9 +139,9 @@ a {
 
 #chat-area {
   position: absolute;
-  top: 16dvh;
+  top: 15dvh;
   left: 1dvw;
-  height: 74dvh;
+  height: 76.5dvh;
   width: 98dvw;
   overflow-y: scroll;
   display: flex;
@@ -181,6 +181,7 @@ a {
   margin-left: 3dvw;
   margin-top: 0.5dvh;
   border-top-left-radius: 0;
+  animation: slideRight 0.5s ease-out;
 }
 
 .box.bot.waiting {
@@ -256,6 +257,17 @@ a {
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    left: -50%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
   }
 }
 
