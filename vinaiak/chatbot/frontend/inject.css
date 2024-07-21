@@ -12,6 +12,10 @@ a {
   color: blueviolet;
 }
 
+p {
+  margin: 0;
+}
+
 #background-img {
   position: fixed;
   bottom: 0;
@@ -48,6 +52,7 @@ a {
   outline: none;
   border-top: 1px solid rgb(90, 90, 90);
 }
+
 #text-input::-webkit-scrollbar {
   display: none;
 }
@@ -265,6 +270,7 @@ a {
     opacity: 0;
     left: -50%;
   }
+
   100% {
     opacity: 1;
     left: 0;

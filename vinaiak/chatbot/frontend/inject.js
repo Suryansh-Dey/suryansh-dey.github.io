@@ -1,16 +1,17 @@
 const server = "https://vinaiak.ddns.net"
 const xhr = new XMLHttpRequest()
+xhr.open('GET', "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", false)
+xhr.send()
+eval(xhr.responseText)
 
 function arraysEqual(arr1, arr2) {
-    if (arr1.length !== arr2.length) {
-        return false;
-    }
+    if (arr1.length !== arr2.length)
+        return false
     for (let i = 0; i < arr1.length; i++) {
-        if (arr1[i] !== arr2[i]) {
-            return false;
-        }
+        if (arr1[i] !== arr2[i])
+            return false
     }
-    return true;
+    return true
 }
 class AI {
     static replyNo = 0
@@ -180,7 +181,7 @@ class Bot {
                 continue
             }
             else matchedCount = 0
-            if (matchedCount == trigger.length) {
+            if (matchedCount == trigger.length && text[i - 1] != '(') {
                 let start = i - trigger.length + 1 + (text[i - 3] != 's')
                 let fileExtension
                 let got1stBracket = 0, got2ndBracket = 0
@@ -218,11 +219,7 @@ class Bot {
         }
         let box = document.createElement('div')
         box.className = 'box ' + type
-        box.innerHTML = (type == 'bot' && format == undefined) || format ? Bot.wrapLinks(text).replace(/^- /gm, '<div style="font-weight:bold;font-size:larger; display:inline">• </div>').
-            replace(/^\d+\.\s/gm, (match) => {
-                return `<div style="font-weight:bold;display:inline">${match}</div>`
-            }).
-            replace(/\n/g, "<br>") : text
+        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(this.wrapLinks(text)) : text
         const chatArea = Bot.iframe.contentDocument.getElementById('chat-area')
         chatArea.appendChild(box)
         chatArea.scrollTo({
