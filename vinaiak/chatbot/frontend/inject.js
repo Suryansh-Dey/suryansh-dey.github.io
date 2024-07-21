@@ -222,8 +222,9 @@ class Bot {
         if (callBack != undefined)
             callBack()
         if (Bot.queue.length) {
+            const { text, type, format, callBack } = Bot.queue[0]
             Bot.queue.shift()
-            this.createBox(...Bot.queue[0])
+            this.createBox(text, type, format, callBack)
         }
     }
     static createOptions(options, containerClassId, optionClassName) {

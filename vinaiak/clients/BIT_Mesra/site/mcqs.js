@@ -1,11 +1,15 @@
 const xhr = new XMLHttpRequest()
-function getData(url) {
-    xhr.open('POST', server + '/data/fetch', false)
+function getData(context) {
+    xhr.open('POST', server + '/data/fetch', true)
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-    xhr.send(JSON.stringify({ id: AI.clientId, context: url }))
-    if (xhr.status == 200)
-        return xhr.responseText
-    else return "An error occurred while fetching the data. Report to the administrator and try later!"
+    xhr.send(JSON.stringify({ id: AI.clientId, context: context }))
+    return new Promise((resolve, reject) => {
+        xhr.onload = () => {
+            if (xhr.status == 200)
+                resolve(xhr.responseText)
+            else resolve("An error occurred while fetching the data. Report to the administrator and try later!")
+        }
+    })
 }
 function initChatting() {
     Bot.iframe.contentDocument.getElementById('text-input').style.display = 'block'
@@ -50,7 +54,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('How to apply', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "application procedure"]), 'bot', true, remember)
+                                                getData(['b.tech b.arch and integrated msc', 'admission', "application procedure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -58,7 +63,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Eligibility criteria', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                                getData(['b.tech b.arch and integrated msc', 'admission', "eligibility criteria"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -66,7 +72,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Fee structure', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "fee structure"]), 'bot', true, remember)
+                                                getData(['b.tech b.arch and integrated msc', 'admission', "fee structure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -74,7 +81,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Documents required', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "documents required"]), 'bot', true, remember)
+                                                getData(['b.tech b.arch and integrated msc', 'admission', "documents required"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         }
@@ -105,7 +113,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('How to apply', 'user')
                                                 AI.setContext(['bhmct', 'admission'])
-                                                Bot.createBox(getData(['bhmct', 'admission', "how to apply"]), 'bot', true, remember)
+                                                getData(['bhmct', 'admission', "how to apply"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -113,7 +122,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Admission process', 'user')
                                                 AI.setContext(['bhmct', 'admission'])
-                                                Bot.createBox(getData(['bhmct', 'admission', "admission procedure"]), 'bot', true, remember)
+                                                getData(['bhmct', 'admission', "admission procedure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -121,7 +131,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Eligibility criteria', 'user')
                                                 AI.setContext(['bhmct', 'admission'])
-                                                Bot.createBox(getData(['bhmct', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                                getData(['bhmct', 'admission', "eligibility criteria"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -129,7 +140,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Fee structure', 'user')
                                                 AI.setContext(['bhmct', 'admission'])
-                                                Bot.createBox(getData(['bhmct', 'admission', "fee structure"]), 'bot', true, remember)
+                                                getData(['bhmct', 'admission', "fee structure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -137,7 +149,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Reservation criteria', 'user')
                                                 AI.setContext(['bhmct', 'admission'])
-                                                Bot.createBox(getData(['bhmct', 'admission', "reservation criteria"]), 'bot', true, remember)
+                                                getData(['bhmct', 'admission', "reservation criteria"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         }
@@ -180,7 +193,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('How to apply', 'user')
                                                 AI.setContext(['MBA', 'admission'])
-                                                Bot.createBox(getData(['MBA', 'admission', "how to apply"]), 'bot', true, remember)
+                                                getData(['MBA', 'admission', "how to apply"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -188,7 +202,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Eligibility criteria', 'user')
                                                 AI.setContext(['MBA', 'admission'])
-                                                Bot.createBox(getData(['MBA', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                                getData(['MBA', 'admission', "eligibility criteria"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -196,7 +211,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Fee structure', 'user')
                                                 AI.setContext(['MBA', 'admission'])
-                                                Bot.createBox(getData(['MBA', 'admission', "fee structure"]), 'bot', true, remember)
+                                                getData(['MBA', 'admission', "fee structure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -204,7 +220,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Documents for physical verification', 'user')
                                                 AI.setContext(['MBA', 'admission'])
-                                                Bot.createBox(getData(['MBA', 'admission', "documents for physical verification"]), 'bot', true, remember)
+                                                getData(['MBA', 'admission', "documents for physical verification"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -212,7 +229,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Documents for interview', 'user')
                                                 AI.setContext(['MBA', 'admission'])
-                                                Bot.createBox(getData(['MBA', 'admission', "documents for interview"]), 'bot', true, remember)
+                                                getData(['MBA', 'admission', "documents for interview"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         }
@@ -243,7 +261,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('How to apply', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox(getData(['BSc and MSc', 'admission', "how to apply"]), 'bot', true, remember)
+                                                getData(['BSc and MSc', 'admission', "how to apply"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -251,7 +270,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Selection procedure', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox(getData(['BSc and MSc', 'admission', "admission and selection procedure"]), 'bot', true, remember)
+                                                getData(['BSc and MSc', 'admission', "admission and selection procedure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -259,7 +279,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Eligibility criteria', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox(getData(['BSc and MSc', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                                getData(['BSc and MSc', 'admission', "eligibility criteria"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -267,7 +288,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Fee structure', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox(getData(['BSc and MSc', 'admission', "fee structure"]), 'bot', true, remember)
+                                                getData(['BSc and MSc', 'admission', "fee structure"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -275,7 +297,8 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Documents for physical verification', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox(getData(['BSc and MSc', 'admission', "documents required"]), 'bot', true, remember)
+                                                getData(['BSc and MSc', 'admission', "documents required"])
+                                                    .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
                                         }
@@ -327,7 +350,8 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('How to apply', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "how to apply"]), 'bot', true, remember)
+                                    getData(['phd', 'admission', "how to apply"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -335,7 +359,8 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Admission process', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "admission procedure"]), 'bot', true, remember)
+                                    getData(['phd', 'admission', "admission procedure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -343,7 +368,8 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Eligibility criteria', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                    getData(['phd', 'admission', "eligibility criteria"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -351,7 +377,8 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Exam for admission', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "exam for admission"]), 'bot', true, remember)
+                                    getData(['phd', 'admission', "exam for admission"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -359,7 +386,8 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Documents for physical verification', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "documents required"]), 'bot', true, remember)
+                                    getData(['phd', 'admission', "documents required"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -367,7 +395,8 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Fee structure', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox(getData(['phd', 'admission', "fee structure"]), 'bot', true, remember)
+                                    getData(['phd', 'admission', "fee structure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.resetQuickAccess()
                                 }
                             }
@@ -410,7 +439,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('How to apply', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "application procedure"]), 'bot', true, remember)
+                                    getData(['b.tech b.arch and integrated msc', 'admission', "application procedure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -419,7 +449,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Eligibility criteria', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                    getData(['b.tech b.arch and integrated msc', 'admission', "eligibility criteria"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -428,7 +459,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Fee structure', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "fee structure"]), 'bot', true, remember)
+                                    getData(['b.tech b.arch and integrated msc', 'admission', "fee structure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -437,7 +469,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Documents required', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox(getData(['b.tech b.arch and integrated msc', 'admission', "documents required"]), 'bot', true, remember)
+                                    getData(['b.tech b.arch and integrated msc', 'admission', "documents required"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -472,7 +505,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('How to apply', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox(getData(['bhmct', 'admission', "how to apply"]), 'bot', true, remember)
+                                    getData(['bhmct', 'admission', "how to apply"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -481,7 +515,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Admission process', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox(getData(['bhmct', 'admission', "admission procedure"]), 'bot', true, remember)
+                                    getData(['bhmct', 'admission', "admission procedure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -490,7 +525,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Eligibility criteria', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox(getData(['bhmct', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                    getData(['bhmct', 'admission', "eligibility criteria"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -499,7 +535,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Fee structure', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox(getData(['bhmct', 'admission', "fee structure"]), 'bot', true, remember)
+                                    getData(['bhmct', 'admission', "fee structure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -508,7 +545,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Reservation criteria', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox(getData(['bhmct', 'admission', "reservation criteria"]), 'bot', true, remember)
+                                    getData(['bhmct', 'admission', "reservation criteria"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -555,7 +593,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('How to apply', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox(getData(['MBA', 'admission', "how to apply"]), 'bot', true, remember)
+                                    getData(['MBA', 'admission', "how to apply"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -564,7 +603,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Eligibility criteria', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox(getData(['MBA', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                    getData(['MBA', 'admission', "eligibility criteria"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -573,7 +613,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Fee structure', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox(getData(['MBA', 'admission', "fee structure"]), 'bot', true, remember)
+                                    getData(['MBA', 'admission', "fee structure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -582,7 +623,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Documents for physical verification', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox(getData(['MBA', 'admission', "documents for physical verification"]), 'bot', true, remember)
+                                    getData(['MBA', 'admission', "documents for physical verification"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -591,7 +633,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Documents for interview', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox(getData(['MBA', 'admission', "documents for interview"]), 'bot', true, remember)
+                                    getData(['MBA', 'admission', "documents for interview"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -626,7 +669,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('How to apply', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox(getData(['BSc and MSc', 'admission', "how to apply"]), 'bot', true, remember)
+                                    getData(['BSc and MSc', 'admission', "how to apply"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -635,7 +679,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Selection procedure', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox(getData(['BSc and MSc', 'admission', "admission and selection procedure"]), 'bot', true, remember)
+                                    getData(['BSc and MSc', 'admission', "admission and selection procedure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -644,7 +689,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Eligibility criteria', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox(getData(['BSc and MSc', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                                    getData(['BSc and MSc', 'admission', "eligibility criteria"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -653,7 +699,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Fee structure', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox(getData(['BSc and MSc', 'admission', "fee structure"]), 'bot', true, remember)
+                                    getData(['BSc and MSc', 'admission', "fee structure"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -662,7 +709,8 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Documents for physical verification', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox(getData(['BSc and MSc', 'admission', "documents required"]), 'bot', true, remember)
+                                    getData(['BSc and MSc', 'admission', "documents required"])
+                                        .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -718,7 +766,8 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('How to apply', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "how to apply"]), 'bot', true, remember)
+                        getData(['phd', 'admission', "how to apply"])
+                            .then(data => { Bot.createBox(data, 'bot', true, remember) })
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
@@ -727,7 +776,8 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Admission process', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "admission procedure"]), 'bot', true, remember)
+                        getData(['phd', 'admission', "admission procedure"])
+                            .then(data => { Bot.createBox(data, 'bot', true, remember) })
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
@@ -736,7 +786,8 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Eligibility criteria', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "eligibility criteria"]), 'bot', true, remember)
+                        getData(['phd', 'admission', "eligibility criteria"])
+                            .then(data => { Bot.createBox(data, 'bot', true, remember) })
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
@@ -745,7 +796,8 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Exam for admission', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "exam for admission"]), 'bot', true, remember)
+                        getData(['phd', 'admission', "exam for admission"])
+                            .then(data => { Bot.createBox(data, 'bot', true, remember) })
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
@@ -754,7 +806,8 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Documents for physical verification', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "documents required"]), 'bot', true, remember)
+                        getData(['phd', 'admission', "documents required"])
+                            .then(data => { Bot.createBox(data, 'bot', true, remember) })
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
@@ -763,7 +816,8 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Fee structure', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox(getData(['phd', 'admission', "fee structure"]), 'bot', true, remember)
+                        getData(['phd', 'admission', "fee structure"])
+                            .then(data => { Bot.createBox(data, 'bot', true, remember) })
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
