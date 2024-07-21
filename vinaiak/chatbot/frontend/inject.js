@@ -1,4 +1,4 @@
-const server = "http://localhost:3000"
+const server = "https://vinaiak.ddns.net"
 const xhr = new XMLHttpRequest()
 
 function arraysEqual(arr1, arr2) {
