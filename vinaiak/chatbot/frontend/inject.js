@@ -17,9 +17,20 @@ class AI {
     static clientId
     static context = ''
     static keepAliveXhr
+    static keepAliveRequested = false
     constructor(organisationId) {
         AI.keepAliveXhr = new XMLHttpRequest()
         AI.keepAliveXhr.onload = null
+        AI.keepAliveIntervalId = setInterval(() => {
+            if (!AI.keepAliveRequested) {
+                Bot.reply("Are you there? If yes then please scroll else I am going to sleep")
+                return
+            }
+            AI.keepAliveRequested = false
+            AI.keepAliveXhr.open('POST', server + '/keepAlive', true)
+            AI.keepAliveXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+            AI.keepAliveXhr.send(JSON.stringify({ id: AI.clientId }))
+        }, 1.8 * 60 * 1000)
         xhr.open('POST', server + '/login', true)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
         xhr.onload = () => {
@@ -58,15 +69,14 @@ class AI {
         xhr.send(JSON.stringify({ query: query, reply: reply, id: AI.clientId }))
     }
     static keepAlive() {
-        AI.keepAliveXhr.open('POST', server + '/keepAlive', true)
-        AI.keepAliveXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-        AI.keepAliveXhr.send(JSON.stringify({ id: AI.clientId }))
+        AI.keepAliveRequested = true
     }
     static quit() {
         xhr.open('POST', server + '/quit', true)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
         xhr.send(JSON.stringify({ id: AI.clientId }))
         xhr.onload = null
+        clearInterval(AI.keepAliveIntervalId)
     }
 }
 class Bot {
