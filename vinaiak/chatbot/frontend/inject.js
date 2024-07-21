@@ -213,9 +213,10 @@ class Bot {
                 return `<div style="font-weight:bold;display:inline">${match}</div>`
             }).
             replace(/\n/g, "<br>") : text
-        Bot.iframe.contentDocument.getElementById('chat-area').appendChild(box)
-        Bot.iframe.contentDocument.getElementById('chat-area').scrollTo({
-            top: Bot.iframe.contentDocument.getElementById('chat-area').scrollHeight,
+        const chatArea = Bot.iframe.contentDocument.getElementById('chat-area')
+        chatArea.appendChild(box)
+        chatArea.scrollTo({
+            top: chatArea.scrollHeight - chatArea.querySelector('.box:last-child').scrollHeight - chatArea.clientHeight,
             behavior: 'smooth'
         })
         if (callBack != undefined)

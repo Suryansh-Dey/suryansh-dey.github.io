@@ -1,3 +1,4 @@
+const xhr = new XMLHttpRequest()
 function getData(url) {
     xhr.open('POST', server + '/data/fetch', false)
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
