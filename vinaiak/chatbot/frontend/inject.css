@@ -144,13 +144,14 @@ p {
 
 #chat-area {
   position: absolute;
-  top: 15dvh;
+  top: 14dvh;
   left: 1dvw;
-  height: 76.5dvh;
+  height: 75.5dvh;
   width: 98dvw;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  padding-top: 2dvh;
 }
 
 #chat-area::-webkit-scrollbar {

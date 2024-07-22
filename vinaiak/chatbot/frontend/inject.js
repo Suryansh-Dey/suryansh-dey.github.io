@@ -3,6 +3,17 @@ const xhr = new XMLHttpRequest()
 xhr.open('GET', "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", false)
 xhr.send()
 eval(xhr.responseText)
+const renderer = new marked.Renderer()
+renderer.link = (href, title, text) => {
+    const extention = href.split('.').pop()
+    if (extention === 'png' || extention === 'jpg' || extention === 'jpeg')
+        return `<img src="${href}" alt="${title || text}" title="${title || ''}" class="media" onclick="window.open(this.src, '_blank')">`
+    if (extention === 'mp4')
+        return `<video autoplay muted controls class="media"><source src="${href}" title="${title || ''}" type="video/mp4">\
+            ${title || text}.\
+        </video>`
+    return `<a href="${href}" title="${title || ''}" target="_blank" rel="noopener noreferrer">${text || "click here"}</a>`
+}
 
 function arraysEqual(arr1, arr2) {
     if (arr1.length !== arr2.length)
@@ -124,6 +135,7 @@ class Bot {
     }
     static resizeIframe() {
         Bot.iframe.style.width = (window.innerHeight > window.innerWidth ? Bot.mobileWidth : Bot.landscapeWidth) + 'dvw'
+        Bot.iframe.style.height = Bot.height
         document.getElementById('frame-animation').textContent = Bot.generateFrameAnimation()
     }
     static createWaiting() {
@@ -166,6 +178,7 @@ class Bot {
         const fileTag = {
             "png": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
             "jpg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
+            "jpeg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
             "mp4": ['<video autoplay muted controls class="media"><source src="', '" type="video/mp4">\
             pta chla ki galat leke main pta nikla.\
         </video>']
@@ -181,8 +194,9 @@ class Bot {
                 continue
             }
             else matchedCount = 0
-            if (matchedCount == trigger.length && text[i - 1] != '(') {
+            if (matchedCount == trigger.length) {
                 let start = i - trigger.length + 1 + (text[i - 3] != 's')
+                if (text[start - 2] === ']' && text[start - 1] === '(') continue
                 let fileExtension
                 let got1stBracket = 0, got2ndBracket = 0
                 for (; i < text.length && !(text[i] === ' ' || text[i] === '"' || text[i] === '\n' || text[i] === '\r' || text[i] === ',' || (text[i] == '.' && text[i + 1] == ' ') || (!got1stBracket && text[i] == ')') || (!got2ndBracket && text[i] == ']')); i++) {

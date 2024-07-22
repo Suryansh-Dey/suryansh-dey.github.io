@@ -134,8 +134,6 @@ function addBot(targetElement) {
 	#heading {
 	background-color: rgb(0, 0, 150);
 	}
-	a {
-	color: yellow}
 	.box{
 	color: violet;
 	}
@@ -215,6 +213,8 @@ function addBot(targetElement) {
 				frame.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
 				document.addEventListener('scrollend', AI.keepAlive)
 				Bot.iframe.style.zIndex = 10000
+				Bot.height = '80dvh'
+				Bot.resizeIframe()
 			},
 			targetElement,
 			false
