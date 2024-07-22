@@ -143,6 +143,7 @@ function addBot(targetElement) {
 	box-shadow: 0 0 2px 2px lightblue;
 	}
 	.box.user {
+	color:white;
 	background-color: rgb(50, 50, 255);
 	border: 2dvh solid rgb(50, 50, 255);
 	}`
