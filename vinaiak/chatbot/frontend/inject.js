@@ -4,15 +4,15 @@ xhr.open('GET', "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", fals
 xhr.send()
 eval(xhr.responseText)
 const renderer = new marked.Renderer()
-renderer.link = (href, title, text) => {
-    const extention = href.split('.').pop()
+renderer.link = (link) => {
+    const extention = link.href.split('.').pop()
     if (extention === 'png' || extention === 'jpg' || extention === 'jpeg')
-        return `<img src="${href}" alt="${title || text}" title="${title || ''}" class="media" onclick="window.open(this.src, '_blank')">`
+        return `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ''}" class="media" onclick="window.open(this.src, '_blank')">`
     if (extention === 'mp4')
-        return `<video autoplay muted controls class="media"><source src="${href}" title="${title || ''}" type="video/mp4">\
-            ${title || text}.\
+        return `<video autoplay muted controls class="media"><source src="${link.href}" title="${link.title || ''}" type="video/mp4">\
+            ${link.title || link.text}.\
         </video>`
-    return `<a href="${href}" title="${title || ''}" target="_blank" rel="noopener noreferrer">${text || "click here"}</a>`
+    return `<a href="${link.href}" title="${link.title || ''}" target="_blank">${link.text || "click here"}</a>`
 }
 
 function arraysEqual(arr1, arr2) {
@@ -233,7 +233,7 @@ class Bot {
         }
         let box = document.createElement('div')
         box.className = 'box ' + type
-        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(this.wrapLinks(text)) : text
+        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(this.wrapLinks(text), { renderer }) : text
         const chatArea = Bot.iframe.contentDocument.getElementById('chat-area')
         chatArea.appendChild(box)
         chatArea.scrollTo({
