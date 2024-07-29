@@ -103,7 +103,7 @@ function addBot(targetElement) {
 		align-items: center;
 		color: white
 	}
-	#loginForm input{
+	#loginForm input {
 		width: 96%;
 		height: 1.5em;
 		margin-top: 0.5em;

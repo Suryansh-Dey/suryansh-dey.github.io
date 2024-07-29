@@ -35,7 +35,7 @@ class AI {
         AI.keepAliveXhr.onload = null
         AI.keepAliveIntervalId = setInterval(() => {
             if (!AI.keepAliveRequested) {
-                Bot.reply("Are you there? If yes then please scroll else I am going to sleep")
+                Bot.reply("Are you there? You have been inactive for too long, session might be terminated")
                 return
             }
             AI.keepAliveRequested = false
@@ -173,52 +173,6 @@ class Bot {
         avtar.style.height = '2rem'
         Bot.iframe.contentDocument.getElementById('chat-area').appendChild(avtar)
     }
-    static wrapLinks(text) {
-        text = text.replace(/(?<!http:\/\/|https:\/\/)www\./g, 'https://www.')
-        const fileTag = {
-            "png": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
-            "jpg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
-            "jpeg": [`<img src="`, `" alt="pta chla ki galat leke main pta nikla" class="media" onclick="window.open(this.src, '_blank')">`],
-            "mp4": ['<video autoplay muted controls class="media"><source src="', '" type="video/mp4">\
-            pta chla ki galat leke main pta nikla.\
-        </video>']
-        }
-        let trigger = "https://"
-        let matchedCount = 0
-        for (let i = 0; i < text.length; i++) {
-            if (text[i].toLowerCase() == trigger[matchedCount])
-                matchedCount++
-            else if (trigger[matchedCount] == 's') {
-                matchedCount++
-                i--
-                continue
-            }
-            else matchedCount = 0
-            if (matchedCount == trigger.length) {
-                let start = i - trigger.length + 1 + (text[i - 3] != 's')
-                if (text[start - 2] === ']' && text[start - 1] === '(') continue
-                let fileExtension
-                let got1stBracket = 0, got2ndBracket = 0
-                for (; i < text.length && !(text[i] === ' ' || text[i] === '"' || text[i] === '\n' || text[i] === '\r' || text[i] === ',' || (text[i] == '.' && text[i + 1] == ' ') || (!got1stBracket && text[i] == ')') || (!got2ndBracket && text[i] == ']')); i++) {
-                    got1stBracket += '(' === text[i]
-                    got2ndBracket += '[' === text[i]
-                    got1stBracket -= ')' === text[i]
-                    got2ndBracket -= ']' === text[i]
-                    if (text[i] == '.') fileExtension = ''
-                    else fileExtension += text[i]
-                }
-                let link = text.slice(start, i)
-                let remaining = text.length - i
-                if (link[link.length - 1] == '.')
-                    link = link.slice(0, -1)
-                if (fileTag.hasOwnProperty(fileExtension.toLowerCase()))
-                    text = text.slice(0, start) + fileTag[fileExtension][0] + link + fileTag[fileExtension][1] + text.slice(i)
-                else text = text.slice(0, start) + `<a href="${link}" target="_blank">click here</a>` + text.slice(i)
-                i = text.length - remaining - 1
-            }
-        }
-        return text
-    }
     static createBox(text, type, format, callBack) {
         if (Bot.replying) {
             Bot.queue.push({ text: text, type: type, format: format, callBack: callBack })
@@ -233,7 +187,7 @@ class Bot {
         }
         let box = document.createElement('div')
         box.className = 'box ' + type
-        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(this.wrapLinks(text), { renderer }) : text
+        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(text.replace(/\u00A0/g, ' '), { renderer }) : text
         const chatArea = Bot.iframe.contentDocument.getElementById('chat-area')
         chatArea.appendChild(box)
         chatArea.scrollTo({

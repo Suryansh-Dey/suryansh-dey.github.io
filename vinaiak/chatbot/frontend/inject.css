@@ -298,3 +298,33 @@ p {
   height: auto;
   cursor: pointer;
 }
+
+ul {
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
+}
+
+ol {
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
+}
+
+ol li {
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
+  margin-left: 0;
+}
+
+ul li {
+  margin-left: 0.5em;
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
+}
+
+li::marker {
+  font-weight: bolder;
+}
+
+ul li::marker {
+  font-size: x-large;
+}
