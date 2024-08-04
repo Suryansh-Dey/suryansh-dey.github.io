@@ -4,8 +4,8 @@
     right: 1vw;
     cursor: pointer;
     z-index: 9999;
-    width: 5rem;
-    height: 5rem;
+    width: 10vmin;
+    height: 10vmin;
     border-radius: 100%;
     background-color: white;
 }
@@ -16,8 +16,8 @@
 }
 
 #bot-loginIcon * {
-    width: 5rem;
-    height: 5rem;
+    width: 10vmin;
+    height: 10vmin;
     border-radius: 100%;
 }
 
