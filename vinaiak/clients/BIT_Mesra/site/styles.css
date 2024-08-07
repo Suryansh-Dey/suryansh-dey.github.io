@@ -21,6 +21,18 @@
     border-radius: 100%;
 }
 
+@media (min-aspect-ratio: 1/1) {
+    #bot-loginIcon {
+        width: 10dvmin;
+        height: 10dvmin;
+    }
+
+    #bot-loginIcon * {
+        width: 10dvmin;
+        height: 10dvmin;
+    }
+}
+
 #bot-loginIcon #click {
     position: absolute;
     top: 0;

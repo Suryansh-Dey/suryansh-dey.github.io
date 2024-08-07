@@ -15,6 +15,7 @@ import('https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/mcqs.js').
 	mcq = module.mcq
 })
 function addBot(targetElement) {
+	let frameNotOpened = false
 	targetElement = targetElement || document.body
 	const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
@@ -98,8 +99,9 @@ function addBot(targetElement) {
 		}
 		else {
 			setTimeout(() => {
-				Bot.openFrame()
 				document.getElementById('bot-loginIcon').style.display = 'none'
+				if (!Bot.exists) frameNotOpened = true
+				Bot.openFrame()
 			}, 2000)
 		}
 		let customCss = document.createElement('style')
@@ -209,6 +211,7 @@ function addBot(targetElement) {
 				frame.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
 				document.addEventListener('scrollend', AI.keepAlive)
 				Bot.iframe.style.zIndex = 10000
+				if (frameNotOpened) Bot.openFrame()
 			},
 			targetElement
 		)
