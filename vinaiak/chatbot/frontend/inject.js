@@ -29,7 +29,7 @@ class AI {
     static clientId
     static context = ''
     static keepAliveXhr
-    static keepAliveRequested = false
+    static keepAliveRequested = true
     constructor(organisationId) {
         AI.keepAliveXhr = new XMLHttpRequest()
         AI.keepAliveXhr.onload = null
@@ -102,6 +102,7 @@ class Bot {
         closeFrame: new Audio('https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/window_close.wav')
     }
     static exists = false
+    static loaded = false
     static replying = false
     static iframe
     static optionsCallBacks = {}
@@ -297,6 +298,7 @@ class Bot {
             if (openOnLoad === undefined || openOnLoad) Bot.openFrame()
             window.addEventListener('resize', Bot.resizeIframe)
             onload(Bot.iframe.contentDocument)
+            Bot.loaded = true
         }
         (targetElement || document.body).appendChild(Bot.iframe)
     }

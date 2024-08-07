@@ -94,7 +94,7 @@ function addBot(targetElement) {
 		else {
 			setTimeout(() => {
 				document.getElementById('bot-loginIcon').style.display = 'none'
-				if (!Bot.exists) frameNotOpened = true
+				if (!Bot.loaded) frameNotOpened = true
 				Bot.openFrame()
 			}, 2000)
 		}
