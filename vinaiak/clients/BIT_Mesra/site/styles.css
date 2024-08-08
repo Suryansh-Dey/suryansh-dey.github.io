@@ -23,13 +23,13 @@
 
 @media (min-aspect-ratio: 1/1) {
     #bot-loginIcon {
-        width: 10dvmin;
-        height: 10dvmin;
+        width: 5rem;
+        height: 5rem;
     }
 
     #bot-loginIcon * {
-        width: 10dvmin;
-        height: 10dvmin;
+        width: 5rem;
+        height: 5rem;
     }
 }
 
