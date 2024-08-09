@@ -72,7 +72,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Fee structure', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                getData(['b.tech b.arch and integrated msc', 'admission', "fee structure"])
+                                                getData(['b.tech b.arch and integrated msc', 'admission', "hostel and tuition fee"])
                                                     .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                                 Bot.resetQuickAccess()
                                             }
@@ -459,7 +459,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Fee structure', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    getData(['b.tech b.arch and integrated msc', 'admission', "fee structure"])
+                                    getData(['b.tech b.arch and integrated msc', 'admission', "hostel and tuition fee"])
                                         .then(data => { Bot.createBox(data, 'bot', true, remember) })
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
