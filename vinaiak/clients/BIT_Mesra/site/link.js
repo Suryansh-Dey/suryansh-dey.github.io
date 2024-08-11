@@ -41,8 +41,8 @@ function addBot(targetElement) {
 	targetElement.appendChild(captchaScript)
 	loginIcon.querySelector('#popup').play()
 	let startWaiting = true
-	loginIcon.querySelector('#popup').onended = () => {
-		const video = loginIcon.querySelector('#popup')
+	const video = loginIcon.querySelector('#popup')
+	video.onended = () => {
 		video.src = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/popup.mp4"
 		video.play()
 		video.onended = () => { startWaiting = false }
@@ -101,7 +101,7 @@ function addBot(targetElement) {
 			setTimeout(() => {
 				document.getElementById('bot-loginIcon').style.display = 'none'
 				if (!Bot.loaded) frameNotOpened = true
-				Bot.openFrame()
+				else Bot.openFrame()
 			}, 2000)
 		}
 		let customCss = document.createElement('style')

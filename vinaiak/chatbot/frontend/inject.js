@@ -7,15 +7,12 @@ const renderer = new marked.Renderer()
 renderer.link = (link) => {
     const extention = link.href.split('.').pop()
     if (extention === 'png' || extention === 'jpg' || extention === 'jpeg')
-        return `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ''}" class="media" onclick="window.open(this.src, '_blank')">`
+        return `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ''}" onclick="window.open(this.src, '_blank')">`
     if (extention === 'mp4')
-        return `<video muted autoplay controls class="media"><source src="${link.href}" title="${link.title || ''}" type="video/mp4">\
+        return `<video muted autoplay controls><source src="${link.href}" title="${link.title || ''}" type="video/mp4">\
             ${link.title || link.text}.\
         </video>`
     return `<a href="${link.href}" title="${link.title || ''}" target="_blank">${link.text || "click here"}</a>`
-}
-renderer.image = (link) => {
-    return `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ''}" class="media" onclick="window.open(this.src, '_blank')">`
 }
 
 function arraysEqual(arr1, arr2) {
@@ -191,11 +188,11 @@ class Bot {
         }
         let box = document.createElement('div')
         box.className = 'box ' + type
-        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(text.replace(/\u00A0/g, ' '), { renderer }).replace("<video", '<video class="media" muted autoplay') : text
+        box.innerHTML = (type == 'bot' && format == undefined) || format ? marked.parse(text.replace(/\u00A0/g, ' '), { renderer }) : text
         const chatArea = Bot.iframe.contentDocument.getElementById('chat-area')
         chatArea.appendChild(box)
         chatArea.scrollTo({
-            top: chatArea.scrollHeight - chatArea.querySelector('.box:last-child').scrollHeight - chatArea.clientHeight,
+            top: chatArea.scrollHeight - chatArea.querySelector('.box:last-child').scrollHeight - window.innerHeight * 0.3,
             behavior: 'smooth'
         })
         if (callBack != undefined)
