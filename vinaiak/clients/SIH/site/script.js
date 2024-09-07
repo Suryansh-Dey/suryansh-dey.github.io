@@ -1,3 +1,5 @@
+import students_data from "./resources/students_data.js"
+import { priortise, stringify } from "./review.js"
 const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
 let injectjs = document.createElement('script')
@@ -172,6 +174,7 @@ function addBot(targetElement) {
 						const email = frame.getElementById('email').value
 						const xhr = new XMLHttpRequest()
 						grecaptcha.enterprise.ready(async () => {
+							Bot.startWaiting()
 							const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
 							xhr.open('POST', server + '/verify', true)
 							xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
@@ -187,6 +190,12 @@ function addBot(targetElement) {
 									id: AI.clientId, data: ('name ' + name),
 									personalData: { name: name, email: email }
 								}))
+								const priorties = priortise(students_data[name.trim().toLowerCase()] || students_data["lata"])
+								console.log(priorties)
+								AI.answer(stringify(priorties)).then((answer => {
+									Bot.stopWaiting()
+									Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${answer}`)
+								}))
 							}
 							xhr.send(JSON.stringify({
 								id: AI.clientId, token: token
@@ -195,10 +204,10 @@ function addBot(targetElement) {
 						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
 						frame.getElementById('text-input').style.display = 'block'
 						frame.getElementById('text-input').focus();
-						Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! Which program are you intrested in?`)
 					})
 				}, 2000)
 				Bot.customiseCss(customCss)
+				frame.querySelector("#heading .credit").textContent = "Developed by Saarthi"
 				frame.getElementById('chat-area').addEventListener('scrollend', AI.keepAlive)
 				document.addEventListener('scrollend', AI.keepAlive)
 				Bot.iframe.style.zIndex = 10000
