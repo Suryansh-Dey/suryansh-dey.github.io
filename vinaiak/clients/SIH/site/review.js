@@ -33,16 +33,3 @@ export function stringify(priorties) {
     }
     return formatted + `\nHence most suitable is ${mostSuitableJob}. Guide me about this career option like how should I prepare for it etc.`
 }
-/*
-How will you integrate the ChatBot into the application ?
-webView
-How did you create the AI chatbot ?
-What technologies were used or can be used in future for your project?
-
-How can the AI access the data from the tests?
-AWS RDS
-How will you train the model ?
-AWS cloude computing
-Where will you store the data ?
-AWS RDS
-*/
