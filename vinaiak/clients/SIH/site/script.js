@@ -23,7 +23,7 @@ function addBot(targetElement) {
 	const loginIcon = document.createElement('div')
 	loginIcon.id = "bot-loginIcon"
 	loginIcon.innerHTML = '\
-            <video muted disablePictureInPicture preload="auto" id="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/namaste.mp4" type="video/mp4">AI assistants</video>\
+            <video muted disablePictureInPicture preload="auto" id="popup"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/popup.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="looking" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Looking_Around.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="jump" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/Jump.mp4" type="video/mp4">AI assistants</video>\
             <video muted disablePictureInPicture preload="auto" id="hover" style="display:none"><source src="https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/resources/onHover.mp4" type="video/mp4">AI assistants</video>\
@@ -146,6 +146,7 @@ function addBot(targetElement) {
 					document.getElementById('bot-loginIcon').style.display = 'block'
 				})
 				frame.getElementById('text-input').style.display = 'none'
+				frame.getElementById('send').style.display = 'none'
 				Bot.startWaiting()
 				setTimeout(() => {
 					Bot.stopWaiting()
@@ -205,6 +206,7 @@ function addBot(targetElement) {
 						})
 						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
 						frame.getElementById('text-input').style.display = 'block'
+						frame.getElementById('send').style.display = 'block'
 						frame.getElementById('text-input').focus();
 					})
 				}, 2000)
