@@ -138,7 +138,7 @@ function addBot(targetElement) {
 		new Bot(4,
 			"Ask me about career options",
 			"Career guidance",
-			"https://i.pinimg.com/originals/e4/d6/bd/e4d6bd1ae21753776bebc61b80049375.jpg",
+			"https://th.bing.com/th/id/OIG4.FifVADqtamldL5SUX1cN?pid=ImgGn",
 			null,
 			(frame) => {
 				window.addEventListener('beforeunload', AI.quit)
