@@ -25,7 +25,24 @@ export function priortise(scores) {
 export function stringify(priorties) {
     let formatted = "I gave few tests and found that:\n"
     let jobs = Object.keys(priorties)
-    for (let job of jobs)
+    let mostSuitableJob = jobs[0]
+    for (let job of jobs) {
+        if (parseFloat(priorties[mostSuitableJob]) < parseFloat(priorties[job]))
+            mostSuitableJob = job
         formatted += `I am ${priorties[job]}% suitable for ${job}, `
-    return formatted + "Guide me about which career option, out of these, should I choose and how should I prepare for it."
+    }
+    return formatted + `\nHence most suitable is ${mostSuitableJob}. Guide me about this career option like how should I prepare for it etc.`
 }
+/*
+How will you integrate the ChatBot into the application ?
+webView
+How did you create the AI chatbot ?
+What technologies were used or can be used in future for your project?
+
+How can the AI access the data from the tests?
+AWS RDS
+How will you train the model ?
+AWS cloude computing
+Where will you store the data ?
+AWS RDS
+*/

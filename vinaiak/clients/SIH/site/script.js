@@ -137,7 +137,7 @@ function addBot(targetElement) {
 		}`
 		new Bot(4,
 			"Ask me about career options",
-			"Carrer guidance",
+			"Career guidance",
 			"https://i.pinimg.com/originals/e4/d6/bd/e4d6bd1ae21753776bebc61b80049375.jpg",
 			null,
 			(frame) => {
@@ -190,12 +190,14 @@ function addBot(targetElement) {
 									id: AI.clientId, data: ('name ' + name),
 									personalData: { name: name, email: email }
 								}))
-								const priorties = priortise(students_data[name.trim().toLowerCase()] || students_data["lata"])
-								console.log(priorties)
-								AI.answer(stringify(priorties)).then((answer => {
-									Bot.stopWaiting()
-									Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${answer}`)
-								}))
+								// const priorties = priortise(students_data[name.trim().toLowerCase()] || students_data["lata"])
+								// console.log(priorties)
+								// AI.answer(stringify(priorties)).then((answer => {
+								// 	Bot.stopWaiting()
+								// 	Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${answer}`)
+								// }))
+								Bot.stopWaiting()
+								Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${"How may I guide you with your career?"}`)
 							}
 							xhr.send(JSON.stringify({
 								id: AI.clientId, token: token
