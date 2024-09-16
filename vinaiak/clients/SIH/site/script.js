@@ -1,5 +1,6 @@
 import students_data from "./resources/students_data.js"
 import { priortise, stringify } from "./review.js"
+import { mcq, quickAccesses } from "./mcqs.js"
 const captchaKey = '6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v'
 
 let injectjs = document.createElement('script')
@@ -139,7 +140,7 @@ function addBot(targetElement) {
 			"Ask me about career options",
 			"Career guidance",
 			"resources/bot-avtar.png",
-			null,
+			quickAccesses,
 			(frame) => {
 				window.addEventListener('beforeunload', AI.quit)
 				frame.getElementById('close').addEventListener('click', () => {
@@ -147,6 +148,7 @@ function addBot(targetElement) {
 				})
 				frame.getElementById('text-input').style.display = 'none'
 				frame.getElementById('send').style.display = 'none'
+				frame.getElementById('quick-access').style.display = 'none'
 				Bot.startWaiting()
 				setTimeout(() => {
 					Bot.stopWaiting()
@@ -196,6 +198,7 @@ function addBot(targetElement) {
 								AI.answer(stringify(priorties)).then((answer => {
 									Bot.stopWaiting()
 									Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${answer}`)
+									Bot.createMcq(mcq)
 								}))
 							}
 							xhr.send(JSON.stringify({
@@ -205,7 +208,7 @@ function addBot(targetElement) {
 						frame.getElementById('chat-area').removeChild(frame.getElementById('chat-area').lastChild)
 						frame.getElementById('text-input').style.display = 'block'
 						frame.getElementById('send').style.display = 'block'
-						frame.getElementById('text-input').focus();
+						frame.getElementById('text-input').focus()
 					})
 				}, 2000)
 				Bot.customiseCss(customCss)
