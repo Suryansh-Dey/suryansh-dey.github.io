@@ -2,25 +2,25 @@ export const mcq = {
     "Roadmap": {
         "callBack": () => {
             Bot.removeMcq()
-            frame.getElementById('quick-access').style.display = 'block'
+            Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
         }
     },
     "Job Opportunities": {
         "callBack": () => {
             Bot.removeMcq()
-            frame.getElementById('quick-access').style.display = 'block'
+            Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
         }
     },
     "Skills Required": {
         "callBack": () => {
             Bot.removeMcq()
-            frame.getElementById('quick-access').style.display = 'block'
+            Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
         }
     },
     "Expected Pay": {
         "callBack": () => {
             Bot.removeMcq()
-            frame.getElementById('quick-access').style.display = 'block'
+            Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
         }
     }
 }
