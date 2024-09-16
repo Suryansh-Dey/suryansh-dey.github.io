@@ -197,7 +197,7 @@ function addBot(targetElement) {
 								console.log(priorties)
 								AI.answer(stringify(priorties)).then((answer => {
 									Bot.stopWaiting()
-									Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}!\n${answer}`)
+									Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}!<br>${answer}`)
 									Bot.createMcq(mcq)
 								}))
 							}
