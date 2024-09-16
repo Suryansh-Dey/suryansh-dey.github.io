@@ -138,7 +138,7 @@ function addBot(targetElement) {
 		new Bot(4,
 			"Ask me about career options",
 			"Career guidance",
-			"https://th.bing.com/th/id/OIG4.FifVADqtamldL5SUX1cN?pid=ImgGn",
+			"resources/bot-avtar.png",
 			null,
 			(frame) => {
 				window.addEventListener('beforeunload', AI.quit)
@@ -197,8 +197,6 @@ function addBot(targetElement) {
 									Bot.stopWaiting()
 									Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${answer}`)
 								}))
-								//Bot.stopWaiting()
-								//Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(' ')[0]}! ${"How may I guide you with your career?"}`)
 							}
 							xhr.send(JSON.stringify({
 								id: AI.clientId, token: token

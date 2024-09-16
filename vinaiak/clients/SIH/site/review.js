@@ -16,10 +16,10 @@ export function priortise(scores) {
         for (let test of tests)
             priorty += dot(career_weights[job][test], scores[test]);
         priorties[job] = priorty;
-        total += Math.abs(priorty);
+        total += priorty ** 2;
     }
     for (let job of jobs)
-        priorties[job] = (priorties[job] * 100 / total).toFixed(2);
+        priorties[job] = (100 * priorties[job] ** 2 / total).toFixed(2);
     return priorties;
 }
 export function stringify(priorties) {
