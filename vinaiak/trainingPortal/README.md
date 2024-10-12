@@ -1,12 +1,12 @@
 # vinAIak training portal documentation
-It is a website, for DESKTOP ONLY, to `train` the chat bot provided by vinAIak to your organisation.  
+It is a website, for DESKTOP ONLY, to `train` the chat bot provided by vinAIak to your organization.  
 `train`: Editing the data based on which the chat bot will reply.
 ## Choosing topics
 After you login with your credentials, you will see a line of `topics` upon which the chatbot is trained. Now, `topics` can be of two types:
 - `File`: It contains the data, which can be text and files, based on which the bot will reply when question is asked related to that topic. Clicking on it opens the `editor`.
 - `Folder`: It contains further more child `topics` which can be of any type, `files` and/or `folders`. Clicking on it creates a new line of it's child `topics`.
 
-This allows topics to recursively contain child or sub-topics. You can always see the hierarchy of a `topic`, the parent `topics` to which it belongs, by seeing the choosen topic in every line. Even while editor is open.
+This allows topics to recursively contain child or sub-topics. You can always see the hierarchy of a `topic`, the parent `topics` to which it belongs, by seeing the chosen topic in every line. Even while editor is open.
 ## Operations
 There 4 types of operations or editing, you can perform on a `topic`: `create`, `modify`, `delete` and `rename`.
 ### Create
@@ -23,8 +23,8 @@ The newly created `topic` is shown with a green background
 Always try to put a descriptive topic name to a `topic` to get better response from chatbot.
 
 
-Example: Name like *events* doesn't make anything immediatly clear about it's content. So if you put data about college fests in it, chatbot will never be able to guess that.  
-Rather try making a folder of name *college events*, and within that make the file of name *college fests* and put the relevent data in that file.  
+Example: Name like *events* doesn't make anything immediately clear about it's content. So if you put data about college fests in it, chatbot will never be able to guess that.  
+Rather try making a folder of name *college events*, and within that make the file of name *college fests* and put the relevant data in that file.  
 If the college fest data is too much like more than a page, try breaking it into further `topics` like for every college fest *BITotsav*, *Pantheon*, *vinotsav* etc. and there put their respective data.
 
 But try avoiding making deep hierarchy, generally not more than 3 levels if all of them is to be guessed by AI. If you ask about the context about which question is to be asked in beginning of conversation and AI has to guess about 3 levels of hierarchy then it's okay. Rather try creating many `topics` in single line is recommended.
@@ -55,7 +55,7 @@ The deleted topic will be shown with red background
 Simply click on the deleted topic to restore it. Like deleting restoring will also restore it's children recursively.
 
 
-**Note**: It will retore with your all changes made in this session too. Means your all hardwork in this session won't vanish because of a accidental delete key press
+**Note**: It will retore with your all changes made in this session too. Means your all hard work in this session won't vanish because of a accidental delete key press
 ### Rename
 To rename an existing `topic`  
 Renaming a `topic`:
@@ -71,7 +71,7 @@ Renamed `topic` is shown with sky blue font color
 ## Editor
 It the one which allows you to write text and upload files using which chat bot will respond. When you open the `editor` of an `topic`, it will be in [markdown](#markdown-formatting) preview mode initially. Click anywhere on it to start editing the data.  
 It is made up of 3 parts:
-1. Heading: It shows the hierarchy to which the file which you are editing belongs. Basically the choosen `topic` at each line to reach this file
+1. Heading: It shows the hierarchy to which the file which you are editing belongs. Basically the chosen `topic` at each line to reach this file
 2. Text Editor: Here you can type the data of the `topic` as well as upload files using 3rd button of button ribbon. It supports all usual key functions like `Ctrl+z` for undo etc.  
 **Note**: The new file is always placed at the end of the text editor but you can cut or copy it like a text and paste it wherever you want to.
 3. Button ribbon: It has 4 buttons:
@@ -97,7 +97,7 @@ So think twice before clicking that
 Don't wait to save till your all work is finished since you are just one refresh away from flushing your all work!
 ## Markdown formatting
 Our training portal as well as our chatbot supports [markdown syntax](https://www.markdownguide.org/basic-syntax/) for formatting  
-For Eg. To create a bullet point in `editor`
+For E.g. To create a bullet point in `editor`
 - like this simply start a line with - followed by a whitespace  
 to create a numbered bullet point
 1. like this simply write the number followed by a . then a whitespace
@@ -106,4 +106,4 @@ To preview your data how it will look after markdown formatting in chatbot, you 
 
 To go back to editing mode you may click on the text or hit F5 (or fn + F5, which ever works) again. Latter one is **recommended** otherwise your cursor will get placed at last no matter where your cursor previously was but with F5 your cursor will still be right there!
 # Thank you
-We are proud to be choosen by you. If you have any doubt about anything, just put it on github issues. We will try resolving it ASAP!
+We are proud to be chosen by you. If you have any doubt about anything, just put it on GitHub issues. We will try resolving it ASAP!

@@ -30,12 +30,31 @@ class AI {
     static context = ''
     static keepAliveXhr
     static keepAliveRequested = true
+    static isTutor = false
     constructor(organisationId) {
         AI.keepAliveXhr = new XMLHttpRequest()
         AI.keepAliveXhr.onload = null
         AI.keepAliveIntervalId = setInterval(() => {
+            if (!Bot.exists) return
             if (!AI.keepAliveRequested) {
-                Bot.reply("Are you there? You have been inactive for too long, session might be terminated")
+                fetch(server + '/isAlive', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: AI.clientId
+                    })
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data === 'false') {
+                            Bot.createBox("Session terminated! Kindly log in again to chat further.", 'bot')
+                            Bot.exists = false
+                        }
+                        else
+                            Bot.reply("Are you there? You have been inactive for too long, session might be terminated")
+                    })
                 return
             }
             AI.keepAliveRequested = false
@@ -62,9 +81,11 @@ class AI {
         AI.context = context
     }
     static answer(query) {
+        if (AI.isTutor && typeof query !== 'object') throw Error("When at tutor state, query should be an object")
+        if (!AI.isTutor && typeof query !== 'string') throw Error("When not at tutor state, query should be a string")
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest()
-            xhr.open('POST', server + `/ask`, true)
+            xhr.open('POST', server + (AI.isTutor ? '/tutor' : '/ask'), true)
             xhr.onload = () => {
                 if (xhr.status == 200)
                     resolve(JSON.parse(xhr.responseText).content)
@@ -107,6 +128,16 @@ class Bot {
     static iframe
     static optionsCallBacks = {}
     static queue = []
+    static makeTutor() {
+        AI.isTutor = true
+        Bot.iframe.contentDocument.getElementById('text-input').style.paddingLeft = '5.5dvh'
+        Bot.iframe.contentDocument.getElementById('image-input-icon').style.display = 'block'
+    }
+    static unmakeTutor() {
+        AI.isTutor = false
+        Bot.iframe.contentDocument.getElementById('text-input').style.paddingLeft = '2dvh'
+        Bot.iframe.contentDocument.getElementById('image-input-icon').style.display = 'none'
+    }
     static hideFrame() {
         Bot.iframe.style.display = 'none'
         Bot.iframe.removeEventListener('animationend', Bot.hideFrame)
@@ -258,7 +289,6 @@ class Bot {
         document.head.appendChild(frameStyles)
         Bot.iframe = document.createElement('iframe')
         Bot.iframe.title = "chat bot frame"
-        //Bot.iframe.src = "../../../chatbot/frontend/inject.html"
         fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.html").then(response => { return response.text() }).then(data => {
             Bot.iframe.contentDocument.open()
             Bot.iframe.contentDocument.write(data)
@@ -284,11 +314,21 @@ class Bot {
             Bot.iframe.contentDocument.getElementById('close').addEventListener('click', Bot.closeFrame)
             Bot.iframe.contentDocument.getElementById('send').addEventListener('click', (event) => {
                 event.preventDefault()
+                Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "/vinaiak/chatbot/frontend/resources/image.svg"
                 Bot.reply()
             })
+            Bot.iframe.contentDocument.getElementById('image-input').addEventListener('input', (event) => {
+                if (event.target.files[0])
+                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = URL.createObjectURL(event.target.files[0])
+                else
+                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "/vinaiak/chatbot/frontend/resources/image.svg"
+                Bot.iframe.contentDocument.getElementById('text-input').focus()
+            })
+
             Bot.iframe.contentDocument.getElementById('text-input').addEventListener('keydown', (event) => {
                 if (event.key == 'Enter' && !event.shiftKey) {
                     event.preventDefault()
+                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "/vinaiak/chatbot/frontend/resources/image.svg"
                     Bot.reply()
                 }
             })
@@ -323,21 +363,38 @@ class Bot {
     }
     static async reply(text) {
         if (Bot.replying) {
-            console.log("Bot.reply() failed. one Bot.reply() call is aready processing")
+            console.error("Bot.reply() failed. one Bot.reply() call is already processing")
             return
         }
-        let inputText
+        let query
         if (!text) {
-            inputText = Bot.iframe.contentDocument.getElementById('text-input').value
-            if (!inputText) {
+            query = Bot.iframe.contentDocument.getElementById('text-input').value
+            if (!query) {
                 return
             }
             Bot.iframe.contentDocument.getElementById('text-input').value = ''
-            Bot.createBox(inputText, 'user')
+            if (AI.isTutor) {
+                let image = Bot.iframe.contentDocument.getElementById('image-input').files[0]
+                Bot.createBox((image ? `<img src=${URL.createObjectURL(image)}><br>` : '') + query, 'user')
+                image = image ? await new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onload = (event) => {
+                        resolve(event.target.result)
+                    }
+                    reader.readAsDataURL(image)
+                }) : null
+                query = {
+                    question: query,
+                    images: image ? [image] : []
+                }
+                Bot.iframe.contentDocument.getElementById('image-input').value = ''
+            }
+            else
+                Bot.createBox(query, 'user', false)
         }
         Bot.audios.ask.play()
         Bot.startWaiting()
-        let replyText = text || await AI.answer(inputText)
+        let replyText = text || await AI.answer(query)
         Bot.stopWaiting()
         Bot.createBox(replyText, 'bot')
     }

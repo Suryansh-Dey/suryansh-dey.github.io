@@ -82,6 +82,18 @@ p {
   transform: scale(1.1);
 }
 
+#image-input-icon {
+  position: fixed;
+  left: 0.5dvh;
+  bottom: 2dvh;
+  cursor: pointer;
+}
+
+#image-input-icon img {
+  width: 4dvh;
+  height: auto;
+}
+
 #heading {
   position: fixed;
   top: 0;
