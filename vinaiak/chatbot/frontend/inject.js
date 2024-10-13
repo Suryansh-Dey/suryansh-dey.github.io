@@ -317,21 +317,21 @@ class Bot {
             Bot.iframe.contentDocument.getElementById('close').addEventListener('click', Bot.closeFrame)
             Bot.iframe.contentDocument.getElementById('send').addEventListener('click', (event) => {
                 event.preventDefault()
-                Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "/vinaiak/chatbot/frontend/resources/image.svg"
+                Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/image.svg"
                 Bot.reply()
             })
             Bot.iframe.contentDocument.getElementById('image-input').addEventListener('input', (event) => {
                 if (event.target.files[0])
                     Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = URL.createObjectURL(event.target.files[0])
                 else
-                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "/vinaiak/chatbot/frontend/resources/image.svg"
+                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/image.svg"
                 Bot.iframe.contentDocument.getElementById('text-input').focus()
             })
 
             Bot.iframe.contentDocument.getElementById('text-input').addEventListener('keydown', (event) => {
                 if (event.key == 'Enter' && !event.shiftKey) {
                     event.preventDefault()
-                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "/vinaiak/chatbot/frontend/resources/image.svg"
+                    Bot.iframe.contentDocument.querySelector('#image-input-icon img').src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/image.svg"
                     Bot.reply()
                 }
             })
