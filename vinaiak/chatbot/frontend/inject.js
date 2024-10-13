@@ -14,6 +14,9 @@ renderer.link = (link) => {
         </video>`
     return `<a href="${link.href}" title="${link.title || ''}" target="_blank">${link.text || "click here"}</a>`
 }
+renderer.image = (link) => {
+    `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ''}" onclick="window.open(this.src, '_blank')">`
+}
 
 function arraysEqual(arr1, arr2) {
     if (arr1.length !== arr2.length)
