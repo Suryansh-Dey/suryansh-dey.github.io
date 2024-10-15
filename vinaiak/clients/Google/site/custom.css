@@ -1,0 +1,6 @@
+#heading{
+    background-color: blue !important;
+}
+.box.bot {
+    box-shadow: 0 0 2dvh blue;
+}
