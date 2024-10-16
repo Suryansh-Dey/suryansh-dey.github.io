@@ -117,11 +117,8 @@ function addBot(targetElement) {
 				Bot.iframe.style.zIndex = 10000
 				if (frameNotOpened) Bot.openFrame()
 				Bot.startWaiting()
-				setTimeout(() => {
-					Bot.stopWaiting()
-					Bot.createBox("How may I assist you?", 'bot')
-				}, 2000)
 				grecaptcha.enterprise.ready(async () => {
+					const xhr = new XMLHttpRequest()
 					const token = await grecaptcha.enterprise.execute(captchaKey, { action: 'LOGIN' })
 					xhr.open('POST', server + '/verify', true)
 					xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
@@ -130,6 +127,8 @@ function addBot(targetElement) {
 							Bot.reply('Error: Invalid session. Please try logging in again otherwise some features may not work')
 							return
 						}
+						Bot.stopWaiting()
+						Bot.createBox("How may I assist you?", 'bot')
 					}
 					xhr.send(JSON.stringify({
 						id: AI.clientId, token: token
