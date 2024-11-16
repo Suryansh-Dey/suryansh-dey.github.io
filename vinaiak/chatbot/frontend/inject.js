@@ -1,4 +1,4 @@
-const server = "http://localhost:3000"
+const server = "https://vinaiak.ddns.net"
 const xhr = new XMLHttpRequest()
 xhr.open('GET', "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", false)
 xhr.send()
