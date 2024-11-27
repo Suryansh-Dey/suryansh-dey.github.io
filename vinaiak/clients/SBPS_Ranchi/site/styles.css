@@ -1,74 +1,43 @@
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
+#bot-loginIcon {
+    position: fixed;
+    bottom: 1vh;
+    right: 1vw;
+    cursor: pointer;
+    z-index: 9999;
+    width: 15dvmin;
+    height: 15dvmin;
+    border-radius: 100%;
+    background-color: white;
+}
 
-        .container {
-            position: relative;
-            height: 100%;
-        }
+#bot-loginIcon:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s;
+}
 
-        #loginIcon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            cursor: pointer;
-            animation: loginIntro 1s ease-in-out;
-        }
+#bot-loginIcon * {
+    width: 15dvmin;
+    height: 15dvmin;
+    border-radius: 100%;
+}
 
-        #loginForm {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: #ddf17f;
-            border: 1px solid #000000;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgb(241, 217, 4);
-            display: none;
-            animation: slideIn 0.6s ease-in-out;
-        }
-        button[type="button"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-          }
-          
-          button[type="button"]:hover {
-            background-color: #335beb;
-          }
+@media (min-aspect-ratio: 1/1) {
+    #bot-loginIcon {
+        width: 5rem;
+        height: 5rem;
+    }
 
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-                box-shadow: 0 0 100px rgb(24, 4, 241);
-            }
-            
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-                box-shadow: 0 0 10px rgb(241, 229, 4);
-            }
-        }
-        @keyframes loginIntro {
-            0% {
-                opacity: 0.2;
-                transform: translateX(-50vw) translateY(-30vw) scale(10);
-            }
+    #bot-loginIcon * {
+        width: 5rem;
+        height: 5rem;
+    }
+}
 
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
+#bot-loginIcon #click {
+    position: absolute;
+    top: 0;
+}
 
-        .hidden {
-            display: none;
-        }
+.grecaptcha-badge {
+    display: none !important;
+}

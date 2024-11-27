@@ -1,14 +1,23 @@
-import { quickAccesses, mcq } from "./mcqs.js";
-const captchaKey = "6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v";
-
-let injectjs = document.createElement("script");
-injectjs.src = "/vinaiak/chatbot/frontend/inject.js";
-document.body.appendChild(injectjs);
-let captchaScript = document.createElement("script");
-captchaScript.src =
-  "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey;
-captchaScript.id = "captcha";
-document.body.appendChild(captchaScript);
+let AI, Bot;
+let quickAccesses, mcq;
+const server = "https://vinaiak.ddns.net";
+fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
+  (response) => {
+    response.text().then((data) => {
+      let Bot1, AI1;
+      data = data + ";Bot1 = Bot;AI1 = AI";
+      eval(data);
+      AI = AI1;
+      Bot = Bot1;
+    });
+  },
+);
+import(
+  "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/mcqs.js"
+).then((module) => {
+  quickAccesses = module.quickAccesses;
+  mcq = module.mcq;
+});
 function addBot(targetElement) {
   let frameNotOpened = false;
   targetElement = targetElement || document.body;
@@ -17,7 +26,8 @@ function addBot(targetElement) {
   {
     const styles = document.createElement("link");
     styles.rel = "stylesheet";
-    styles.href = "/vinaiak/clients/BIT_Mesra/site/styles.css";
+    styles.href =
+      "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css";
     document.head.appendChild(styles);
   }
   const loginIcon = document.createElement("div");
@@ -145,24 +155,7 @@ function addBot(targetElement) {
 		}
 	  button[type="button"]:hover {
 		  background-color: #fead61;
-		}
-#heading {
-	background-color: #fead61;
-	}
-	.box{
-	color: violet;
-	}
-	.box.bot {
-	color:black;
-	background-color: white;
-	box-shadow: 0 0 2px 2px lightblue;
-	}
-	.box.user {
-	color:white;
-	background-color: rgb(50, 50, 255);
-	border: 2dvh solid rgb(50, 50, 255);
-	}
-`;
+		}`;
     new Bot(
       2,
       "Ask me about SBPS Ranchi",
@@ -170,6 +163,7 @@ function addBot(targetElement) {
       "https://www.sbpsranchi.com/Logo/Logo1.png",
       quickAccesses,
       (frame) => {
+        Bot.hideFrame();
         window.addEventListener("beforeunload", AI.quit);
         frame.getElementById("quick-access").style.display = "none";
         frame.getElementById("text-input").style.display = "none";
@@ -249,13 +243,10 @@ function addBot(targetElement) {
             });
             frame
               .getElementById("chat-area")
-              .removeChild(frame.getElementById("loginForm").parentNode);
-            if (email == "deysuryansh@gmail.com")
-              Bot.reply(`Welcome back champion! How may I help you today?`);
-            else
-              Bot.reply(
-                `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(" ")[0]}! Welcome to SBPS Ranchi. An paradice, legally known to be a school. What would you like to know about us?`,
-              );
+              .removeChild(frame.getElementById("chat-area").lastChild);
+            Bot.reply(
+              `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(" ")[0]}! How may I assist you today?`,
+            );
             Bot.createMcq(mcq);
           });
         }, 2000);
@@ -268,9 +259,7 @@ function addBot(targetElement) {
         if (frameNotOpened) Bot.openFrame();
       },
       targetElement,
-      false,
     );
     console.log("Logged in to chat bot");
   };
 }
-addBot();
