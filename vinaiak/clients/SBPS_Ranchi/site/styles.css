@@ -4,8 +4,8 @@
   right: 1vw;
   cursor: pointer;
   z-index: 9999;
-  width: 15dvmin;
-  height: 15dvmin;
+  width: 18dvmin;
+  height: 18dvmin;
   border-radius: 100%;
 }
 
@@ -15,20 +15,20 @@
 }
 
 #bot-loginIcon * {
-  width: 15dvmin;
-  height: 15dvmin;
+  width: 18dvmin;
+  height: 18dvmin;
   border-radius: 100%;
 }
 
 @media (min-aspect-ratio: 1/1) {
   #bot-loginIcon {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
   }
 
   #bot-loginIcon * {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
   }
 }
 

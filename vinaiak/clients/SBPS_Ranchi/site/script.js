@@ -98,6 +98,7 @@ function addBot(targetElement) {
 	border: 2dvh solid rgb(50, 50, 255);
 	}
 `;
+    Bot.height = 70;
     new Bot(
       2,
       "Ask me about SBPS Ranchi",
@@ -106,6 +107,7 @@ function addBot(targetElement) {
       quickAccesses,
       (frame) => {
         window.addEventListener("beforeunload", AI.quit);
+        Bot.iframe.style.bottom = "5dvh";
         frame.getElementById("quick-access").style.display = "none";
         frame.getElementById("text-input").style.display = "none";
         frame.getElementById("send").style.display = "none";
