@@ -1,6 +1,6 @@
 let AI, Bot
 let quickAccesses, mcq
-const server = "https://vinaiak.ddns.net"
+const server = "https://api.vinaiak.com"
 fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(response => {
 	response.text().then(data => {
 		let Bot1, AI1

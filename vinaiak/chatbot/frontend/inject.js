@@ -1,4 +1,4 @@
-const server = "https://vinaiak.ddns.net";
+const server = "https://api.vinaiak.com";
 const xhr = new XMLHttpRequest();
 xhr.open(
   "GET",
