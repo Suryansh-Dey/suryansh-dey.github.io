@@ -73,7 +73,14 @@ class AI {
           "Content-Type",
           "application/json;charset=UTF-8",
         );
-        AI.keepAliveXhr.send(JSON.stringify({ id: AI.clientId }));
+
+        grecaptcha.enterprise
+          .execute(captchaKey, { action: "LOGIN" })
+          .then((token) => {
+            AI.keepAliveXhr.send(
+              JSON.stringify({ id: AI.clientId, captcha: token }),
+            );
+          });
       },
       1.8 * 60 * 1000,
     );
