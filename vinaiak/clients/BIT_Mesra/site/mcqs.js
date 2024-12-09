@@ -33,7 +33,7 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('B.Tech/B.Arch/Integrated M.Sc', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=45&nid=50', 'bot')
+                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                                     Bot.updateQuickAccess({
                                         "Course details": {
                                             'callBack': () => {
@@ -46,7 +46,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Important dates', 'user')
                                                 AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=43&nid=40 and click "Important dates"', 'bot', true, remember)
+                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -93,7 +93,7 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('BHMCT', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=43&nid=40', 'bot')
+                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                                     Bot.updateQuickAccess({
                                         "Course details": {
                                             'callBack': () => {
@@ -105,7 +105,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Important dates', 'user')
                                                 AI.setContext(['bhmct', 'admission'])
-                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=43&nid=40 and click "Important dates"', 'bot', true, remember)
+                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -241,7 +241,7 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('B.Sc/M.Sc', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=44&nid=47', 'bot')
+                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                                     Bot.updateQuickAccess({
                                         "Course details": {
                                             'callBack': () => {
@@ -253,7 +253,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Important dates', 'user')
                                                 AI.setContext(['BSc and MSc', 'admission'])
-                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=44&nid=47 and click "Important dates"', 'bot', true, remember)
+                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                                 Bot.resetQuickAccess()
                                             }
                                         },
@@ -330,7 +330,7 @@ export const quickAccesses = {
                     'callBack': () => {
                         Bot.createBox('PHD', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=41&nid=42', 'bot')
+                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                         Bot.updateQuickAccess({
                             "Course details": {
                                 'callBack': () => {
@@ -342,7 +342,7 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('Important dates', 'user')
                                     AI.setContext(['phd', 'admission'])
-                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=41&nid=42 and click "Important dates"', 'bot', true, remember)
+                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                     Bot.resetQuickAccess()
                                 }
                             },
@@ -415,7 +415,7 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('B.Tech/B.Arch/Integrated M.Sc', 'user')
                         AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=45&nid=50', 'bot')
+                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                         initChatting()
                         Bot.updateMcq({
                             "Course details": {
@@ -430,7 +430,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Important dates', 'user')
                                     AI.setContext(['b.tech b.arch and integrated msc', 'admission'])
-                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=43&nid=40 and click "Important dates"', 'bot', true, remember)
+                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -482,7 +482,7 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('BHMCT', 'user')
                         AI.setContext(['bhmct', 'admission'])
-                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=43&nid=40', 'bot')
+                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                         initChatting()
                         Bot.updateMcq({
                             "Course details": {
@@ -496,7 +496,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Important dates', 'user')
                                     AI.setContext(['bhmct', 'admission'])
-                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=43&nid=40 and click "Important dates"', 'bot', true, remember)
+                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -570,7 +570,7 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('MBA', 'user')
                         AI.setContext(['MBA', 'admission'])
-                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=34&nid=32', 'bot')
+                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                         initChatting()
                         Bot.updateMcq({
                             "Course details": {
@@ -584,7 +584,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Important dates', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=34&nid=32 and click "Important dates"', 'bot', true, remember)
+                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -646,7 +646,7 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('B.Sc/M.Sc', 'user')
                         AI.setContext(['BSc and MSc', 'admission'])
-                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=44&nid=47', 'bot')
+                        Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                         initChatting()
                         Bot.updateMcq({
                             "Course details": {
@@ -660,7 +660,7 @@ export const mcq = {
                                 'callBack': () => {
                                     Bot.createBox('Important dates', 'user')
                                     AI.setContext(['BSc and MSc', 'admission'])
-                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=44&nid=47 and click "Important dates"', 'bot', true, remember)
+                                    Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                     Bot.removeMcq()
                                     Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                                 }
@@ -743,7 +743,7 @@ export const mcq = {
         'callBack': () => {
             Bot.createBox('PHD', 'user')
             AI.setContext(['phd', 'admission'])
-            Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=41&nid=42', 'bot')
+            Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
             initChatting()
             Bot.updateMcq({
                 "Course details": {
@@ -757,7 +757,7 @@ export const mcq = {
                     'callBack': () => {
                         Bot.createBox('Important dates', 'user')
                         AI.setContext(['phd', 'admission'])
-                        Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=41&nid=42 and click "Important dates"', 'bot', true, remember)
+                        Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                         Bot.removeMcq()
                         Bot.iframe.contentDocument.getElementById('quick-access').style.display = 'block'
                     }
