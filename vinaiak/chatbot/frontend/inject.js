@@ -281,6 +281,7 @@ class Bot {
       (type == "bot" && format == undefined) || format
         ? marked.parse(text.replace(/\u00A0/g, " "), { renderer })
         : text;
+    for (const a of box.querySelectorAll("a")) a.target = "_blank";
     const chatArea = Bot.iframe.contentDocument.getElementById("chat-area");
     chatArea.appendChild(box);
     chatArea.scrollTo({
@@ -510,12 +511,12 @@ class Bot {
         );
         image = image
           ? await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-              resolve(event.target.result);
-            };
-            reader.readAsDataURL(image);
-          })
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                resolve(event.target.result);
+              };
+              reader.readAsDataURL(image);
+            })
           : null;
         query = {
           question: query,
