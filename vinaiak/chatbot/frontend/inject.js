@@ -36,7 +36,7 @@ class AI {
   static keepAliveXhr;
   static keepAliveRequested = true;
   static isTutor = false;
-  constructor(organisationId) {
+  constructor(organisationId, captchaKey) {
     AI.keepAliveXhr = new XMLHttpRequest();
     AI.keepAliveXhr.onload = null;
     AI.keepAliveIntervalId = setInterval(
@@ -353,6 +353,7 @@ class Bot {
   }
   constructor(
     organisationId,
+    captchaKey,
     placeholder,
     title,
     avtarPath,
@@ -365,7 +366,7 @@ class Bot {
       throw new Error(
         "Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists",
       );
-    new AI(organisationId);
+    new AI(organisationId, captchaKey);
     Bot.avtarPath = avtarPath;
     let frameStyles = document.createElement("style");
     frameStyles.id = "frame-animation";

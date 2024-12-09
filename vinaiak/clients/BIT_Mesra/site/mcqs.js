@@ -173,7 +173,7 @@ export const quickAccesses = {
                                 'callBack': () => {
                                     Bot.createBox('MBA', 'user')
                                     AI.setContext(['MBA', 'admission'])
-                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=34&nid=32', 'bot')
+                                    Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                                     Bot.updateQuickAccess({
                                         "Course details": {
                                             'callBack': () => {
@@ -185,7 +185,7 @@ export const quickAccesses = {
                                             'callBack': () => {
                                                 Bot.createBox('Important dates', 'user')
                                                 AI.setContext(['MBA', 'admission'])
-                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/Show_Brochure_Details?brid=34&nid=32 and click "Important dates"', 'bot', true, remember)
+                                                Bot.createBox('To get latest dates go to this link https://www.bitmesra.ac.in/admission/notification/1 and click "Important dates"', 'bot', true, remember)
                                                 Bot.resetQuickAccess()
                                             }
                                         },
