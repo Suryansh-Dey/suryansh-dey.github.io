@@ -545,6 +545,7 @@ class Bot {
       );
   }
   static removeMcq() {
+    this.optionsCallBacks = {};
     Bot.iframe.contentDocument
       .getElementById("chat-area")
       .removeChild(Bot.iframe.contentDocument.getElementById("mcq"));
