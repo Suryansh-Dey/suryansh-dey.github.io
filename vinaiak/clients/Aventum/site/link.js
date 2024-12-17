@@ -1,8 +1,22 @@
 const captchaKey = "6Lffi5YqAAAAADnWze7vgQJf6VTa908gS0v5lLhu";
 
-let injectjs = document.createElement("script");
-injectjs.src = "/vinaiak/chatbot/frontend/inject.js";
-document.body.appendChild(injectjs);
+let AI, Bot;
+const server = "https://api.vinaiak.com";
+fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
+  (response) => {
+    response.text().then((data) => {
+      let Bot1, AI1;
+      data = data + ";Bot1 = Bot;AI1 = AI;";
+      eval(data);
+      AI = AI1;
+      Bot = Bot1;
+    });
+  },
+);
+const mcq = document.createElement('script')
+mcq.src = "https://suryansh-dey.github.io/vinaiak/clients/Aventum/site/mcq.js"
+document.body.appendChild(mcq)
+
 let captchaScript = document.createElement("script");
 captchaScript.src =
   "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey;
@@ -15,7 +29,7 @@ function addBot(targetElement) {
   {
     const styles = document.createElement("link");
     styles.rel = "stylesheet";
-    styles.href = "/vinaiak/clients/BIT_Mesra/site/styles.css";
+    styles.href = "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css";
     document.head.appendChild(styles);
   }
   const loginIcon = document.createElement("div");

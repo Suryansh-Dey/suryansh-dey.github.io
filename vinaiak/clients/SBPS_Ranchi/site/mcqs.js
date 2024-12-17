@@ -17,7 +17,7 @@ function remember() {
   );
 }
 
-export const mcq = {
+const mcq = {
   "About us": {
     callBack: () => {
       Bot.createBox(
@@ -41,7 +41,7 @@ export const mcq = {
     },
   },
 };
-export const quickAccesses = {
+const quickAccesses = {
   "quick access": {
     callBack: () => {
       Bot.updateQuickAccess({

@@ -157,6 +157,7 @@ class Bot {
   static exists = false;
   static loaded = false;
   static replying = false;
+  /** @type {HTMLIFrameElement} */
   static iframe;
   static optionsCallBacks = {};
   static queue = [];
