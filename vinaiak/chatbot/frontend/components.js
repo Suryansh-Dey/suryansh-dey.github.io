@@ -79,6 +79,7 @@ function createLoginForm(heading, anonymous, callback, callstart) {
     const response = await fetch(server + "/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: 'include',
       body: JSON.stringify({
         id: AI.clientId,
         token,
@@ -150,6 +151,7 @@ function createLoginForm(heading, anonymous, callback, callstart) {
         response = await fetch(server + "/verify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: 'include',
           body: JSON.stringify({
             id: AI.clientId,
             OTP: parseInt(email.value),
