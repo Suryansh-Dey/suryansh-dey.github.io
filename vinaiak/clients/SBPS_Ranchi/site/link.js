@@ -1,10 +1,7 @@
 const server = "https://api.vinaiak.com";
 const captchaKey = "6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v";
 
-let mcqs = document.createElement("script");
-mcqs.src = "/vinaiak/clients/SBPS_Ranchi/site/mcqs.js";
-document.body.appendChild(mcqs);
-let AI, Bot
+let AI, Bot;
 fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   (response) => {
     response.text().then((data) => {
@@ -16,14 +13,20 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
     });
   },
 );
-let components = document.createElement("script");
-components.src = "/vinaiak/chatbot/frontend/components.js";
-document.body.appendChild(components);
-let captchaScript = document.createElement("script");
-captchaScript.src =
-  "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey;
-captchaScript.id = "captcha";
-document.body.appendChild(captchaScript);
+{
+  let captchaScript = document.createElement("script");
+  captchaScript.src =
+    "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey;
+  captchaScript.id = "captcha";
+  document.body.appendChild(captchaScript);
+  let components = document.createElement("script");
+  components.src = "/vinaiak/chatbot/frontend/components.js";
+  document.body.appendChild(components);
+
+  let mcqsjs = document.createElement("script");
+  mcqsjs.src = "/vinaiak/clients/SBPS_Ranchi/site/mcqs.js";
+  document.body.appendChild(mcqsjs);
+}
 
 function addBot(targetElement) {
   let frameNotOpened = false;
@@ -62,41 +65,9 @@ function addBot(targetElement) {
       }, 500);
     }
     let customCss = document.createElement("style");
-    customCss.textContent = `
-	  #loginForm{
-		  display: flex;
-		  flex-direction: column;
-		  align-items: center;
-		  width:80dvw
-	  }
-	  #loginForm input{
-		  width: 96%;
-		  height: 1.5em;
-		  margin-top: 0.5em;
-		  border-radius: 5px;
-		  border: none;
-		  background-color: #fbe7d1;
-	  }
-	  #loginForm input:focus {
-		  background-color: #fbe7d1;
-		  outline: none;
-	  }
-	  #loginForm input:-webkit-autofill{
-		  -webkit-box-shadow: 0 0 0px 1000px #fbe7d1 inset;
-	  }
-	  button[type="button"] {
-		  width: 100%;
-		  padding: 10px;
-		  background-color: #ff9029;
-		  color: #fff;
-		  border: none;
-		  border-radius: 5px;
-		  margin-top: 0.6em;
-		  cursor: pointer;
-		}
-	  button[type="button"]:hover {
-		  background-color: #fead61;
-		}
+    customCss.textContent =
+      loginFormCss +
+      `
   #heading {
 	  background-color: #fead61;
 	}
@@ -120,86 +91,15 @@ function addBot(targetElement) {
         });
         Bot.startWaiting();
         setTimeout(() => {
-          Bot.stopWaiting();
-          Bot.createBox(
-            '<div id="loginForm">\
-						<h3 style="margin: 0">Introduce yourself</h3>\
-						<input type="text" id="username" name="username" placeholder="Name" autocomplete="on">\
-						<input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">\
-						<button type="button" id="submit">Submit</button>\
-						</div>',
-            "bot",
-            false,
+          createLoginForm(
+            "Introduce yourself",
+            true,
+            () => {
+              Bot.createMcq(mcq);
+            },
+            Bot.stopWaiting,
           );
-          frame.getElementById("username").focus();
-          frame
-            .getElementById("username")
-            .addEventListener("keydown", (event) => {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                frame.getElementById("email").focus();
-              }
-            });
-          frame.getElementById("email").addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-              event.preventDefault();
-              frame.getElementById("submit").dispatchEvent(new Event("click"));
-            }
-          });
-          frame.getElementById("submit").addEventListener("click", (event) => {
-            event.preventDefault();
-            const name = frame.getElementById("username").value;
-            const email = frame.getElementById("email").value;
-            const xhr = new XMLHttpRequest();
-            grecaptcha.enterprise.ready(async () => {
-              const token = await grecaptcha.enterprise.execute(captchaKey, {
-                action: "LOGIN",
-              });
-              xhr.open("POST", server + "/verify", true);
-              xhr.setRequestHeader(
-                "Content-Type",
-                "application/json;charset=UTF-8",
-              );
-              xhr.onload = () => {
-                if (xhr.status != 200) {
-                  Bot.reply(
-                    "Error: Invalid session. Please try logging in again otherwise some features may not work",
-                  );
-                  return;
-                }
-                xhr.open("POST", server + "/commonData", true);
-                xhr.setRequestHeader(
-                  "Content-Type",
-                  "application/json;charset=UTF-8",
-                );
-                xhr.onload = null;
-                xhr.send(
-                  JSON.stringify({
-                    id: AI.clientId,
-                    data: "name " + name,
-                    personalData: { name: name, email: email },
-                  }),
-                );
-              };
-              xhr.send(
-                JSON.stringify({
-                  id: AI.clientId,
-                  token: token,
-                }),
-              );
-            });
-            frame
-              .getElementById("chat-area")
-              .removeChild(frame.getElementById("loginForm").parentNode);
-            if (email == "deysuryansh@gmail.com")
-              Bot.reply(`Welcome back champion! How may I help you today?`);
-            else
-              Bot.reply(
-                `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${name.split(" ")[0]}! Welcome to SBPS Ranchi. An paradice, legally known to be a school. What would you like to know about us?`,
-              );
-            Bot.createMcq(mcq);
-          });
-        }, 2000);
+        }, 1000);
         Bot.customiseCss(customCss);
         frame
           .getElementById("chat-area")

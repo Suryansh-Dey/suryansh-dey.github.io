@@ -29,7 +29,7 @@ function createInputBox(question, id, callback) {
     },
   );
 }
-const LoginFormCss = `
+const loginFormCss = `
 	  #loginForm{
 		  display: flex;
 		  flex-direction: column;
@@ -68,23 +68,29 @@ const LoginFormCss = `
 /**
  * @param {string} heading
  * @param {boolean} anonymous
+ * @param {Function} callback
  * @returns {void}
  */
-function createLoginForm(heading, anonymous) {
+function createLoginForm(heading, anonymous, callback, callstart) {
   grecaptcha.enterprise.ready(async () => {
-    const token = await grecaptcha.enterprise.execute(captchaKey, {
+    let token = await grecaptcha.enterprise.execute(captchaKey, {
       action: "LOGIN",
     });
     const response = await fetch(server + "/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        id: AI.clientId,
         token,
         personalData: { name: "suryansh", emailid: "deysuryansh@gmail.com" },
       }),
     });
+    if (callstart) callstart();
     const result = await response.text();
-    if (result == "Ok") return;
+    if (result == "Ok") {
+      if (callback) callback();
+      return;
+    }
 
     Bot.createBox(
       `
@@ -114,18 +120,53 @@ function createLoginForm(heading, anonymous) {
     });
     frame.getElementById("login").onclick = async () => {
       const name = frame.getElementById("username");
-      const emailId = frame.getElementById("email");
-      const response = await fetch(server + '/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          emailId: emailId.value,
-          token
+      const email = frame.getElementById("email");
+      const emailId = email.value.trim();
+      if (name.value.trim().length < 3 || !email.value.includes("@")) return;
+      name.parentNode.removeChild(name);
+      email.type = "number";
+      email.name = "OTP";
+      email.placeholder = "OTP";
+      email.value = "";
+      frame.querySelector("#loginForm h3").textContent = "Email sent";
+
+      let response = await fetch(server + "/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: AI.clientId,
+          emailId,
+          token,
+        }),
+      });
+      if (response.status != 200) {
+        Bot.createBox("Login failed! Try loggin in again later", "bot");
+        return;
+      }
+    token = await grecaptcha.enterprise.execute(captchaKey, {
+      action: "LOGIN",
+    });
+      frame.getElementById("login").onclick = async () => {
+        response = await fetch(server + "/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: AI.clientId,
+            OTP: parseInt(email.value),
+            token,
+            personalData: { name: name.value.trim(), emailId },
+          }),
+        });
+        if (response.status == 200 && "OK" == (await response.text())) {
+          frame
+            .getElementById("chat-area")
+            .removeChild(frame.getElementById("chat-area").lastChild);
+          callback()
+        } else {
+          email.value = "";
+          email.placeholder = "Wrong OTP, try again";
         }
-      })
-      const parent = name.parentNode
-      parent.removeChild(name)
-      parent.removeChild(emailId)
+      };
     };
   });
 }
