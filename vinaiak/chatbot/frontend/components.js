@@ -51,7 +51,7 @@ const loginFormCss = `
 	  #loginForm input:-webkit-autofill{
 		  -webkit-box-shadow: 0 0 0px 1000px #fbe7d1 inset;
 	  }
-    #login {
+    #login,#allowAnonymous {
 		  width: 100%;
 		  padding: 10px;
 		  background-color: #ff9029;
@@ -61,17 +61,28 @@ const loginFormCss = `
 		  margin-top: 0.6em;
 		  cursor: pointer;
 		}
-    #login:hover {
+    #allowAnonymous{
+      background-color: #ffcc00;
+      color: black;
+    }
+    #login:hover,#allowAnonymous:hover {
 		  background-color: #fead61;
 		}
 `;
 /**
  * @param {string} heading
  * @param {boolean} anonymous
- * @param {Function} callback
+ * @param {(sessionToken?: {name:string, emailId:string})=>void} callback
  * @returns {void}
  */
-function createLoginForm(heading, anonymous, callback, callstart) {
+function createLoginForm(
+  captchaKey,
+  heading,
+  allowAnonymous,
+  callback,
+  callstart,
+) {
+  let anonymous = false;
   grecaptcha.enterprise.ready(async () => {
     let token = await grecaptcha.enterprise.execute(captchaKey, {
       action: "LOGIN",
@@ -79,17 +90,16 @@ function createLoginForm(heading, anonymous, callback, callstart) {
     const response = await fetch(server + "/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify({
         id: AI.clientId,
         token,
-        personalData: { name: "suryansh", emailid: "deysuryansh@gmail.com" },
       }),
     });
     if (callstart) callstart();
     const result = await response.text();
-    if (result == "Ok") {
-      if (callback) callback();
+    if (response.status === 200 && result !== "Verification failed") {
+      if (callback) callback(JSON.parse(result));
       return;
     }
 
@@ -100,7 +110,8 @@ function createLoginForm(heading, anonymous, callback, callstart) {
 <input type="text" id="username" name="username" placeholder="Name" autocomplete="on">
 <input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">
 <button type="button" id="login">Login</button>
-</div>,
+${allowAnonymous ? '<button type="button" id="allowAnonymous">Anonymous</button>' : ""}
+</div>
 `,
       "bot",
       true,
@@ -123,7 +134,27 @@ function createLoginForm(heading, anonymous, callback, callstart) {
       const name = frame.getElementById("username");
       const email = frame.getElementById("email");
       const emailId = email.value.trim();
-      if (name.value.trim().length < 3 || !email.value.includes("@")) return;
+      if (
+        !anonymous &&
+        (name.value.trim().length < 3 || !email.value.includes("@"))
+      )
+        return;
+      let response = await fetch(server + "/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: AI.clientId,
+          anonymous,
+          emailId,
+          token,
+        }),
+      });
+      if (anonymous) {
+        if (callback) callback();
+        if (response.status != 200)
+          Bot.createBox("Login in failed. Try again later", "bot");
+        return;
+      }
       name.parentNode.removeChild(name);
       email.type = "number";
       email.name = "OTP";
@@ -131,27 +162,18 @@ function createLoginForm(heading, anonymous, callback, callstart) {
       email.value = "";
       frame.querySelector("#loginForm h3").textContent = "Email sent";
 
-      let response = await fetch(server + "/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: AI.clientId,
-          emailId,
-          token,
-        }),
-      });
       if (response.status != 200) {
         Bot.createBox("Login failed! Try loggin in again later", "bot");
         return;
       }
-    token = await grecaptcha.enterprise.execute(captchaKey, {
-      action: "LOGIN",
-    });
+      token = await grecaptcha.enterprise.execute(captchaKey, {
+        action: "LOGIN",
+      });
       frame.getElementById("login").onclick = async () => {
         response = await fetch(server + "/verify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: 'include',
+          credentials: "include",
           body: JSON.stringify({
             id: AI.clientId,
             OTP: parseInt(email.value),
@@ -159,16 +181,26 @@ function createLoginForm(heading, anonymous, callback, callstart) {
             personalData: { name: name.value.trim(), emailId },
           }),
         });
-        if (response.status == 200 && "OK" == (await response.text())) {
+        if (response.status == 200 && "OK" === (await response.text())) {
           frame
             .getElementById("chat-area")
             .removeChild(frame.getElementById("chat-area").lastChild);
-          callback()
+          callback({ name: name.value.trim(), emailId });
         } else {
           email.value = "";
           email.placeholder = "Wrong OTP, try again";
+          token = await grecaptcha.enterprise.execute(captchaKey, {
+            action: "LOGIN",
+          });
         }
       };
+    };
+    frame.getElementById("allowAnonymous").onclick = () => {
+      anonymous = true;
+      frame.getElementById("login").onclick();
+      frame
+        .getElementById("chat-area")
+        .removeChild(frame.getElementById("chat-area").lastChild);
     };
   });
 }

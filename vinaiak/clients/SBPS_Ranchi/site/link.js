@@ -92,6 +92,7 @@ function addBot(targetElement) {
         Bot.startWaiting();
         setTimeout(() => {
           createLoginForm(
+            captchaKey,
             "Introduce yourself",
             true,
             () => {
