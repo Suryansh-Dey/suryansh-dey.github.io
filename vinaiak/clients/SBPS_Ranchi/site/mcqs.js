@@ -17,6 +17,7 @@ const mcq = {
         false,
         remember,
       );
+      Bot.removeMcq();
     },
   },
   "Admission form": {
@@ -27,6 +28,7 @@ const mcq = {
         true,
         remember,
       );
+      Bot.removeMcq();
     },
   },
   "Fee structure": {
@@ -37,6 +39,7 @@ const mcq = {
         true,
         remember,
       );
+      Bot.removeMcq();
     },
   },
 };
