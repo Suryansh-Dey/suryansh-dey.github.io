@@ -48,7 +48,7 @@ function addBot(targetElement) {
     captchaScript.id = "captcha";
     targetElement.appendChild(captchaScript);
     let components = document.createElement("script");
-    components.src = "/vinaiak/chatbot/frontend/components.js";
+    components.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
     document.body.appendChild(components);
   }
 
