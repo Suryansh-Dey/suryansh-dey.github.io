@@ -65,9 +65,12 @@ const loginFormCss = `
       background-color: #ffcc00;
       color: black;
     }
-    #login:hover,#allowAnonymous:hover {
+    #login:hover{
 		  background-color: #fead61;
 		}
+    #allowAnonymous:hover {
+      background-color: #ffdd00
+    }
 `;
 /**
  * @param {string} heading
@@ -110,7 +113,7 @@ function createLoginForm(
 <input type="text" id="username" name="username" placeholder="Name" autocomplete="on">
 <input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">
 <button type="button" id="login">Login</button>
-${allowAnonymous ? '<button type="button" id="allowAnonymous">Anonymous</button>' : ""}
+${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : ""}
 </div>
 `,
       "bot",

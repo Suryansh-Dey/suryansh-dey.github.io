@@ -1,13 +1,4 @@
 const xhr = new XMLHttpRequest();
-function initChatting() {
-  Bot.iframe.contentDocument.getElementById("text-input").style.display =
-    "block";
-  Bot.iframe.contentDocument.getElementById("send").style.display = "block";
-  Bot.iframe.contentDocument.getElementById("text-input").focus();
-  Bot.removeMcq();
-  Bot.iframe.contentDocument.getElementById("quick-access").style.display =
-    "block";
-}
 function remember() {
   let children =
     Bot.iframe.contentDocument.getElementById("chat-area").children;
@@ -26,7 +17,6 @@ const mcq = {
         false,
         remember,
       );
-      initChatting();
     },
   },
   "Admission form": {
@@ -37,7 +27,16 @@ const mcq = {
         true,
         remember,
       );
-      initChatting();
+    },
+  },
+  "Fee structure": {
+    callBack: () => {
+      Bot.createBox(
+        "Follow this link to the fee structure https://docs.sbpsranchi.com/SBPS-Ftp-Uploads/PDFs/Fees/2024/November/23-11-2024-Fees.pdf",
+        "bot",
+        true,
+        remember,
+      );
     },
   },
 };
@@ -60,6 +59,17 @@ const quickAccesses = {
           callBack: () => {
             Bot.createBox(
               "Follow this link to the admission form https://sbpsranchi.in/admission/newregxi.aspx",
+              "bot",
+              true,
+              remember,
+            );
+            Bot.resetQuickAccess();
+          },
+        },
+        "Fee structure": {
+          callBack: () => {
+            Bot.createBox(
+              "Follow this link to the fee structure https://docs.sbpsranchi.com/SBPS-Ftp-Uploads/PDFs/Fees/2024/November/23-11-2024-Fees.pdf",
               "bot",
               true,
               remember,

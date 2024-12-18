@@ -20,11 +20,13 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   captchaScript.id = "captcha";
   document.body.appendChild(captchaScript);
   let components = document.createElement("script");
-  components.src = "/vinaiak/chatbot/frontend/components.js";
+  components.src =
+    "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
   document.body.appendChild(components);
 
   let mcqsjs = document.createElement("script");
-  mcqsjs.src = "/vinaiak/clients/SBPS_Ranchi/site/mcqs.js";
+  mcqsjs.src =
+    "https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/mcqs.js";
   document.body.appendChild(mcqsjs);
 }
 
@@ -36,13 +38,14 @@ function addBot(targetElement) {
   {
     const styles = document.createElement("link");
     styles.rel = "stylesheet";
-    styles.href = "/vinaiak/clients/SBPS_Ranchi/site/styles.css";
+    styles.href =
+      "https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/styles.css";
     document.head.appendChild(styles);
   }
   const loginIcon = document.createElement("div");
   loginIcon.id = "bot-loginIcon";
   loginIcon.innerHTML =
-    '<img src="/vinaiak/clients/SBPS_Ranchi/site/resources/icon.gif" alt="AI assistants"</img>';
+    '<img src="https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/resources/icon.gif" alt="AI assistants"</img>';
   targetElement.appendChild(loginIcon);
   let captchaScript = document.createElement("script");
   captchaScript.src =
@@ -95,7 +98,18 @@ function addBot(targetElement) {
             captchaKey,
             "Introduce yourself",
             true,
-            () => {
+            (personalData) => {
+              Bot.reply(
+                `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`,
+              );
+              frame.getElementById("text-input").style.display =
+                "block";
+              frame.getElementById("send").style.display =
+                "block";
+              frame.getElementById("text-input").focus();
+              frame.getElementById(
+                "quick-access",
+              ).style.display = "block";
               Bot.createMcq(mcq);
             },
             Bot.stopWaiting,
