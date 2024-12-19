@@ -46,6 +46,7 @@ function addBot(targetElement) {
     captchaScript.src =
       "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey;
     captchaScript.id = "captcha";
+    captchaScript.async = false;
     targetElement.appendChild(captchaScript);
     let components = document.createElement("script");
     components.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";

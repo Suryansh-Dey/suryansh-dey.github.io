@@ -18,6 +18,7 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   captchaScript.src =
     "https://www.google.com/recaptcha/enterprise.js?render=" + captchaKey;
   captchaScript.id = "captcha";
+  captchaScript.async = false;
   document.body.appendChild(captchaScript);
   let components = document.createElement("script");
   components.src =
