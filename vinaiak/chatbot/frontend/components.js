@@ -136,6 +136,10 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       }
     });
     frame.getElementById("login").onclick = async () => {
+      frame
+        .getElementById("loginForm")
+        .removeChild(frame.getElementById("allowAnonymous"));
+
       const name = frame.getElementById("username");
       const email = frame.getElementById("email");
       const emailId = email.value.trim();
