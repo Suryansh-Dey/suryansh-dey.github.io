@@ -102,9 +102,8 @@ function createLoginForm(
       }),
     });
     if (callstart) callstart();
-    const result = await response.text();
-    if (response.status === 200 && result !== "Verification failed") {
-      if (callback) callback(JSON.parse(result));
+    if (response.status === 200) {
+      if (callback) callback(await response.json());
       return;
     }
 
@@ -175,7 +174,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       frame.querySelector("#loginForm h3").textContent = "Email sent";
 
       response = await response;
-      if (response.status != 200) {
+      if (response.status != 202) {
         Bot.createBox("Login failed! Try loggin in again later", "bot");
         return;
       }
@@ -198,7 +197,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         });
         Bot.stopWaiting();
         frame.getElementById("loginForm").style.display = "block";
-        if (response.status == 200 && "OK" === (await response.text())) {
+        if (response.status == 200) {
           frame
             .getElementById("chat-area")
             .removeChild(frame.getElementById("loginForm").parentNode);
