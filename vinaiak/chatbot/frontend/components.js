@@ -173,11 +173,11 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         return;
       }
 
-      const loginForm = frame.getElementById('loginForm')
+      const loginForm = frame.getElementById("loginForm");
       loginForm.removeChild(name);
       loginForm.removeChild(email);
-      const otp = loginForm.querySelector('#otp');
-      otp.style.display="block"
+      const otp = loginForm.querySelector("#otp");
+      otp.style.display = "block";
       frame.querySelector("#loginForm h3").textContent = "Email sent";
 
       response = await response;
@@ -189,6 +189,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         action: "LOGIN",
       });
       frame.getElementById("login").onclick = async () => {
+        if (otp.value.trim().length < 6 || otp.value.trim().length > 6) return;
         frame.getElementById("loginForm").style.display = "none";
         Bot.startWaiting();
         response = await fetch(server + "/verify", {
@@ -211,7 +212,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
           callback({ name: name.value.trim(), emailId });
         } else {
           otp.value = "";
-          loginForm.querySelector('h3').textContent = "Wrong OTP, try again";
+          loginForm.querySelector("h3").textContent = "Wrong OTP, try again";
           token = await grecaptcha.enterprise.execute(captchaKey, {
             action: "LOGIN",
           });
