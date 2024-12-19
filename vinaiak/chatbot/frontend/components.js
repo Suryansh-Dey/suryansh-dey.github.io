@@ -113,12 +113,12 @@ function createLoginForm(
 <h3 style="margin: 0">${heading}</h3>
 <input type="text" id="username" name="username" placeholder="Name" autocomplete="on">
 <input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">
+<input style="display:none" id="otp" type="number" placeholder="OTP">
 <button type="button" id="login">Login</button>
 ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : ""}
 </div>
 `,
       "bot",
-      true,
     );
     const frame = Bot.iframe.contentDocument;
     frame.getElementById("username").focus();
@@ -129,6 +129,12 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       }
     });
     frame.getElementById("email").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        frame.getElementById("login").dispatchEvent(new Event("click"));
+      }
+    });
+    frame.getElementById("otp").addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
         frame.getElementById("login").dispatchEvent(new Event("click"));
@@ -166,11 +172,11 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         return;
       }
 
-      name.parentNode.removeChild(name);
-      email.type = "number";
-      email.name = "OTP";
-      email.placeholder = "OTP";
-      email.value = "";
+      const loginForm = frame.getElementById('loginForm')
+      loginForm.removeChild(name);
+      loginForm.removeChild(email);
+      const otp = loginForm.querySelector('#otp');
+      otp.style.display="block"
       frame.querySelector("#loginForm h3").textContent = "Email sent";
 
       response = await response;
@@ -190,21 +196,21 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
           credentials: "include",
           body: JSON.stringify({
             id: AI.clientId,
-            OTP: parseInt(email.value),
+            OTP: parseInt(otp.value),
             token,
             personalData: { name: name.value.trim(), emailId },
           }),
         });
         Bot.stopWaiting();
-        frame.getElementById("loginForm").style.display = "block";
+        frame.getElementById("loginForm").style.display = "flex";
         if (response.status == 200) {
           frame
             .getElementById("chat-area")
             .removeChild(frame.getElementById("loginForm").parentNode);
           callback({ name: name.value.trim(), emailId });
         } else {
-          email.value = "";
-          email.placeholder = "Wrong OTP, try again";
+          otp.value = "";
+          loginForm.querySelector('h3').textContent = "Wrong OTP, try again";
           token = await grecaptcha.enterprise.execute(captchaKey, {
             action: "LOGIN",
           });

@@ -254,6 +254,13 @@ class Bot {
     avtar.style.height = "2rem";
     Bot.iframe.contentDocument.getElementById("chat-area").appendChild(avtar);
   }
+  /**
+   * @param {string} text
+   * @param {'bot'|'user'} type
+   * @param {boolean | undefined} format if true text is treated as markdown else as raw HTML
+   * @param {(()=>void) | undefined} callBack 
+   * @returns {HTMLDivElement | null} box
+  */
   static createBox(text, type, format, callBack) {
     if (Bot.replying) {
       Bot.queue.push({
@@ -262,7 +269,7 @@ class Bot {
         format: format,
         callBack: callBack,
       });
-      return;
+      return null;
     }
     const chats =
       Bot.iframe.contentDocument.getElementById("chat-area").children;
@@ -298,6 +305,7 @@ class Bot {
       Bot.queue.shift();
       this.createBox(text, type, format, callBack);
     }
+    return box;
   }
   static createOptions(options, containerClassId, optionClassName) {
     if (!Bot.optionsCallBacks.hasOwnProperty(containerClassId))

@@ -17,6 +17,7 @@ const mcq = {
         false,
         remember,
       );
+      Bot.createBox("About us", "user");
       Bot.removeMcq();
     },
   },
@@ -28,6 +29,7 @@ const mcq = {
         true,
         remember,
       );
+      Bot.createBox("Admission form", "user");
       Bot.removeMcq();
     },
   },
@@ -39,6 +41,7 @@ const mcq = {
         true,
         remember,
       );
+      Bot.createBox("Fee structure", "user");
       Bot.removeMcq();
     },
   },
@@ -55,6 +58,7 @@ const quickAccesses = {
               false,
               remember,
             );
+            Bot.createBox("About us", "user");
             Bot.resetQuickAccess();
           },
         },
@@ -66,6 +70,7 @@ const quickAccesses = {
               true,
               remember,
             );
+            Bot.createBox("Admission form", "user");
             Bot.resetQuickAccess();
           },
         },
@@ -77,6 +82,7 @@ const quickAccesses = {
               true,
               remember,
             );
+            Bot.createBox("Fee structure", "user");
             Bot.resetQuickAccess();
           },
         },
