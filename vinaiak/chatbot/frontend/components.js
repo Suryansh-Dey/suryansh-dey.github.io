@@ -142,7 +142,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         (name.value.trim().length < 3 || !email.value.includes("@"))
       )
         return;
-      let response = await fetch(server + "/verify", {
+      let response = fetch(server + "/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -154,10 +154,13 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       });
       if (anonymous) {
         if (callback) callback();
-        if (response.status != 200)
-          Bot.createBox("Login in failed. Try again later", "bot");
+        response.then((response) => {
+          if (response.status != 200)
+            Bot.createBox("Login in failed. Try again later", "bot");
+        });
         return;
       }
+
       name.parentNode.removeChild(name);
       email.type = "number";
       email.name = "OTP";
@@ -165,6 +168,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       email.value = "";
       frame.querySelector("#loginForm h3").textContent = "Email sent";
 
+      response = await response;
       if (response.status != 200) {
         Bot.createBox("Login failed! Try loggin in again later", "bot");
         return;
@@ -191,7 +195,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         if (response.status == 200 && "OK" === (await response.text())) {
           frame
             .getElementById("chat-area")
-            .removeChild(frame.getElementById("chat-area").lastChild);
+            .removeChild(frame.getElementById("loginForm"));
           callback({ name: name.value.trim(), emailId });
         } else {
           email.value = "";
@@ -207,7 +211,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       frame.getElementById("login").onclick();
       frame
         .getElementById("chat-area")
-        .removeChild(frame.getElementById("chat-area").lastChild);
+        .removeChild(frame.getElementById("loginForm"));
     };
   });
 }
