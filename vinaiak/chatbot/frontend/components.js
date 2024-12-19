@@ -73,9 +73,11 @@ const loginFormCss = `
     }
 `;
 /**
+ * @param {string} captchaKey
  * @param {string} heading
- * @param {boolean} anonymous
- * @param {(sessionToken?: {name:string, emailId:string})=>void} callback
+ * @param {boolean} allowAnonymous
+ * @param {((sessionToken?: {name:string, emailId:string})=>void) | null} callback
+ * @param {(()=>void) | null} callstart
  * @returns {void}
  */
 function createLoginForm(
@@ -195,7 +197,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         if (response.status == 200 && "OK" === (await response.text())) {
           frame
             .getElementById("chat-area")
-            .removeChild(frame.getElementById("loginForm"));
+            .removeChild(frame.getElementById("loginForm").parentNode);
           callback({ name: name.value.trim(), emailId });
         } else {
           email.value = "";
@@ -211,7 +213,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       frame.getElementById("login").onclick();
       frame
         .getElementById("chat-area")
-        .removeChild(frame.getElementById("loginForm"));
+        .removeChild(frame.getElementById("loginForm").parentNode);
     };
   });
 }
