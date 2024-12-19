@@ -173,6 +173,8 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         action: "LOGIN",
       });
       frame.getElementById("login").onclick = async () => {
+        frame.getElementById("loginForm").style.display = "none";
+        Bot.startWaiting();
         response = await fetch(server + "/verify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -184,6 +186,8 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
             personalData: { name: name.value.trim(), emailId },
           }),
         });
+        Bot.stopWaiting();
+        frame.getElementById("loginForm").style.display = "block";
         if (response.status == 200 && "OK" === (await response.text())) {
           frame
             .getElementById("chat-area")
