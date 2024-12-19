@@ -94,28 +94,22 @@ function addBot(targetElement) {
           document.getElementById("bot-loginIcon").style.display = "block";
         });
         Bot.startWaiting();
-        setTimeout(() => {
-          createLoginForm(
-            captchaKey,
-            "Introduce yourself",
-            true,
-            (personalData) => {
-              Bot.reply(
-                `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`,
-              );
-              frame.getElementById("text-input").style.display =
-                "block";
-              frame.getElementById("send").style.display =
-                "block";
-              frame.getElementById("text-input").focus();
-              frame.getElementById(
-                "quick-access",
-              ).style.display = "block";
-              Bot.createMcq(mcq);
-            },
-            Bot.stopWaiting,
-          );
-        }, 1000);
+        createLoginForm(
+          captchaKey,
+          "Introduce yourself",
+          true,
+          (personalData) => {
+            Bot.reply(
+              `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`,
+            );
+            frame.getElementById("text-input").style.display = "block";
+            frame.getElementById("send").style.display = "block";
+            frame.getElementById("text-input").focus();
+            frame.getElementById("quick-access").style.display = "block";
+            Bot.createMcq(mcq);
+          },
+          Bot.stopWaiting,
+        );
         Bot.customiseCss(customCss);
         frame
           .getElementById("chat-area")

@@ -49,7 +49,8 @@ function addBot(targetElement) {
     captchaScript.async = false;
     targetElement.appendChild(captchaScript);
     let components = document.createElement("script");
-    components.src = "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
+    components.src =
+      "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
     document.body.appendChild(components);
   }
 
@@ -146,22 +147,20 @@ function addBot(targetElement) {
           document.getElementById("bot-loginIcon").style.display = "block";
         });
         Bot.startWaiting();
-        setTimeout(() => {
-          createLoginForm(
-            captchaKey,
-            "Introduce yourself",
-            true,
-            (personalData) => {
-              Bot.reply(
-                `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! Which program are you intrested in?`,
-              );
-              Bot.createMcq(mcq);
-            },
-            () => {
-              Bot.stopWaiting();
-            },
-          );
-        }, 1000);
+        createLoginForm(
+          captchaKey,
+          "Introduce yourself",
+          true,
+          (personalData) => {
+            Bot.reply(
+              `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! Which program are you intrested in?`,
+            );
+            Bot.createMcq(mcq);
+          },
+          () => {
+            Bot.stopWaiting();
+          },
+        );
         Bot.customiseCss(customCss);
         frame
           .getElementById("chat-area")

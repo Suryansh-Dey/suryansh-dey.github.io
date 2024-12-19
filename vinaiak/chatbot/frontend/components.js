@@ -119,6 +119,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
 </div>
 `,
       "bot",
+      false,
     );
     const frame = Bot.iframe.contentDocument;
     frame.getElementById("username").focus();
