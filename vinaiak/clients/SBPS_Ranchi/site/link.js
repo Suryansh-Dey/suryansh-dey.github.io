@@ -21,6 +21,7 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   captchaScript.async = false;
   document.body.appendChild(captchaScript);
   let components = document.createElement("script");
+  components.async = false;
   components.src =
     "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
   document.body.appendChild(components);

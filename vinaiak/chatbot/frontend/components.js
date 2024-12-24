@@ -205,7 +205,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       const loginForm = frame.getElementById("loginForm");
       loginForm.removeChild(name);
       loginForm.removeChild(email);
-      loginForm.removeChild(classInput);
+      if (allowClassInput) loginForm.removeChild(classInput);
       const otp = loginForm.querySelector("#otp");
       otp.style.display = "block";
       frame.querySelector("#loginForm h3").textContent = "Email sent";
@@ -239,7 +239,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
           frame
             .getElementById("chat-area")
             .removeChild(frame.getElementById("loginForm").parentNode);
-          callback({ name: name.value.trim(), emailId, additionalInfo: classInput.value });
+          callback({ name: name.value.trim(), emailId, additionalInfo: allowClassInput ? classInput.value : undefined });
         } else {
           otp.value = "";
           loginForm.querySelector("h3").textContent = "Wrong OTP, try again";

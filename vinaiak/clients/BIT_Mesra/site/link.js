@@ -51,6 +51,7 @@ function addBot(targetElement) {
     let components = document.createElement("script");
     components.src =
       "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
+    components.async = false;
     document.body.appendChild(components);
   }
 

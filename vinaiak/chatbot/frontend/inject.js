@@ -153,6 +153,7 @@ class Bot {
   static landscapeWidth = 30;
   static mobileWidth = 100;
   static height = 98;
+  static mobileHeight = 100;
   static audios = {
     openFrame: new Audio(
       "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Open.wav",
@@ -221,11 +222,13 @@ class Bot {
         `;
   }
   static resizeIframe() {
-    Bot.iframe.style.width =
-      (window.innerHeight > window.innerWidth
-        ? Bot.mobileWidth
-        : Bot.landscapeWidth) + "dvw";
-    Bot.iframe.style.height = Bot.height;
+    if (window.innerHeight > window.innerWidth) {
+      Bot.iframe.style.width = Bot.mobileWidth + "dvw"
+      Bot.iframe.style.height = Bot.mobileHeight + "dvh";
+    } else {
+      Bot.iframe.style.width = Bot.landscapeWidth + "dvw"
+      Bot.iframe.style.height = Bot.height + "dvh";
+    }
     document.getElementById("frame-animation").textContent =
       Bot.generateFrameAnimation();
   }
@@ -393,8 +396,8 @@ class Bot {
     Bot.avtarPath = avtarPath;
     let frameStyles = document.createElement("style");
     frameStyles.id = "frame-animation";
-    frameStyles.textContent = Bot.generateFrameAnimation();
     document.head.appendChild(frameStyles);
+    Bot.resizeIframe()
     Bot.iframe = document.createElement("iframe");
     Bot.iframe.title = "chat bot frame";
     fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.html")
@@ -411,12 +414,7 @@ class Bot {
     Bot.iframe.style.position = "fixed";
     Bot.iframe.style.bottom = "1dvh";
     Bot.iframe.style.right = "1px";
-    Bot.iframe.style.width =
-      (window.innerHeight > window.innerWidth
-        ? Bot.mobileWidth
-        : Bot.landscapeWidth) + "dvw";
     Bot.iframe.style.display = "none";
-    Bot.iframe.style.height = Bot.height + "dvh";
     Bot.iframe.style.overflow = "hidden";
     Bot.iframe.style.border = "none";
     Bot.iframe.style.boxShadow = "0 0 5px rgb(100,100,100)";
