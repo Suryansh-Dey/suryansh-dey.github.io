@@ -153,7 +153,7 @@ class Bot {
   static landscapeWidth = 30;
   static mobileWidth = 100;
   static height = 98;
-  static mobileHeight = 100;
+  static mobileHeight = 98;
   static audios = {
     openFrame: new Audio(
       "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Open.wav",
@@ -397,7 +397,6 @@ class Bot {
     let frameStyles = document.createElement("style");
     frameStyles.id = "frame-animation";
     document.head.appendChild(frameStyles);
-    Bot.resizeIframe()
     Bot.iframe = document.createElement("iframe");
     Bot.iframe.title = "chat bot frame";
     fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.html")
@@ -410,6 +409,7 @@ class Bot {
         Bot.iframe.contentDocument.close();
         Bot.exists = true;
       });
+    Bot.resizeIframe()
     Bot.iframe.id = "bot-iframe";
     Bot.iframe.style.position = "fixed";
     Bot.iframe.style.bottom = "1dvh";
