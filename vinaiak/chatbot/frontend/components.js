@@ -239,7 +239,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
           frame
             .getElementById("chat-area")
             .removeChild(frame.getElementById("loginForm").parentNode);
-          callback({ name: name.value.trim(), emailId });
+          callback({ name: name.value.trim(), emailId, additionalInfo: classInput.value });
         } else {
           otp.value = "";
           loginForm.querySelector("h3").textContent = "Wrong OTP, try again";

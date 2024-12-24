@@ -127,7 +127,7 @@ const quickAccesses = {
               AI.getData(['Notices', 'common to all'])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
             }
-            else Bot.createBox("Ask the AI about Notices for a class")
+            else Bot.createBox("Ask the AI about Notices for a class", 'bot')
             Bot.resetQuickAccess()
           }
         }
