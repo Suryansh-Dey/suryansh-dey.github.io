@@ -59,9 +59,12 @@ const mcq = {
   "Notices": {
     callBack: () => {
       Bot.createBox("Notices", 'user')
-      if (personalData_className)
+      if (personalData_className) {
         AI.getData(['Notices', personalData_className])
           .then(data => { Bot.createBox(data, 'bot', true, remember) })
+        AI.getData(['Notices', 'common to all'])
+          .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      }
       else Bot.createBox("Ask the AI about Notices for a class", 'bot')
       Bot.removeMcq()
     }
@@ -118,9 +121,12 @@ const quickAccesses = {
         },
         "Notices": {
           callBack: () => {
-            if (personalData_className)
+            if (personalData_className) {
               AI.getData(['Notices', personalData_className])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
+              AI.getData(['Notices', 'common to all'])
+                .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            }
             else Bot.createBox("Ask the AI about Notices for a class")
             Bot.resetQuickAccess()
           }
