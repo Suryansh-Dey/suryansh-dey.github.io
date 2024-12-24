@@ -30,6 +30,8 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   document.body.appendChild(mcqsjs);
 }
 
+let personalData_className = ''
+
 function addBot(targetElement) {
   let frameNotOpened = false;
   targetElement = targetElement || document.body;
@@ -67,14 +69,11 @@ function addBot(targetElement) {
         else Bot.openFrame();
       }, 500);
     }
-    let customCss = document.createElement("style");
-    customCss.textContent =
-      loginFormCss +
+    let customCss = getLoginFormCss(
       `
   #heading {
 	  background-color: #fead61;
-	}
-`;
+	}`);
     Bot.height = 70;
     new Bot(
       2,
@@ -98,6 +97,7 @@ function addBot(targetElement) {
           "Introduce yourself",
           true,
           (personalData) => {
+            personalData_className = personalData.additionalInfo.split(' ')[4]
             Bot.reply(
               `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`,
             );
@@ -108,6 +108,7 @@ function addBot(targetElement) {
             Bot.createMcq(mcq);
           },
           Bot.stopWaiting,
+          true
         );
         Bot.customiseCss(customCss);
         frame

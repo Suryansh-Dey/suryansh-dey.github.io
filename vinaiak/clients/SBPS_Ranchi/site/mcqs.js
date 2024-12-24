@@ -44,7 +44,24 @@ const mcq = {
       Bot.createBox("Fee structure", "user");
       Bot.removeMcq();
     },
+
   },
+  "Assignments": {
+    callBack: () => {
+      Bot.createBox("Assignments", 'user')
+      AI.getData(['Assignments', personalData_className])
+        .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      Bot.removeMcq()
+    }
+  },
+  "Notices": {
+    callBack: () => {
+      Bot.createBox("Notices", 'user')
+      AI.getData(['Notices', personalData_className])
+        .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      Bot.removeMcq()
+    }
+  }
 };
 const quickAccesses = {
   "quick access": {
@@ -86,6 +103,22 @@ const quickAccesses = {
             Bot.resetQuickAccess();
           },
         },
+        "Assignments": {
+          callBack: () => {
+            Bot.createBox("Assignments", 'user')
+            AI.getData(['Assignments', personalData_className])
+              .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            Bot.resetQuickAccess()
+          }
+        },
+        "Notices": {
+          callBack: () => {
+            Bot.createBox("Notices", 'user')
+            AI.getData(['Notices', personalData_className])
+              .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            Bot.resetQuickAccess()
+          }
+        }
       });
     },
   },

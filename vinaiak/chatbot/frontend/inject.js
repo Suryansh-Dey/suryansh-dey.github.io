@@ -128,6 +128,19 @@ class AI {
   static keepAlive() {
     AI.keepAliveRequested = true;
   }
+  static getData(context) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', server + '/data/fetch', true)
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    xhr.send(JSON.stringify({ id: AI.clientId, context: context }))
+    return new Promise((resolve, reject) => {
+      xhr.onload = () => {
+        if (xhr.status === 200)
+          resolve(xhr.responseText)
+        else resolve("An error occurred while fetching the data. Report to the administrator and try later!")
+      }
+    })
+  }
   static quit() {
     xhr.open("POST", server + "/quit", true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -520,12 +533,12 @@ class Bot {
         );
         image = image
           ? await new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = (event) => {
-                resolve(event.target.result);
-              };
-              reader.readAsDataURL(image);
-            })
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              resolve(event.target.result);
+            };
+            reader.readAsDataURL(image);
+          })
           : null;
         query = {
           question: query,

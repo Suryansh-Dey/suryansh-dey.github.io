@@ -29,32 +29,44 @@ function createInputBox(question, id, callback) {
     },
   );
 }
-const loginFormCss = `
+/**
+ * @param {string} addionalCss 
+ * @param {*} inputColor 
+ * @param {*} loginColor 
+ * @param {*} loginHoverColor 
+ * @param {*} allowAnonymousColor 
+ * @param {*} allowAnonymousHoverColor 
+ * @returns {HTMLStyleElement} customCss
+ */
+function getLoginFormCss(addionalCss, inputColor, loginColor, loginHoverColor, allowAnonymousColor, allowAnonymousHoverColor) {
+  const styles = document.createElement('style')
+  styles.textContent =
+    `
 	  #loginForm{
 		  display: flex;
 		  flex-direction: column;
 		  align-items: center;
 		  width:80dvw
 	  }
-	  #loginForm input{
+	  #loginForm .input{
 		  width: 96%;
 		  height: 1.5em;
 		  margin-top: 0.5em;
 		  border-radius: 5px;
 		  border: none;
-		  background-color: #fbe7d1;
+		  background-color: ${inputColor || "#fbe7d1"};
 	  }
-	  #loginForm input:focus {
-		  background-color: #fbe7d1;
+	  #loginForm .input:focus {
+		  background-color: ${inputColor || "#fbe7d1"};
 		  outline: none;
 	  }
-	  #loginForm input:-webkit-autofill{
-		  -webkit-box-shadow: 0 0 0px 1000px #fbe7d1 inset;
+	  #loginForm .input:-webkit-autofill{
+		  -webkit-box-shadow: 0 0 0px 1000px ${inputColor || "#fbe7d1"} inset;
 	  }
     #login,#allowAnonymous {
 		  width: 100%;
 		  padding: 10px;
-		  background-color: #ff9029;
+		  background-color: ${loginColor || "#ff9029"};
 		  color: #fff;
 		  border: none;
 		  border-radius: 5px;
@@ -62,31 +74,28 @@ const loginFormCss = `
 		  cursor: pointer;
 		}
     #allowAnonymous{
-      background-color: #ffcc00;
+      background-color: ${allowAnonymousColor || "#ffcc00"};
       color: black;
     }
     #login:hover{
-		  background-color: #fead61;
+		  background-color: ${loginHoverColor || "#fead61"};
 		}
     #allowAnonymous:hover {
-      background-color: #ffdd00
+      background-color: ${allowAnonymousHoverColor || "#ffdd00"}
     }
-`;
+`+ addionalCss
+  return styles
+}
 /**
  * @param {string} captchaKey
  * @param {string} heading
  * @param {boolean} allowAnonymous
- * @param {((sessionToken?: {name:string, emailId:string})=>void) | null} callback
+ * @param {((sessionToken?: {name:string, emailId:string, additionalInfo?:string})=>void) | null} callback
  * @param {(()=>void) | null} callstart
+ * @param {boolean|undefined} allowClassInput 
  * @returns {void}
  */
-function createLoginForm(
-  captchaKey,
-  heading,
-  allowAnonymous,
-  callback,
-  callstart,
-) {
+function createLoginForm(captchaKey, heading, allowAnonymous, callback, callstart, allowClassInput) {
   let anonymous = false;
   grecaptcha.enterprise.ready(async () => {
     let token = await grecaptcha.enterprise.execute(captchaKey, {
@@ -111,9 +120,28 @@ function createLoginForm(
       `
 <div id="loginForm">
 <h3 style="margin: 0">${heading}</h3>
-<input type="text" id="username" name="username" placeholder="Name" autocomplete="on">
-<input type="email" id="email" name="email" placeholder="Email ID" autocomplete="on">
-<input style="display:none" id="otp" type="number" placeholder="OTP">
+<input type="text" id="username" class="input" name="username" placeholder="Name" autocomplete="on">
+<input type="email" id="email" class="input" name="email" placeholder="Email ID" autocomplete="on">
+<input style="display:none" id="otp" class="input" type="number" placeholder="6-digit OTP">
+${!allowClassInput ? '' :
+        `<select id="className" name="classes" class="input">
+<option value="parent of a ">parent</option>
+<option value="Nursery">Nursery</option>
+<option value="KG 1">KG I</option>
+<option value="KG 2">KG II</option>
+<option value="Std 1">Std. I</option>
+<option value="Std 2">Std. II</option>
+<option value="Std 3">Std. III</option>
+<option value="Std 4">Std. IV</option>
+<option value="Std 5">Std. V</option>
+<option value="Std 6">Std. VI</option>
+<option value="Std 7">Std. VII</option>
+<option value="Std 8">Std. VIII</option>
+<option value="Std 9">Std. IX</option>
+<option value="Std 10">Std. X</option>
+<option value="Std 11">Std. XI</option>
+<option value="Std 12">Std. XII</option>
+</select>`}
 <button type="button" id="login">Login</button>
 ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : ""}
 </div>
@@ -148,6 +176,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
 
       const name = frame.getElementById("username");
       const email = frame.getElementById("email");
+      const classInput = frame.getElementById('className');
       const emailId = email.value.trim();
       if (
         !anonymous &&
@@ -176,6 +205,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       const loginForm = frame.getElementById("loginForm");
       loginForm.removeChild(name);
       loginForm.removeChild(email);
+      loginForm.removeChild(classInput);
       const otp = loginForm.querySelector("#otp");
       otp.style.display = "block";
       frame.querySelector("#loginForm h3").textContent = "Email sent";
@@ -200,7 +230,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
             id: AI.clientId,
             OTP: parseInt(otp.value),
             token,
-            personalData: { name: name.value.trim(), emailId },
+            personalData: { name: name.value.trim(), emailId, additionalInfo: allowClassInput ? `- Treat user as ${classInput.value} student` : '' },
           }),
         });
         Bot.stopWaiting();

@@ -128,8 +128,7 @@ function addBot(targetElement) {
         else Bot.openFrame();
       }, 2000);
     }
-    let customCss = document.createElement("style");
-    customCss.textContent = loginFormCss;
+    let customCss = getLoginFormCss();
     new Bot(
       1,
       captchaKey,
