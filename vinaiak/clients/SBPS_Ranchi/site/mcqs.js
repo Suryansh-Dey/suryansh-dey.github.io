@@ -50,7 +50,7 @@ const mcq = {
     callBack: () => {
       Bot.createBox("Assignments", 'user')
       if (personalData_className)
-        AI.getData(['Assignments', personalData_className])
+        AI.getData(['Assignments of classes', personalData_className])
           .then(data => { Bot.createBox(data, 'bot', true, remember) })
       else Bot.createBox("Ask the AI about Assignments for a class", 'bot')
       Bot.removeMcq()
@@ -110,7 +110,7 @@ const quickAccesses = {
         "Assignments": {
           callBack: () => {
             if (personalData_className)
-              AI.getData(['Assignments', personalData_className])
+              AI.getData(['Assignments of classes', personalData_className])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
             else Bot.createBox("Ask the AI about Assignments for a class", 'bot')
             Bot.resetQuickAccess()
