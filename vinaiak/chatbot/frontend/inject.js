@@ -553,24 +553,24 @@ class Bot {
     Bot.stopWaiting();
     Bot.createBox(replyText, "bot");
   }
-  static createMcq(options) {
+  static createMcq(options, id = "mcq") {
     Bot.iframe.contentDocument
       .getElementById("chat-area")
-      .appendChild(Bot.createOptions(options, "mcq", "option"));
+      .appendChild(Bot.createOptions(options, id, "option"));
   }
-  static updateMcq(options) {
+  static updateMcq(options, id = "mcq") {
     Bot.iframe.contentDocument
       .getElementById("chat-area")
       .replaceChild(
-        Bot.createOptions(options, "mcq", "option"),
-        Bot.iframe.contentDocument.getElementById("mcq"),
+        Bot.createOptions(options, id, "option"),
+        Bot.iframe.contentDocument.getElementById(id),
       );
   }
-  static removeMcq() {
-    this.optionsCallBacks = {};
+  static removeMcq(id = "mcq") {
+    delete this.optionsCallBacks[id];
     Bot.iframe.contentDocument
       .getElementById("chat-area")
-      .removeChild(Bot.iframe.contentDocument.getElementById("mcq"));
+      .removeChild(Bot.iframe.contentDocument.getElementById(id));
   }
   static customiseCss(css) {
     Bot.iframe.contentDocument.head.appendChild(css);

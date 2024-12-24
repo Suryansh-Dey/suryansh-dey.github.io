@@ -49,16 +49,20 @@ const mcq = {
   "Assignments": {
     callBack: () => {
       Bot.createBox("Assignments", 'user')
-      AI.getData(['Assignments', personalData_className])
-        .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      if (personalData_className)
+        AI.getData(['Assignments', personalData_className])
+          .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      else Bot.createBox("Ask the AI about Assignments for a class", 'bot')
       Bot.removeMcq()
     }
   },
   "Notices": {
     callBack: () => {
       Bot.createBox("Notices", 'user')
-      AI.getData(['Notices', personalData_className])
-        .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      if (personalData_className)
+        AI.getData(['Notices', personalData_className])
+          .then(data => { Bot.createBox(data, 'bot', true, remember) })
+      else Bot.createBox("Ask the AI about Notices for a class", 'bot')
       Bot.removeMcq()
     }
   }
@@ -105,17 +109,19 @@ const quickAccesses = {
         },
         "Assignments": {
           callBack: () => {
-            Bot.createBox("Assignments", 'user')
-            AI.getData(['Assignments', personalData_className])
-              .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            if (personalData_className)
+              AI.getData(['Assignments', personalData_className])
+                .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            else Bot.createBox("Ask the AI about Assignments for a class", 'bot')
             Bot.resetQuickAccess()
           }
         },
         "Notices": {
           callBack: () => {
-            Bot.createBox("Notices", 'user')
-            AI.getData(['Notices', personalData_className])
-              .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            if (personalData_className)
+              AI.getData(['Notices', personalData_className])
+                .then(data => { Bot.createBox(data, 'bot', true, remember) })
+            else Bot.createBox("Ask the AI about Notices for a class")
             Bot.resetQuickAccess()
           }
         }

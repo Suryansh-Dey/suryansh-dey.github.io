@@ -90,7 +90,7 @@ function getLoginFormCss(addionalCss, inputColor, loginColor, loginHoverColor, a
  * @param {string} captchaKey
  * @param {string} heading
  * @param {boolean} allowAnonymous
- * @param {((sessionToken?: {name:string, emailId:string, additionalInfo?:string})=>void) | null} callback
+ * @param {((sessionToken?: {name:string, emailId:string, additionalInfo?:string})=>void) | null} callback sessionToken is undefined if anonymous button was clicked
  * @param {(()=>void) | null} callstart
  * @param {boolean|undefined} allowClassInput 
  * @returns {void}
