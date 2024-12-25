@@ -77,7 +77,7 @@ function addBot(targetElement) {
       captchaKey,
       "Ask me about Zen learn ",
       "Zen learn AI",
-      "https://img.freepik.com/premium-vector/robot-icon-chat-bot-sign-support-service-concept-chatbot-character-flat-style_41737-796.jpg?w=2000",
+      "./resources/logo.png",
       null,
       (frame) => {
         Bot.iframe.style.bottom = "5dvh";

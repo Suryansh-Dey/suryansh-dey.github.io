@@ -593,11 +593,11 @@ class Bot {
     let extraCss = ''
     if (colors.boxBoder)
       extraCss += `.box.bot {box-shadow: 0 0 2dvh ${colors.boxBoder} !important;
-background-color: ${colors.botBox || 'white'} !important;
+background-color: ${colors.botBox || 'white'} !important;}
 `
     if (colors.userBox)
       extraCss += `.box.user {background-color: ${colors.userBox} !important;
-border: 2dvw solid ${colors.userBox} !important;
+border: 2dvw solid ${colors.userBox} !important;}
 `
     if (colors.link)
       extraCss += `a{color:${colors.link} !important;}
