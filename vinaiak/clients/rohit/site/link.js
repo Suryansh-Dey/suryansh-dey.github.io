@@ -73,7 +73,7 @@ function addBot(targetElement) {
 
     Bot.landscapeHeight = 70;
     new Bot(
-      2,
+      3,
       captchaKey,
       "Ask me about Zen learn ",
       "Zen learn AI",
