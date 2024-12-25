@@ -31,14 +31,9 @@ function createInputBox(question, id, callback) {
 }
 /**
  * @param {string} addionalCss 
- * @param {*} inputColor 
- * @param {*} loginColor 
- * @param {*} loginHoverColor 
- * @param {*} allowAnonymousColor 
- * @param {*} allowAnonymousHoverColor 
  * @returns {HTMLStyleElement} customCss
  */
-function getLoginFormCss(addionalCss, inputColor, loginColor, loginHoverColor, allowAnonymousColor, allowAnonymousHoverColor) {
+function getLoginFormCss(addionalCss, inputColor = "#fbe7d1", loginColor = "#ff9029", loginHoverColor = "#fead61", allowAnonymousColor = "#ffcc00", allowAnonymousHoverColor = "#ffdd00") {
   const styles = document.createElement('style')
   styles.textContent =
     `
@@ -54,19 +49,19 @@ function getLoginFormCss(addionalCss, inputColor, loginColor, loginHoverColor, a
 		  margin-top: 0.5em;
 		  border-radius: 5px;
 		  border: none;
-		  background-color: ${inputColor || "#fbe7d1"};
+		  background-color: ${inputColor};
 	  }
 	  #loginForm .input:focus {
-		  background-color: ${inputColor || "#fbe7d1"};
+		  background-color: ${inputColor};
 		  outline: none;
 	  }
 	  #loginForm .input:-webkit-autofill{
-		  -webkit-box-shadow: 0 0 0px 1000px ${inputColor || "#fbe7d1"} inset;
+		  -webkit-box-shadow: 0 0 0px 1000px ${inputColor} inset;
 	  }
     #login,#allowAnonymous {
 		  width: 100%;
 		  padding: 10px;
-		  background-color: ${loginColor || "#ff9029"};
+		  background-color: ${loginColor};
 		  color: #fff;
 		  border: none;
 		  border-radius: 5px;
@@ -74,14 +69,14 @@ function getLoginFormCss(addionalCss, inputColor, loginColor, loginHoverColor, a
 		  cursor: pointer;
 		}
     #allowAnonymous{
-      background-color: ${allowAnonymousColor || "#ffcc00"};
+      background-color: ${allowAnonymousColor};
       color: black;
     }
     #login:hover{
-		  background-color: ${loginHoverColor || "#fead61"};
+		  background-color: ${loginHoverColor};
 		}
     #allowAnonymous:hover {
-      background-color: ${allowAnonymousHoverColor || "#ffdd00"}
+      background-color: ${allowAnonymousHoverColor}
     }
 `+ addionalCss
   return styles

@@ -151,9 +151,9 @@ class AI {
 }
 class Bot {
   static landscapeWidth = 30;
-  static mobileWidth = 100;
-  static height = 98;
-  static mobileHeight = 98;
+  static portraitWidth = 100;
+  static landscapeHeight = 98;
+  static portraitHeight = 98;
   static audios = {
     openFrame: new Audio(
       "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Open.wav",
@@ -203,7 +203,7 @@ class Bot {
   static generateFrameAnimation() {
     let width =
       window.innerHeight > window.innerWidth
-        ? (window.innerWidth * Bot.mobileWidth) / 100
+        ? (window.innerWidth * Bot.portraitWidth) / 100
         : (window.innerWidth * Bot.landscapeWidth) / 100;
     return `
         @keyframes fadeIn {
@@ -223,11 +223,11 @@ class Bot {
   }
   static resizeIframe() {
     if (window.innerHeight > window.innerWidth) {
-      Bot.iframe.style.width = Bot.mobileWidth + "dvw"
-      Bot.iframe.style.height = Bot.mobileHeight + "dvh";
+      Bot.iframe.style.width = Bot.portraitWidth + "dvw"
+      Bot.iframe.style.height = Bot.portraitHeight + "dvh";
     } else {
       Bot.iframe.style.width = Bot.landscapeWidth + "dvw"
-      Bot.iframe.style.height = Bot.height + "dvh";
+      Bot.iframe.style.height = Bot.landscapeHeight + "dvh";
     }
     document.getElementById("frame-animation").textContent =
       Bot.generateFrameAnimation();

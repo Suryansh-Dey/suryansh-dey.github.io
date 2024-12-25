@@ -75,7 +75,7 @@ function addBot(targetElement) {
   #heading {
 	  background-color: #fead61;
 	}`);
-    Bot.height = 70;
+    Bot.landscapeHeight = 70;
     new Bot(
       2,
       captchaKey,
