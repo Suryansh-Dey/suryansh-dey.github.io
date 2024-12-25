@@ -105,9 +105,7 @@ function addBot(targetElement) {
               else if (personalData_className.length <= 2) personalData_className = personalData_className.join(' ')
               else personalData_className = ''
             }
-            Bot.reply(
-              `${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`,
-            );
+            Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`);
             frame.getElementById("text-input").style.display = "block";
             frame.getElementById("send").style.display = "block";
             frame.getElementById("text-input").focus();

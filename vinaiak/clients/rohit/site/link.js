@@ -2,7 +2,7 @@ const server = "https://api.vinaiak.com";
 const captchaKey = "6LfgWgAqAAAAAAUnB69cbKEuxMVJJxDzs9lSP65v";
 
 let AI, Bot;
-fetch("/vinaiak/chatbot/frontend/inject.js").then(
+fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   (response) => {
     response.text().then((data) => {
       let Bot1, AI1;
@@ -85,6 +85,10 @@ function addBot(targetElement) {
           document.getElementById("bot-loginIcon").style.display = "block";
         });
         Bot.startWaiting();
+        setTimeout(() => {
+          Bot.stopWaiting();
+          Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]}! How may I help you today?`)
+        }, 2000)
         frame
           .getElementById("chat-area")
           .addEventListener("scrollend", AI.keepAlive);
