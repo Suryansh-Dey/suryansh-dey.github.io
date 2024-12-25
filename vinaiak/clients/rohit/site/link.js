@@ -77,7 +77,7 @@ function addBot(targetElement) {
       captchaKey,
       "Ask me about Zen learn ",
       "Zen learn AI",
-      "https://suryansh-dey.github.io/vinaiak/clients/rohit/site/resources/logo.png",
+      "https://suryansh-dey.github.io/vinaiak/clients/rohit/site/resources/logo.jpg",
       null,
       (frame) => {
         Bot.iframe.style.bottom = "5dvh";
@@ -94,6 +94,20 @@ function addBot(targetElement) {
           .addEventListener("scrollend", AI.keepAlive);
         document.addEventListener("scrollend", AI.keepAlive);
         Bot.customiseColor({ watermark: false, heading: 'blue', boxBoder: 'violet', userBox: 'violet', link: 'green' })
+        grecaptcha.enterprise.ready(async () => {
+          let token = await grecaptcha.enterprise.execute(captchaKey, {
+            action: "LOGIN",
+          });
+          const response = await fetch(server + "/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              id: AI.clientId,
+              token,
+            }),
+          });
+        })
         Bot.iframe.style.zIndex = 10000;
         if (frameNotOpened) Bot.openFrame();
       },
