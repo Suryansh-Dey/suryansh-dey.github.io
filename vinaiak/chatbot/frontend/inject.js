@@ -393,6 +393,7 @@ class Bot {
         "Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists",
       );
     new AI(organisationId, captchaKey);
+    // window.addEventListener("beforeunload", AI.quit);
     Bot.avtarPath = avtarPath;
     let frameStyles = document.createElement("style");
     frameStyles.id = "frame-animation";
@@ -572,5 +573,43 @@ class Bot {
   }
   static customiseCss(css) {
     Bot.iframe.contentDocument.head.appendChild(css);
+  }
+  /**
+   * @param {{
+   * watermark?: boolean,
+   * heading?: string,
+   * boxBoder?: string,
+   * userBox?: string,
+   * botBox?: string,
+   * link?: string,
+   * mcq?: string
+   * }} colors 
+  */
+  static customiseColor(colors) {
+    if (colors.watermark === false)
+      Bot.iframe.contentDocument.querySelector("#heading .credit").textContent = ''
+    if (colors.heading)
+      Bot.iframe.contentDocument.getElementById('heading').style.backgroundColor = colors.heading
+    let extraCss = ''
+    if (colors.boxBoder)
+      extraCss += `.box.bot {box-shadow: 0 0 2dvh ${colors.boxBoder} !important;
+background-color: ${colors.botBox || 'white'} !important;
+`
+    if (colors.userBox)
+      extraCss += `.box.user {background-color: ${colors.userBox} !important;
+border: 2dvw solid ${colors.userBox} !important;
+`
+    if (colors.link)
+      extraCss += `a{color:${colors.link} !important;}
+`
+    if (colors.mcq)
+      extraCss += `.option{box-shadow: 0 0 2px 2px ${colors.mcq} !important;}
+.option:hover{background-color: ${colors.mcq} !important;}
+`
+    if (extraCss) {
+      const styles = document.createElement('style')
+      styles.textContent = extraCss
+      Bot.iframe.contentDocument.head.appendChild(styles)
+    }
   }
 }
