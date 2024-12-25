@@ -102,7 +102,7 @@ function addBot(targetElement) {
               personalData_className = personalData.additionalInfo.split(' ')
               if (personalData_className.length === 7) personalData_className = personalData_className[4] + ' ' + personalData_className[5]
               else if (personalData_className.length === 6) personalData_className = 'Nursery'
-              else if (personalData_className.length <= 2) personalData_className.join(' ')
+              else if (personalData_className.length <= 2) personalData_className = personalData_className.join(' ')
               else personalData_className = ''
             }
             Bot.reply(
