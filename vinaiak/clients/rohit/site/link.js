@@ -58,7 +58,7 @@ class AI {
       const xhr = new XMLHttpRequest();
       xhr.open("POST", server + '/query', true);
       xhr.onload = () => {
-        const output = JSON.parse(xhr.responseText).output
+        let output = JSON.parse(xhr.responseText).output
         if (output.includes(']'))
           output = output.split(']')[1];
 
