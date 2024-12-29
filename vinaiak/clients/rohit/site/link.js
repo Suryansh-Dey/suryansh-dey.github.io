@@ -58,7 +58,11 @@ class AI {
       const xhr = new XMLHttpRequest();
       xhr.open("POST", server + '/query', true);
       xhr.onload = () => {
-        if (xhr.status == 200) resolve(JSON.parse(xhr.responseText).output);
+        const output = JSON.parse(xhr.responseText).output
+        if (output.includes(']'))
+          output = output.split(']')[1];
+
+        if (xhr.status == 200) resolve(output);
         else resolve("An error occured! Try logging in again to the chatbot");
       };
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
