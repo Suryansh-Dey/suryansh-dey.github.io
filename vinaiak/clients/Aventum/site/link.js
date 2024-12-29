@@ -13,9 +13,11 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
     });
   },
 );
-const mcq = document.createElement('script')
-mcq.src = "https://suryansh-dey.github.io/vinaiak/clients/Aventum/site/mcq.js"
-document.body.appendChild(mcq)
+{
+  const mcq = document.createElement('script')
+  mcq.src = "https://suryansh-dey.github.io/vinaiak/clients/Aventum/site/mcq.js"
+  document.body.appendChild(mcq)
+}
 
 let captchaScript = document.createElement("script");
 captchaScript.src =
@@ -253,8 +255,9 @@ function addBot(targetElement) {
                     "What's you preffered mode of transport?",
                     "bot",
                     true,
-                    ()=>{
-                      Bot.createMcq(mcq)}
+                    () => {
+                      Bot.createMcq(mcq)
+                    }
                   );
                 });
               });
