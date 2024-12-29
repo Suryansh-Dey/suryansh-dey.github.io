@@ -186,7 +186,7 @@ function addBot(targetElement) {
       captchaKey,
       "Your question",
       "Taashi AI",
-      "resources/logo.png",
+      "https://suryansh-dey.github.io/vinaiak/clients/Aventum/site/resources/logo.png",
       null,
       (frame) => {
         Bot.hideFrame();
