@@ -614,7 +614,6 @@ function addBot(targetElement) {
       }, 500);
     }
 
-    Bot.landscapeHeight = 70;
     new Bot(
       3,
       captchaKey,
@@ -643,6 +642,8 @@ function addBot(targetElement) {
       targetElement,
       false,
     );
+    Bot.landscapeHeight = 70;
+    Bot.resizeIframe()
     console.log("Logged in to chat bot");
   };
 }
