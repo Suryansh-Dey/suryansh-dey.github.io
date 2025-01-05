@@ -26,12 +26,12 @@ function arraysEqual(arr1, arr2) {
   return true;
 }
 class AI {
-  static replyNo = 0;
+  static replyNo;
   static clientId;
-  static context = "";
+  static context;
   static keepAliveXhr;
-  static keepAliveRequested = true;
-  static isTutor = false;
+  static keepAliveRequested;
+  static isTutor;
   constructor(organisationId, captchaKey) {
     AI.replyNo = 0;
     AI.context = "";
@@ -150,10 +150,10 @@ class AI {
   }
 }
 class Bot {
-  static landscapeWidth = 30;
-  static portraitWidth = 100;
-  static landscapeHeight = 98;
-  static portraitHeight = 98;
+  static landscapeWidth;
+  static portraitWidth;
+  static landscapeHeight;
+  static portraitHeight;
   static audios = {
     openFrame: new Audio(
       "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/Open.wav",
@@ -168,13 +168,13 @@ class Bot {
       "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/window_close.wav",
     ),
   };
-  static exists = false;
-  static loaded = false;
-  static replying = false;
+  static exists;
+  static loaded;
+  static replying;
   /** @type {HTMLIFrameElement} */
   static iframe;
-  static optionsCallBacks = {};
-  static queue = [];
+  static optionsCallBacks;
+  static queue;
   static makeTutor() {
     AI.isTutor = true;
     Bot.iframe.contentDocument.getElementById("text-input").style.paddingLeft =
@@ -383,7 +383,7 @@ class Bot {
     Bot.landscapeWidth = 30;
     Bot.portraitWidth = 100;
     Bot.landscapeHeight = 98;
-    Bot.portraitHeight = 98;
+    Bot.portraitHeight = 95;
     Bot.exists = false;
     Bot.loaded = false;
     Bot.replying = false;

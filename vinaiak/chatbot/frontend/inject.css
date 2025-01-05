@@ -135,8 +135,18 @@ p {
   font-weight: 1;
 }
 
-#logout {
+.vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding-bottom: 1dvh;
+}
+
+.vertical-buttons * {
+  padding: 0;
+}
+
+#logout {
   font-size: 6dvw;
 }
 
@@ -401,10 +411,4 @@ ul li::marker {
 .cancel-button {
   background-color: yellow;
   border: none;
-}
-
-.vertical-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
