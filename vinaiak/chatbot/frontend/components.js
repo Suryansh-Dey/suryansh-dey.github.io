@@ -90,7 +90,7 @@ function getLoginFormCss(addionalCss, inputColor = "#fbe7d1", loginColor = "#ff9
  * @param {boolean|undefined} allowClassInput 
  * @returns {void}
  */
-function createLoginForm(captchaKey, heading, allowAnonymous, callback, callstart, allowClassInput) {
+function createLoginForm(captchaKey, heading, allowAnonymous, callback, callstart, allowClassInput, logoutCallback) {
   let anonymous = false;
   grecaptcha.enterprise.ready(async () => {
     let token = await grecaptcha.enterprise.execute(captchaKey, {
@@ -107,6 +107,7 @@ function createLoginForm(captchaKey, heading, allowAnonymous, callback, callstar
     });
     if (callstart) callstart();
     if (response.status === 200) {
+      Bot.activateLogout(logoutCallback)
       if (callback) callback(await response.json());
       return;
     }
@@ -231,6 +232,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
         Bot.stopWaiting();
         frame.getElementById("loginForm").style.display = "flex";
         if (response.status == 200) {
+          Bot.activateLogout(logoutCallback)
           frame
             .getElementById("chat-area")
             .removeChild(frame.getElementById("loginForm").parentNode);

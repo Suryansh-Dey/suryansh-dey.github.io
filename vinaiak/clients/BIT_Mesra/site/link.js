@@ -139,7 +139,6 @@ function addBot(targetElement) {
       quickAccesses,
       (frame) => {
         Bot.hideFrame();
-        window.addEventListener("beforeunload", AI.quit);
         frame.getElementById("quick-access").style.display = "none";
         frame.getElementById("text-input").style.display = "none";
         frame.getElementById("send").style.display = "none";
@@ -160,6 +159,10 @@ function addBot(targetElement) {
           () => {
             Bot.stopWaiting();
           },
+          false, () => {
+            console.log("Logged out of chat bot")
+            document.getElementById("bot-loginIcon").style.display = "block";
+          }
         );
         Bot.customiseCss(customCss);
         frame

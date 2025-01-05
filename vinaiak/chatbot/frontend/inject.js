@@ -1,10 +1,6 @@
 const server = "https://api.vinaiak.com";
 const xhr = new XMLHttpRequest();
-xhr.open(
-  "GET",
-  "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js",
-  false,
-);
+xhr.open("GET", "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", false);
 xhr.send();
 eval(xhr.responseText);
 const renderer = new marked.Renderer();
@@ -37,6 +33,10 @@ class AI {
   static keepAliveRequested = true;
   static isTutor = false;
   constructor(organisationId, captchaKey) {
+    AI.replyNo = 0;
+    AI.context = "";
+    AI.keepAliveRequested = true;
+    AI.isTutor = false;
     AI.keepAliveXhr = new XMLHttpRequest();
     AI.keepAliveXhr.onload = null;
     AI.keepAliveIntervalId = setInterval(
@@ -377,23 +377,20 @@ class Bot {
     }
     return optionContainer;
   }
-  constructor(
-    organisationId,
-    captchaKey,
-    placeholder,
-    title,
-    avtarPath,
-    quickAccesses,
-    onload,
-    targetElement,
-    openOnLoad,
-  ) {
+  constructor(organisationId, captchaKey, placeholder, title, avtarPath, quickAccesses, onload, targetElement, openOnLoad) {
     if (Bot.exists)
-      throw new Error(
-        "Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists",
-      );
+      throw new Error("Invalid call to Bot.constructor(). Instance of singleton-class Bot already exists");
+    Bot.landscapeWidth = 30;
+    Bot.portraitWidth = 100;
+    Bot.landscapeHeight = 98;
+    Bot.portraitHeight = 98;
+    Bot.exists = false;
+    Bot.loaded = false;
+    Bot.replying = false;
+    Bot.optionsCallBacks = {};
+    Bot.queue = [];
     new AI(organisationId, captchaKey);
-    // window.addEventListener("beforeunload", AI.quit);
+    window.addEventListener("beforeunload", AI.quit);
     Bot.avtarPath = avtarPath;
     let frameStyles = document.createElement("style");
     frameStyles.id = "frame-animation";
@@ -610,6 +607,36 @@ border: 2dvw solid ${colors.userBox} !important;}
       const styles = document.createElement('style')
       styles.textContent = extraCss
       Bot.iframe.contentDocument.head.appendChild(styles)
+    }
+  }
+  static activateLogout(callback) {
+    const logout = Bot.iframe.contentDocument.getElementById("logout")
+    logout.style.display = "block"
+    logout.onclick = () => {
+      const logoutWarning = Bot.iframe.contentDocument.getElementById("logout-warning")
+      logoutWarning.style.display = "flex"
+      logoutWarning.addEventListener('click', (event) => {
+        if (event.target.id === 'logout-confirm' || event.target.className === 'notice')
+          return
+        logoutWarning.style.display = 'none'
+      })
+    }
+    Bot.iframe.contentDocument.getElementById("logout-confirm").onclick = () => {
+      Bot.closeFrame()
+      fetch(server + '/logout', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          id: AI.clientId
+        })
+      })
+      setTimeout(() => {
+        Bot.destructor()
+        if (callback) callback()
+      }, 300)
     }
   }
 }

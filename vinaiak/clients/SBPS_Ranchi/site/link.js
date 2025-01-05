@@ -84,7 +84,6 @@ function addBot(targetElement) {
       "https://www.sbpsranchi.com/Logo/Logo1.png",
       quickAccesses,
       (frame) => {
-        window.addEventListener("beforeunload", AI.quit);
         Bot.iframe.style.bottom = "5dvh";
         frame.getElementById("quick-access").style.display = "none";
         frame.getElementById("text-input").style.display = "none";
@@ -113,7 +112,10 @@ function addBot(targetElement) {
             Bot.createMcq(mcq);
           },
           Bot.stopWaiting,
-          true
+          true, () => {
+            console.log("Logged out of chat bot")
+            document.getElementById("bot-loginIcon").style.display = "block";
+          }
         );
         Bot.customiseCss(customCss);
         frame
@@ -129,4 +131,3 @@ function addBot(targetElement) {
     console.log("Logged in to chat bot");
   };
 }
-addBot();

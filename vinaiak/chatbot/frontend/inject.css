@@ -125,16 +125,24 @@ p {
   ;
 }
 
-#close {
+#close,
+#logout {
   background: transparent;
   border: none;
   border-radius: 100%;
   color: white;
-  font-size: 7dvh;
+  font-size: 10dvw;
   font-weight: 1;
+  padding: 0.5dvw;
 }
 
-#close:hover {
+#logout {
+  transform: translate(0, -0.5dvh);
+  font-size: 6dvw;
+}
+
+#close:hover,
+#logout:hover {
   color: rgb(89, 88, 88);
   cursor: pointer;
 }
@@ -340,4 +348,58 @@ li::marker {
 
 ul li::marker {
   font-size: x-large;
+}
+
+#logout-warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: medium;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.notice {
+  position: absolute;
+  top: 30dvh;
+  text-align: center;
+  background-color: white;
+  width: 70dvw;
+  height: fit-content;
+  box-shadow: 0 0 2dvw black;
+  padding: 1dvw;
+  border-radius: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2dvh;
+}
+
+.buttons * {
+  padding: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.buttons *:hover {
+  font-size: 1.05em;
+  transition: 0.3s font-size;
+}
+
+.confirm-button {
+  background-color: transparent;
+  border: none;
+}
+
+.cancel-button {
+  background-color: yellow;
+  border: none;
 }
