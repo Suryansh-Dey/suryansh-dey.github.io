@@ -52,7 +52,7 @@ const mcq = {
       if (personalData_className)
         AI.getData(['Assignments of classes', personalData_className])
           .then(data => { Bot.createBox(data, 'bot', true, remember) })
-      else Bot.createBox("Ask the AI about Assignments for a class", 'bot')
+      else Bot.createBox("Assignments of which class?", 'bot', false, remember)
       Bot.removeMcq()
     }
   },
@@ -65,7 +65,7 @@ const mcq = {
         AI.getData(['Notices', 'common to all'])
           .then(data => { Bot.createBox(data, 'bot', true, remember) })
       }
-      else Bot.createBox("Ask the AI about Notices for a class", 'bot')
+      else Bot.createBox("Notices of which class?", 'bot', false, remember)
       Bot.removeMcq()
     }
   }
@@ -116,7 +116,7 @@ const quickAccesses = {
             if (personalData_className)
               AI.getData(['Assignments of classes', personalData_className])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
-            else Bot.createBox("Ask the AI about Assignments for a class", 'bot')
+            else Bot.createBox("Assignments of which class?", 'bot', false, remember)
             Bot.resetQuickAccess()
           }
         },
@@ -129,7 +129,7 @@ const quickAccesses = {
               AI.getData(['Notices', 'common to all'])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
             }
-            else Bot.createBox("Ask the AI about Notices for a class", 'bot')
+            else Bot.createBox("Notices of which class?", 'bot', false, remember)
             Bot.resetQuickAccess()
           }
         }
