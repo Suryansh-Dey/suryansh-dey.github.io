@@ -60,9 +60,9 @@ const mcq = {
     callBack: () => {
       Bot.createBox("Notices", 'user')
       if (personalData_className) {
-        AI.getData(['Notices', personalData_className])
+        AI.getData(['Notices of classes', personalData_className])
           .then(data => { Bot.createBox(data, 'bot', true, remember) })
-        AI.getData(['Notices', 'common to all'])
+        AI.getData(['Notices of classes', 'common to all'])
           .then(data => { Bot.createBox(data, 'bot', true, remember) })
       }
       else Bot.createBox("Notices of which class?", 'bot', false, remember)
@@ -124,9 +124,9 @@ const quickAccesses = {
           callBack: () => {
             Bot.createBox("Notices", "user");
             if (personalData_className) {
-              AI.getData(['Notices', personalData_className])
+              AI.getData(['Notices of classes', personalData_className])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
-              AI.getData(['Notices', 'common to all'])
+              AI.getData(['Notices of classes', 'common to all'])
                 .then(data => { Bot.createBox(data, 'bot', true, remember) })
             }
             else Bot.createBox("Notices of which class?", 'bot', false, remember)
