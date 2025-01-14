@@ -620,7 +620,7 @@ function addBot(targetElement) {
       captchaKey,
       "Ask me about Zen learn ",
       "Zen learn AI",
-      "https://suryansh-dey.github.io/vinaiak/clients/rohit/site/resources/logo.jpg",
+      "https://suryansh-dey.github.io/vinaiak/clients/rohit/site/resources/logo.png",
       null,
       (frame) => {
         Bot.iframe.style.bottom = "5dvh";
