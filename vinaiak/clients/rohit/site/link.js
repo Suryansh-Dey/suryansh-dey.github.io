@@ -61,7 +61,7 @@ class AI {
         let output = JSON.parse(xhr.responseText).output
         if (output.includes(']'))
           output = output.split(']')[1];
-        output = output.replace('```', '\n');
+        output = output.replaceAll('```', '\n');
 
         if (xhr.status == 200) resolve(output);
         else resolve("An error occured! Try logging in again to the chatbot");

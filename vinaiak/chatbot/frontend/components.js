@@ -166,6 +166,7 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       }
     });
     frame.getElementById("login").onclick = async () => {
+      if (!anonymous && (name.value.trim().length < 3 || !email.value.includes("@"))) return;
       frame
         .getElementById("loginForm")
         .removeChild(frame.getElementById("allowAnonymous"));
@@ -174,11 +175,6 @@ ${allowAnonymous ? '<button type="button" id="allowAnonymous">Guest</button>' : 
       const email = frame.getElementById("email");
       const classInput = frame.getElementById('className');
       const emailId = email.value.trim();
-      if (
-        !anonymous &&
-        (name.value.trim().length < 3 || !email.value.includes("@"))
-      )
-        return;
       let response = fetch(server + "/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
