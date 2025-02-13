@@ -2,46 +2,47 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>chat bot</title>
-  <link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.css">
-  </link>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat bot</title>
+    <link rel="stylesheet" href="https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.css">
+    </link>
 </head>
 
 <body>
-  <main>
-    <img src="" alt="pta chla ki galat le ke main pta nikla" id="background-img" />
-    <div id="chat-area"></div>
-    <div id="heading">
-      <img class="avtar"></img>
-      <h3 class="title"></h3>
-      <div class="vertical-buttons">
-        <button id="close">×</button>
-        <button style="display: none;" id="logout">↩</button>
-      </div>
-      <div class="credit">Developed by <a href="https://www.linkedin.com/company/vinaiak/" target="_blank">vinAiak</a>
-      </div>
+    <main>
+        <img src="" alt="pta chla ki galat le ke main pta nikla" id="background-img" />
+        <div id="chat-area"></div>
+        <div id="heading">
+            <img class="avtar"></img>
+            <h3 class="title"></h3>
+            <div class="vertical-buttons">
+                <button id="close">×</button>
+                <button style="display: none;" id="logout">↩</button>
+            </div>
+            <div class="credit">Developed by <a href="https://www.linkedin.com/company/vinaiak/"
+                    target="_blank">vinAiak</a>
+            </div>
+        </div>
+        <textarea id="text-input"></textarea>
+        <input type="file" accept="image/*" id="image-input" title="upload"><input>
+        <label for="image-input" id="image-input-icon" style="display: none;"><img
+                src="https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/image.svg"
+                alt="pta chla ki galat le ke main pta nikla"></label>
+        <button id="send">
+            <img src="https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/send.svg"
+                alt="pta chla ki galat le ke main pta nikla">
+        </button>
+    </main>
+    <div id="logout-warning" style="display: none">
+        <div class="notice">
+            This will delete all of your data and will have to login again!
+            <div class="buttons">
+                <button class="confirm-button" id="logout-confirm">Logout</button>
+                <button class="cancel-button">Cancel</button>
+            </div>
+        </div>
     </div>
-    <textarea id="text-input"></textarea>
-    <input type="file" accept="image/*" id="image-input" title="upload"><input>
-    <label for="image-input" id="image-input-icon" style="display: none;"><img
-        src="https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/image.svg"
-        alt="pta chla ki galat le ke main pta nikla"></label>
-    <button id="send">
-      <img src="https://suryansh-dey.github.io/vinaiak/chatbot/frontend/resources/send.svg"
-        alt="pta chla ki galat le ke main pta nikla">
-    </button>
-  </main>
-  <div id="logout-warning" style="display: none">
-    <div class="notice">
-      This will delete all of your data and will have to login again!
-      <div class="buttons">
-        <button class="confirm-button" id="logout-confirm">Logout</button>
-        <button class="cancel-button">Cancel</button>
-      </div>
-    </div>
-  </div>
 </body>
 
 </html>
