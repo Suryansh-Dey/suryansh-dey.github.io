@@ -25,10 +25,6 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   components.src =
     "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
   document.body.appendChild(components);
-  let mcqsjs = document.createElement("script");
-  mcqsjs.src =
-    "https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/mcqs.js";
-  document.body.appendChild(mcqsjs);
 }
 
 let personalData_className = ''
