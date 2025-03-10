@@ -74,9 +74,9 @@ function addBot(targetElement) {
     new Bot(
       3,
       captchaKey,
-      "Ask me about DWPS Bodhgaya",
-      "DWPS AI assistant",
-      "https://dwpsbodhgaya.com/images/desktop-logo.png",
+      "Ask me about Shanti niketa",
+      "Shanti niketan AI",
+      "./resources/shanti.jpg",
       null,
       (frame) => {
         Bot.iframe.style.bottom = "5dvh";
