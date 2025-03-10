@@ -185,7 +185,7 @@ function addBot(targetElement) {
       3,
       captchaKey,
       "Your question",
-      "BT AI",
+      "Explorify Trips",
       "https://suryansh-dey.github.io/vinaiak/clients/Aventum/site/resources/logo.png",
       null,
       (frame) => {
