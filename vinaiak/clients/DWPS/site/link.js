@@ -96,13 +96,6 @@ function addBot(targetElement) {
           "Introduce yourself",
           true,
           (personalData) => {
-            if (personalData) {
-              personalData_className = personalData.additionalInfo.split(' ')
-              if (personalData_className.length === 7) personalData_className = personalData_className[4] + ' ' + personalData_className[5]
-              else if (personalData_className.length === 6) personalData_className = 'Nursery'
-              else if (personalData_className.length <= 2) personalData_className = personalData_className.join(' ')
-              else personalData_className = ''
-            }
             Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`);
             frame.getElementById("text-input").style.display = "block";
             frame.getElementById("send").style.display = "block";

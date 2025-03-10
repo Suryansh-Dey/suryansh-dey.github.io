@@ -108,7 +108,7 @@ function createLoginForm(captchaKey, heading, allowAnonymous, callback, callstar
         if (callstart) callstart();
         if (response.status === 200) {
             Bot.activateLogout(logoutCallback)
-            if (callback) callback(await response.json());
+            if (callback && await response.text() !== 'OK') callback(await response.json());
             return;
         }
 
