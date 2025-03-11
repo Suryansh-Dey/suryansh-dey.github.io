@@ -177,17 +177,17 @@ class Bot {
     static queue;
     static makeTutor() {
         AI.isTutor = true;
-        Bot.iframe.contentDocument.getElementById("text-input").style.paddingLeft =
+        Bot.iframe.getElementById("text-input").style.paddingLeft =
             "5.5dvh";
-        Bot.iframe.contentDocument.getElementById(
+        Bot.iframe.getElementById(
             "image-input-icon",
         ).style.display = "block";
     }
     static unmakeTutor() {
         AI.isTutor = false;
-        Bot.iframe.contentDocument.getElementById("text-input").style.paddingLeft =
+        Bot.iframe.getElementById("text-input").style.paddingLeft =
             "2dvh";
-        Bot.iframe.contentDocument.getElementById(
+        Bot.iframe.getElementById(
             "image-input-icon",
         ).style.display = "none";
     }
