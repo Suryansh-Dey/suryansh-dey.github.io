@@ -93,12 +93,12 @@ function addBot(targetElement) {
                     true,
                     (personalData) => {
                         Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! How may I help you today?`);
-                        Bot.makeTutor()
                         frame.getElementById("text-input").style.display = "block";
                         frame.getElementById("send").style.display = "block";
                         frame.getElementById("text-input").focus();
                         frame.getElementById("quick-access").style.display = "block";
                         // Bot.createMcq(mcq);
+                        Bot.makeTutor()
                     },
                     Bot.stopWaiting,
                     true, () => {

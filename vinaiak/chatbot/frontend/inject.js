@@ -177,8 +177,8 @@ class Bot {
     static queue;
     static makeTutor() {
         AI.isTutor = true;
-        Bot.iframe.getElementById("text-input").style.paddingLeft = "5.5dvh";
-        Bot.iframe.getElementById("image-input-icon").style.display = "block";
+        Bot.iframe.contentDocument.getElementById("text-input").style.paddingLeft = "5.5dvh";
+        Bot.iframe.contentDocument.getElementById("image-input-icon").style.display = "block";
     }
     static unmakeTutor() {
         AI.isTutor = false;
