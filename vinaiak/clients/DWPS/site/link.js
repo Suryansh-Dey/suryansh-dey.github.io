@@ -74,9 +74,9 @@ function addBot(targetElement) {
         new Bot(
             3,
             captchaKey,
-            "Ask me about Shanti niketan",
-            "Shanti niketan AI",
-            "./resources/shanti.jpg",
+            "Ask me your doubt",
+            "Student Mentor",
+            "./resources/icon.gif",
             null,
             (frame) => {
                 Bot.iframe.style.bottom = "5dvh";
