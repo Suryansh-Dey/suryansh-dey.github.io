@@ -27,7 +27,7 @@ function addBot(targetElement) {
     const styles = document.createElement("link");
     styles.rel = "stylesheet";
     styles.href =
-      "/vinaiak/clients/BIT_Mesra/site/styles.css";
+      "https://suryansh-dey.github.io/vinaiak/clients/BIT_Mesra/site/styles.css";
     document.head.appendChild(styles);
   }
   const loginIcon = document.createElement("div");
