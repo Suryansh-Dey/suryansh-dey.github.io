@@ -1,0 +1,37 @@
+#bot-loginIcon {
+  position: fixed;
+  bottom: 1vh;
+  right: 1vw;
+  cursor: pointer;
+  z-index: 9999;
+  width: 18dvmin;
+  height: 18dvmin;
+  border-radius: 100%;
+}
+
+#bot-loginIcon:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s;
+}
+
+#bot-loginIcon * {
+  width: 18dvmin;
+  height: 18dvmin;
+  border-radius: 100%;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  #bot-loginIcon {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  #bot-loginIcon * {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+.grecaptcha-badge {
+  display: none !important;
+}
