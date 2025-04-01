@@ -26,8 +26,7 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
         "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
     document.body.appendChild(components);
     let mcqsjs = document.createElement("script");
-    mcqsjs.src =
-        "https://suryansh-dey.github.io/vinaiak/clients/ISM/site/mcqs.js";
+    mcqsjs.src = "https://suryansh-dey.github.io/vinaiak/clients/ISM/site/mcqs.js";
     document.body.appendChild(mcqsjs);
 }
 
@@ -42,7 +41,7 @@ function addBot(targetElement) {
         const styles = document.createElement("link");
         styles.rel = "stylesheet";
         styles.href =
-            "https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/styles.css";
+            "https://suryansh-dey.github.io/vinaiak/clients/ISM/site/styles.css";
         document.head.appendChild(styles);
     }
     const loginIcon = document.createElement("div");
@@ -70,11 +69,7 @@ function addBot(targetElement) {
                 else Bot.openFrame();
             }, 500);
         }
-        let customCss = getLoginFormCss(
-            `
-  #heading {
-	  background-color: #fead61;
-	}`);
+        let customCss = getLoginFormCss();
         new Bot(
             3,
             captchaKey,
