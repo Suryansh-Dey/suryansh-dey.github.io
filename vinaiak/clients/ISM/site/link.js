@@ -27,7 +27,7 @@ fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
     document.body.appendChild(components);
     let mcqsjs = document.createElement("script");
     mcqsjs.src =
-        "https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/mcqs.js";
+        "https://suryansh-dey.github.io/vinaiak/clients/ISM/site/mcqs.js";
     document.body.appendChild(mcqsjs);
 }
 
@@ -48,7 +48,7 @@ function addBot(targetElement) {
     const loginIcon = document.createElement("div");
     loginIcon.id = "bot-loginIcon";
     loginIcon.innerHTML =
-        '<img src="https://suryansh-dey.github.io/vinaiak/clients/SBPS_Ranchi/site/resources/icon.gif" alt="AI assistants"</img>';
+        '<img src="https://suryansh-dey.github.io/vinaiak/clients/ISM/site/resources/icon.gif" alt="AI assistants"</img>';
     targetElement.appendChild(loginIcon);
     let captchaScript = document.createElement("script");
     captchaScript.src =
@@ -80,7 +80,7 @@ function addBot(targetElement) {
             captchaKey,
             "Ask me about IIT (ISM) Dhanbad",
             "IIT(ISM) Assistant",
-            "https://seeklogo.com/images/I/iit-ism-dhanbad-logo-6C57F2704B-seeklogo.com.png?v=638418827330000000",
+            "https://suryansh-dey.github.io/vinaiak/clients/ISM/site/resources/logo.png",
             quickAccesses,
             (frame) => {
                 Bot.iframe.style.bottom = "5dvh";
@@ -96,7 +96,7 @@ function addBot(targetElement) {
                     "Introduce yourself",
                     true,
                     (personalData) => {
-                        Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]}! How may I help you today?`);
+                        Bot.reply(`${["Hi", "Hello", "Welcome"][parseInt(Math.random() * 3)]} ${personalData ? personalData.name : ""}! Which program are you intrested in?`);
                         frame.getElementById("text-input").style.display = "block";
                         frame.getElementById("send").style.display = "block";
                         frame.getElementById("text-input").focus();
@@ -104,7 +104,8 @@ function addBot(targetElement) {
                         Bot.createMcq(mcq);
                     },
                     Bot.stopWaiting,
-                    true, () => {
+                    false,
+                    () => {
                         console.log("Logged out of chat bot")
                         document.getElementById("bot-loginIcon").style.display = "block";
                     }
