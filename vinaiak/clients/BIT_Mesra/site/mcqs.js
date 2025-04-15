@@ -256,7 +256,7 @@ export const quickAccesses = {
                 "PHD": {
                     'callBack': () => {
                         Bot.createBox('PHD', 'user')
-                        AI.setContext(['phd', 'admission'])
+                        AI.setContext(['phd', 'Admission'])
                         Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
                         Bot.updateQuickAccess({
                             "Course details": {
@@ -338,7 +338,7 @@ export const mcq = {
     "General query": {
         "callBack": () => {
             Bot.createBox("Genreal query", 'user')
-            Bot.setContext([])
+            AI.setContext([])
             initChatting()
             Bot.removeMcq()
         }
@@ -610,7 +610,7 @@ export const mcq = {
     "PHD": {
         'callBack': () => {
             Bot.createBox('PHD', 'user')
-            AI.setContext(['phd', 'admission'])
+            AI.setContext(['phd', 'Admission'])
             Bot.createBox('You may refer to the brochure on institute site for latest updates via this link https://www.bitmesra.ac.in/admission/notification/1', 'bot')
             initChatting()
             Bot.removeMcq()
