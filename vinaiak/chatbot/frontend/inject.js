@@ -33,7 +33,7 @@ class AI {
     static session_manager;
     constructor(organisationId, captchaKey) {
         AI.requestPayload.org_id = organisationId;
-        import("/vinaiak/chatbot/wasm/session.js").then(async (module) => {
+        import("https://suryansh-dey.github.io/vinaiak/chatbot/wasm/session.js").then(async (module) => {
             await module.default()
             AI.to_parts = module.SessionManager.to_parts
             AI.session_manager = new module.SessionManager()

@@ -1,7 +1,7 @@
 let AI, Bot;
 let quickAccesses, mcq;
 const server = "https://api.vinaiak.com";
-fetch("/vinaiak/chatbot/frontend/inject.js").then(
+fetch("https://suryansh-dey.github.io/vinaiak/chatbot/frontend/inject.js").then(
   (response) => {
     response.text().then((data) => {
       let Bot1, AI1;
@@ -44,7 +44,7 @@ function addBot(targetElement) {
     targetElement.appendChild(captchaScript);
     let components = document.createElement("script");
     components.src =
-      "/vinaiak/chatbot/frontend/components.js";
+      "https://suryansh-dey.github.io/vinaiak/chatbot/frontend/components.js";
     components.async = false;
     document.body.appendChild(components);
   }
