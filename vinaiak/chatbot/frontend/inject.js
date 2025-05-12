@@ -27,103 +27,69 @@ function arraysEqual(arr1, arr2) {
 }
 class AI {
     static replyNo;
-    static clientId;
-    static context;
-    static keepAliveXhr;
-    static keepAliveRequested;
     static isTutor;
+    static requestPayload = {};
+    /**@type {import ('./../wasm/session.d.ts').SessionManager}*/
+    static session_manager;
     constructor(organisationId, captchaKey) {
-        AI.replyNo = 0;
-        AI.context = "";
-        AI.keepAliveRequested = true;
-        AI.isTutor = false;
-        AI.keepAliveXhr = new XMLHttpRequest();
-        AI.keepAliveXhr.onload = null;
-        AI.keepAliveIntervalId = setInterval(
-            () => {
-                if (!Bot.exists) return;
-                if (!AI.keepAliveRequested) {
-                    fetch(server + "/isAlive", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            id: AI.clientId,
-                        }),
-                    })
-                        .then((response) => response.text())
-                        .then((data) => {
-                            if (data === "false") {
-                                Bot.createBox(
-                                    "Session terminated! Kindly log in again to chat further.",
-                                    "bot",
-                                );
-                                Bot.exists = false;
-                            } else
-                                Bot.reply(
-                                    "Are you there? You have been inactive for too long, session might be terminated",
-                                );
-                        });
-                    return;
-                }
-                AI.keepAliveRequested = false;
-                AI.keepAliveXhr.open("POST", server + "/keepAlive", true);
-                AI.keepAliveXhr.setRequestHeader(
-                    "Content-Type",
-                    "application/json;charset=UTF-8",
-                );
+        AI.requestPayload.org_id = organisationId;
+        import("/vinaiak/chatbot/wasm/session.js").then(async (module) => {
+            await module.default()
+            AI.to_parts = module.SessionManager.to_parts
+            AI.session_manager = new module.SessionManager()
 
-                grecaptcha.enterprise
-                    .execute(captchaKey, { action: "LOGIN" })
-                    .then((token) => {
-                        AI.keepAliveXhr.send(
-                            JSON.stringify({ id: AI.clientId, captcha: token }),
-                        );
-                    });
-            },
-            1.8 * 60 * 1000,
-        );
-        xhr.open("POST", server + "/login", true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onload = () => {
-            AI.clientId = xhr.responseText;
-            if (xhr.status != 200) throw Error("Server refused to login");
-        };
-        xhr.send(JSON.stringify({ orgId: organisationId }));
+            let google_captcha_token = await grecaptcha.enterprise.execute(captchaKey, {
+                action: "LOGIN",
+            });
+            const response = await fetch("https://hsinitush23klocgisiucghphm0xqnae.lambda-url.ap-south-1.on.aws/", {
+                method: "POST",
+                body: JSON.stringify({
+                    org_id: String(organisationId),
+                    google_captcha_token,
+                }),
+            })
+            AI.requestPayload.session_token = await response.text()
+        })
+        AI.replyNo = 0;
+        AI.isTutor = false;
     }
     static setContext(context) {
-        if (AI.context != "" && !arraysEqual(AI.context, context)) {
-            xhr.open("POST", server + "/forget", true);
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhr.onload = null;
-            xhr.send(JSON.stringify({ id: AI.clientId }));
-        }
-        AI.context = context;
+        AI.requestPayload.context = context;
     }
-    static answer(query) {
+    static async answer(query, output_box) {
         if (AI.isTutor && typeof query !== "object")
             throw Error("When at tutor state, query should be an object");
         if (!AI.isTutor && typeof query !== "string")
             throw Error("When not at tutor state, query should be a string");
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", server + (AI.isTutor ? "/tutor" : "/ask"), true);
-            xhr.onload = () => {
-                if (xhr.status == 200) resolve(JSON.parse(xhr.responseText).content);
-                else resolve("An error occured! Try logging in again to the chatbot");
-            };
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhr.send(
-                JSON.stringify({ id: AI.clientId, query: query, context: AI.context }),
-            );
-        });
+        AI.requestPayload.prompt = query
+        AI.requestPayload.old_session = JSON.parse(AI.session_manager.get_session())
+        let response = await fetch("https://vusqerclrmitlqzzzpdqq6qnku0enlnu.lambda-url.ap-south-1.on.aws/", {
+            method: "POST",
+            body: JSON.stringify(AI.requestPayload)
+        })
+
+        const decoder = new TextDecoder();
+        let part_no = 1
+        for await (const chunk of response.body) {
+            const chunks = decoder.decode(chunk).split('\\;')
+            for (const parts of chunks) {
+                if (part_no == 1) {
+                    AI.requestPayload.session_token = parts
+                    part_no = 2
+                } else if (part_no == 2) {
+                    AI.session_manager.ask(parts)
+                    part_no = 3
+                } else if (parts) {
+                    AI.session_manager.add_reply(parts)
+                    let reply = AI.session_manager.get_last_reply()
+                    output_box.innerHTML = marked.parse(reply.replace(/\u00A0/g, " "), { renderer })
+                }
+            }
+        }
     }
     static remember(query, reply) {
-        xhr.open("POST", `${server}/remember`, true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onload = null;
-        xhr.send(JSON.stringify({ query: query, reply: reply, id: AI.clientId }));
+        AI.session_manager.ask(query)
+        AI.session_manager.add_reply(reply)
     }
     static keepAlive() {
         AI.keepAliveRequested = true;
@@ -137,16 +103,11 @@ class AI {
             xhr.onload = () => {
                 if (xhr.status === 200)
                     resolve(xhr.responseText)
-                else resolve("An error occurred while fetching the data. Report to the administrator and try later!")
+                else reject("An error occurred while fetching the data. Report to the administrator and try later!")
             }
         })
     }
     static quit() {
-        xhr.open("POST", server + "/quit", true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(JSON.stringify({ id: AI.clientId }));
-        xhr.onload = null;
-        clearInterval(AI.keepAliveIntervalId);
     }
 }
 class Bot {
@@ -269,7 +230,7 @@ class Bot {
      * @param {'bot'|'user'} type
      * @param {boolean | undefined} format if true text is treated as markdown else as raw HTML
      * @param {(()=>void) | undefined} callBack 
-     * @returns {HTMLDivElement | null} box
+     * @returns {HTMLDivElement | null} output box
     */
     static createBox(text, type, format, callBack) {
         if (Bot.replying) {
@@ -522,7 +483,7 @@ class Bot {
                     "user",
                 );
                 image = image
-                    ? await new Promise((resolve, reject) => {
+                    ? await new Promise((resolve, _reject) => {
                         const reader = new FileReader();
                         reader.onload = (event) => {
                             resolve(event.target.result);
@@ -538,10 +499,14 @@ class Bot {
             } else Bot.createBox(query, "user", false);
         }
         Bot.audios.ask.play();
+        if (text) {
+            Bot.createBox(text, "bot");
+            return
+        }
+        let output_box = Bot.createBox('', "bot");
         Bot.startWaiting();
-        let replyText = text || (await AI.answer(query));
+        await AI.answer(query, output_box);
         Bot.stopWaiting();
-        Bot.createBox(replyText, "bot");
     }
     static createMcq(options, id = "mcq") {
         Bot.iframe.contentDocument

@@ -93,24 +93,9 @@ function getLoginFormCss(addionalCss, inputColor = "#fbe7d1", loginColor = "#ff9
 function createLoginForm(captchaKey, heading, allowAnonymous, callback, callstart, allowClassInput, logoutCallback) {
     let anonymous = false;
     grecaptcha.enterprise.ready(async () => {
-        let token = await grecaptcha.enterprise.execute(captchaKey, {
-            action: "LOGIN",
-        });
-        const response = await fetch(server + "/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({
-                id: AI.clientId,
-                token,
-            }),
-        });
         if (callstart) callstart();
-        if (response.status === 200) {
-            Bot.activateLogout(logoutCallback)
-            if (callback) callback(response.headers.get('content-type').includes('application/json') ? await response.json() : null);
-            return;
-        }
+        if (callback) callback()
+        return;
 
         Bot.createBox(
             `
