@@ -4,7 +4,9 @@ xhr.open("GET", "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", fals
 xhr.send();
 eval(xhr.responseText);
 const renderer = new marked.Renderer();
+console.log("inx")
 renderer.link = (link) => {
+    link.href = link.href.replaceAll('\\_', '_')
     const extention = link.href.split(".").pop();
     if (extention === "png" || extention === "jpg" || extention === "jpeg")
         return `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ""}" onclick="window.open(this.src, '_blank')">`;
@@ -12,7 +14,12 @@ renderer.link = (link) => {
         return `<video muted autoplay controls><source src="${link.href}" title="${link.title || ""}" type="video/mp4">\
             ${link.title || link.text}.\
         </video>`;
-    return `<a href="${link.href}" title="${link.title || ""}" target="_blank">${marked.parse(link.text || link.title || "click here")}</a>`;
+
+    let innerText = link.text || link.title || "click here"
+    if (!innerText.trim().startsWith("http")) {
+        innerText = marked.parse(innerText, { renderer })
+    }
+    return `<a href="${link.href}" title="${link.title || ""}" target="_blank">${innerText}</a>`;
 };
 renderer.image = (link) => {
     return `<img src="${link.href}" alt="${link.title || link.text}" title="${link.title || ""}" onclick="window.open(this.src, '_blank')">`;
@@ -82,7 +89,7 @@ class AI {
                 } else if (parts) {
                     AI.session_manager.add_reply(parts)
                     let reply = AI.session_manager.get_last_reply()
-                    output_box.innerHTML = marked.parse(reply.replace(/\u00A0/g, " "), { renderer })
+                    output_box.innerHTML = marked.parse(reply.replaceAll(/\u00A0/g, " "), { renderer })
                 }
             }
         }
@@ -258,7 +265,7 @@ class Bot {
         box.className = "box " + type;
         box.innerHTML =
             (type == "bot" && format == undefined) || format
-                ? marked.parse(text.replace(/\u00A0/g, " "), { renderer })
+                ? marked.parse(text.replaceAll(/\u00A0/g, " "), { renderer })
                 : text;
         for (const a of box.querySelectorAll("a")) a.target = "_blank";
         const chatArea = Bot.iframe.contentDocument.getElementById("chat-area");
