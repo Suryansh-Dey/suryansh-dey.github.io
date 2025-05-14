@@ -4,7 +4,6 @@ xhr.open("GET", "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", fals
 xhr.send();
 eval(xhr.responseText);
 const renderer = new marked.Renderer();
-console.log("inx")
 renderer.link = (link) => {
     link.href = link.href.replaceAll('\\_', '_')
     const extention = link.href.split(".").pop();
@@ -36,10 +35,13 @@ class AI {
     static replyNo;
     static isTutor;
     static requestPayload = {};
+    static last_token_update;
     /**@type {import ('./../wasm/session.d.ts').SessionManager}*/
     static session_manager;
+    static captchaKey;
     constructor(organisationId, captchaKey) {
         AI.requestPayload.org_id = organisationId;
+        AI.captchaKey = captchaKey
         import("https://suryansh-dey.github.io/vinaiak/chatbot/wasm/session.js").then(async (module) => {
             await module.default()
             AI.to_parts = module.SessionManager.to_parts
@@ -55,6 +57,7 @@ class AI {
                     google_captcha_token,
                 }),
             })
+            AI.last_token_update = Date.now()
             AI.requestPayload.session_token = await response.text()
         })
         AI.replyNo = 0;
@@ -63,11 +66,28 @@ class AI {
     static setContext(context) {
         AI.requestPayload.context = context;
     }
+    static async update_token() {
+        let google_captcha_token = await grecaptcha.enterprise.execute(AI.captchaKey, {
+            action: "LOGIN",
+        });
+        const response = await fetch("https://hsinitush23klocgisiucghphm0xqnae.lambda-url.ap-south-1.on.aws/", {
+            method: "POST",
+            body: JSON.stringify({
+                google_captcha_token,
+                session_token: AI.requestPayload.session_token
+            }),
+        })
+        AI.last_token_update = Date.now()
+        AI.requestPayload.session_token = await response.text()
+    }
     static async answer(query, output_box) {
         if (AI.isTutor && typeof query !== "object")
             throw Error("When at tutor state, query should be an object");
         if (!AI.isTutor && typeof query !== "string")
             throw Error("When not at tutor state, query should be a string");
+
+        if (Date.now() - this.last_token_update > 100 * 1000) await AI.update_token()
+
         AI.requestPayload.prompt = query
         AI.requestPayload.old_session = JSON.parse(AI.session_manager.get_session())
         let response = await fetch("https://vusqerclrmitlqzzzpdqq6qnku0enlnu.lambda-url.ap-south-1.on.aws/", {
