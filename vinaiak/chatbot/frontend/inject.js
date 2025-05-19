@@ -115,8 +115,8 @@ class AI {
         }
     }
     static remember(query, reply) {
-        AI.session_manager.ask(query)
-        AI.session_manager.add_reply(reply)
+        AI.session_manager.ask(`[{"text":"${query}"}]`)
+        AI.session_manager.add_reply(`[{"text":"${reply}"}]`)
     }
     static keepAlive() {
         AI.keepAliveRequested = true;
