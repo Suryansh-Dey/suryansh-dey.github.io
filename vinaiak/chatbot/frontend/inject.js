@@ -34,7 +34,7 @@ function arraysEqual(arr1, arr2) {
 class AI {
     static replyNo;
     static isTutor;
-    static requestPayload = {};
+    static requestPayload = { context: [] };
     static last_token_update;
     /**@type {import ('./../wasm/session.d.ts').SessionManager}*/
     static session_manager;
