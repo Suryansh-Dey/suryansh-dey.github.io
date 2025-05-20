@@ -61,7 +61,8 @@ class AI {
             AI.requestPayload.session_token = await response.text()
         })
         AI.replyNo = 0;
-        AI.isTutor = false;
+        if (organisationId == 2)
+            AI.requestPayload.is_tutor = true
     }
     static setContext(context) {
         AI.requestPayload.context = context;
@@ -107,9 +108,10 @@ class AI {
                     AI.session_manager.ask(parts)
                     part_no = 3
                 } else if (parts) {
-                    AI.session_manager.add_reply(parts)
-                    let reply = AI.session_manager.get_last_reply()
-                    output_box.innerHTML = marked.parse(reply.replaceAll(/\u00A0/g, " "), { renderer })
+                    AI.session_manager.add_reply(parts.replaceAll('\\]', ']'))
+                    let reply = AI.session_manager.get_last_reply().replaceAll(/\u00A0|`|tool_code/g, " ");
+
+                    output_box.innerHTML = marked.parse(reply, { renderer })
                 }
             }
         }
