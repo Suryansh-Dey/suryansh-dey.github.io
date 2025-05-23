@@ -139,7 +139,7 @@ function askAI() {
             body: JSON.stringify({
                 sysprompt:
                     "You are a trip planner. You will be given the preffered choices of the user and your task is to replay witha trip plan explaining the which train or flight is to be taken from where to where and which hotels are to be booked etc.\n\
-        Give him a day wise trip plan with all the details like sightseeing etc.",
+        Give him a day wise trip plan with all the details like sightseeing etc. Use markdown for formatting.",
                 query: `I want to go to ${data.dest} from ${data.src} with ${data.transport} and stay in ${data.hotel} hotel. Give me a trip plan.`,
                 token,
             }),
