@@ -61,8 +61,6 @@ class AI {
             AI.requestPayload.session_token = await response.text()
         })
         AI.replyNo = 0;
-        if (organisationId == 2)
-            AI.requestPayload.is_tutor = true
     }
     static setContext(context) {
         AI.requestPayload.context = context;
@@ -167,11 +165,13 @@ class Bot {
     static queue;
     static makeTutor() {
         AI.isTutor = true;
+        AI.requestPayload.is_tutor = true
         Bot.iframe.contentDocument.getElementById("text-input").style.paddingLeft = "5.5dvh";
         Bot.iframe.contentDocument.getElementById("image-input-icon").style.display = "block";
     }
     static unmakeTutor() {
         AI.isTutor = false;
+        AI.requestPayload.is_tutor = false
         Bot.iframe.contentDocument.getElementById("text-input").style.paddingLeft = "2dvh";
         Bot.iframe.contentDocument.getElementById("image-input-icon").style.display = "none";
     }
