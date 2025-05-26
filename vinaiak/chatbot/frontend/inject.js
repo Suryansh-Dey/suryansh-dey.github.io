@@ -4,6 +4,19 @@ xhr.open("GET", "https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js", fals
 xhr.send();
 eval(xhr.responseText);
 const renderer = new marked.Renderer();
+function isPlainLink(markdown) {
+    const tokens = marked.lexer(markdown);
+    if (tokens.length !== 1) return false;
+    const token = tokens[0];
+
+    if (token.type === 'paragraph' && token.tokens?.length === 1) {
+        const inner = token.tokens[0];
+        if (inner.type === 'link' && inner.raw === inner.href) {
+            return true;
+        }
+    }
+    return false;
+}
 renderer.link = (link) => {
     link.href = link.href.replaceAll('\\_', '_')
     const extention = link.href.split(".").pop();
@@ -15,7 +28,7 @@ renderer.link = (link) => {
         </video>`;
 
     let innerText = link.text || link.title || "click here"
-    if (!innerText.trim().startsWith("http")) {
+    if (!isPlainLink(innerText)) {
         innerText = marked.parse(innerText, { renderer })
     }
     return `<a href="${link.href}" title="${link.title || ""}" target="_blank">${innerText}</a>`;
