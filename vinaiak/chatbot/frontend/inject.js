@@ -28,7 +28,7 @@ renderer.link = (link) => {
         </video>`;
 
     let innerText = link.text || link.title || "click here"
-    if (!isPlainLink(innerText)) {
+    if (!isPlainLink(innerText)) { //preventing infinit recursion
         innerText = marked.parse(innerText, { renderer })
     }
     return `<a href="${link.href}" title="${link.title || ""}" target="_blank">${innerText}</a>`;
