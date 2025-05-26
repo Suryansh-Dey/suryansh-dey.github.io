@@ -5,6 +5,7 @@ xhr.send();
 eval(xhr.responseText);
 const renderer = new marked.Renderer();
 function isPlainLink(markdown) {
+    if (markdown.includes('@')) return true;
     const tokens = marked.lexer(markdown);
     if (tokens.length !== 1) return false;
     const token = tokens[0];
