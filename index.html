@@ -1,438 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Classroom Dynamics Handbook</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: The SPA is designed as an interactive handbook, moving away from the report's linear format. The core is the 'Student Profile Explorer,' an interactive grid of student archetypes. Clicking a profile dynamically updates a central content area, providing immediate access to descriptions, needs, and strategies. This task-oriented approach is more usable for a busy educator than scrolling through a long document. It's supplemented by a 'Behavior Response Guide' with a clear, tabbed interface for the Annoying->Disruptive->Dangerous continuum, making critical safety information easy to find. 'Foundational Practices' are in an accordion to keep the main interface clean while providing access to core principles. This structure prioritizes quick, targeted information retrieval. -->
-    <!-- Visualization & Content Choices: 
-        - Student Profiles (Grid of Cards): Report Info -> Student archetypes. Goal -> Organize/Inform. Viz/Method -> Interactive HTML/CSS cards with JS click events. Interaction -> User clicks a profile to dynamically load its specific data into a central view. Justification -> Allows users to quickly scan all profiles and deep-dive into a specific one without losing context. Library -> Vanilla JS.
-        - Behavior Continuum (Tabs): Report Info -> Annoying, Disruptive, Dangerous behaviors. Goal -> Inform/Compare. Viz/Method -> Tabbed interface using HTML/Tailwind/JS. Interaction -> Clicking a tab reveals the corresponding behavior descriptions and responses. Justification -> Clearly separates the distinct levels of behavior, which is critical for appropriate response, and visually reinforces the idea of an escalating continuum. Library -> Vanilla JS.
-        - Teacher Impact Chart (Bar Chart): Report Info -> Impact of positive vs. negative motivators. Goal -> Compare. Viz/Method -> Bar chart. Interaction -> Static display with tooltips on hover. Justification -> Provides a quick, powerful visual summary of a key research finding from the report, reinforcing the importance of a positive teacher approach. Library -> Chart.js.
-        - Foundational Principles (Accordion): Report Info -> Core pedagogical principles. Goal -> Inform. Viz/Method -> Collapsible accordion sections. Interaction -> User clicks to expand/collapse. Justification -> Hides detailed text to reduce initial cognitive load, allowing users to focus on specific profiles or behaviors first, then explore foundational ideas as needed. Library -> Vanilla JS.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>छात्र शक्ती - Student Complaint Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --light-color: #ffffff;
+            --dark-color: #212529;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #F8F7F4; /* Warm Neutral Background */
-            color: #4A4A4A;
-        }
-        .nav-button {
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-        .nav-button.active, .nav-button:hover {
-            border-bottom-color: #BF5A36; /* Muted Terracotta Accent */
-            color: #BF5A36;
-        }
-        .profile-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #EAE8E1;
-        }
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            border-color: #BF5A36;
-        }
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background-color: #BF5A36;
-            color: #FFFFFF;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-        .chart-container {
+            background-color: #f8f9fa;
+            background-image: url('ravi.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: var(--dark-color);
             position: relative;
-            width: 100%;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
+            opacity: 1;
+            animation: fadeIn 3s forwards;
         }
-         @media (min-width: 768px) { .chart-container { height: 400px; } }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--light-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--light-color);
+            opacity: 0.9;
+        }
+
+        .complaint-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .complaint-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .status-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-box h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-item {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            background-color: var(--light-color);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .status-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .status-item .meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .status-item .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #ffdd57;
+            color: #8a6d03;
+        }
+
+        .status-processing {
+            background-color: #47c1f4;
+            color: #0b4e8a;
+        }
+
+        .status-resolved {
+            background-color: #48c774;
+            color: #257942;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--light-color);
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .complaint-box,
+            .status-box {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
-<body class="antialiased">
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">The Interactive Classroom Dynamics Handbook</h1>
-            <p class="text-lg text-gray-600">A Guide to Understanding and Nurturing Every Student</p>
-        </header>
-
-        <nav class="flex justify-center border-b border-gray-200 mb-12">
-            <button class="nav-button active py-4 px-6 text-lg font-medium" onclick="showSection('profiles')">Student Profiles</button>
-            <button class="nav-button py-4 px-6 text-lg font-medium" onclick="showSection('behaviors')">Behavior Response Guide</button>
-            <button class="nav-button py-4 px-6 text-lg font-medium" onclick="showSection('foundations')">Foundational Practices</button>
-        </nav>
-
-        <main id="main-content">
-
-            <!-- Section 1: Student Profiles -->
-            <section id="profiles-section">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-gray-800">Student Profile Explorer</h2>
-                    <p class="mt-2 text-md text-gray-600">Click on a profile to discover key characteristics, underlying needs, and effective strategies.</p>
-                </div>
-
-                <div id="profile-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-                    <!-- Profile cards will be injected here by JS -->
-                </div>
-
-                <div id="profile-details-container" class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 min-h-[400px]">
-                    <!-- Selected profile details will be injected here by JS -->
-                    <div class="flex flex-col items-center justify-center h-full text-center">
-                        <svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        <p class="text-gray-500 text-lg">Select a student profile above to begin.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 2: Behavior Response Guide -->
-            <section id="behaviors-section" class="hidden">
-                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-gray-800">Behavior Response Guide</h2>
-                    <p class="mt-2 text-md text-gray-600">Understand the behavior continuum and learn appropriate, timely responses.</p>
-                </div>
-
-                <div class="w-full max-w-4xl mx-auto">
-                    <div class="flex justify-center rounded-lg bg-gray-100 p-1 mb-6">
-                        <button id="tab-annoying" class="tab-button w-1/3 py-2 px-4 rounded-md text-center font-medium active" onclick="showTab('annoying')">Annoying</button>
-                        <button id="tab-disruptive" class="tab-button w-1/3 py-2 px-4 rounded-md text-center font-medium" onclick="showTab('disruptive')">Disruptive</button>
-                        <button id="tab-dangerous" class="tab-button w-1/3 py-2 px-4 rounded-md text-center font-medium" onclick="showTab('dangerous')">Dangerous</button>
-                    </div>
-
-                    <div id="tab-content-container" class="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-                        <!-- Tab content will be injected here by JS -->
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 3: Foundational Practices -->
-            <section id="foundations-section" class="hidden">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-gray-800">Foundational Practices</h2>
-                    <p class="mt-2 text-md text-gray-600">Explore the core principles that create a thriving classroom for all students.</p>
-                </div>
-
-                <div class="max-w-4xl mx-auto space-y-4">
-                    <div class="bg-white border border-gray-200 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-gray-700">
-                            <span>🤝 Build Strong Relationships</span>
-                            <span class="transform transition-transform duration-300">▼</span>
-                        </button>
-                        <div class="accordion-content px-5 pb-5 text-gray-600 space-y-2">
-                             <p>Building strong teacher-student relationships is a critical preventative measure. It fosters a sense of belonging and psychological safety, which are prerequisites for effective learning. Make an effort to learn names, engage one-on-one, and show genuine warmth and friendliness. When students feel seen and valued, they are more willing to engage positively.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-gray-700">
-                            <span>🛡️ Foster a Safe and Positive Environment</span>
-                             <span class="transform transition-transform duration-300">▼</span>
-                        </button>
-                        <div class="accordion-content px-5 pb-5 text-gray-600 space-y-2">
-                            <p>This goes beyond physical safety to include emotional and intellectual security. A safe environment encourages risk-taking, reduces anxiety, and broadens participation. Clearly define and model expectations, create a culture where mistakes are learning opportunities (a "growth mindset"), and ensure materials reflect a diverse community of learners.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-gray-700">
-                            <span>🎨 Encourage Active & Personalized Learning</span>
-                             <span class="transform transition-transform duration-300">▼</span>
-                        </button>
-                        <div class="accordion-content px-5 pb-5 text-gray-600 space-y-2">
-                             <p>Shift the paradigm from teacher-centric to student-centric to foster ownership and motivation. Use active learning strategies (like group work and project-based learning) that require higher-order thinking. Connect learning to students' real-world interests and give them a say in their learning process. This inherently addresses multiple student needs simultaneously.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-16 text-center">
-                     <h3 class="text-2xl font-bold text-gray-800 mb-4">The Impact of Teacher Approach</h3>
-                     <p class="max-w-3xl mx-auto text-md text-gray-600 mb-6">Research shows a direct link between a teacher's approach and student engagement. Positive motivators and "immediacy behaviors" (warmth, friendliness) foster engagement, while negative motivators often lead to disengagement and incivility.</p>
-                     <div class="chart-container">
-                        <canvas id="teacherImpactChart"></canvas>
-                    </div>
-                </div>
-
-            </section>
-        </main>
+<body>
+    <div class="hero-image">
+        <img src="ravi.jpg"
+            alt="Ravi Choudhary, student leader from Indore, addressing a crowd of students in a university setting with Indian flags" />
     </div>
 
-<script>
-const studentData = {
-    highlyEngaged: {
-        title: "The Highly Engaged Learner",
-        description: "Self-directed learners who bring genuine motivation and independence to the classroom. They often set their own goals and explore topics beyond assigned tasks.",
-        needs: ["Opportunities for advanced exploration", "Autonomy and choice", "Challenges that match their skill level"],
-        strategies: ["Provide extension activities or independent projects.", "Allow them to act as peer mentors or group leaders.", "Connect them with resources for deeper learning.", "Ensure they don't dominate discussions, creating space for others."],
-        videos: []
-    },
-    quietlyEngaged: {
-        title: "The Quietly Engaged Contributor",
-        description: "These students demonstrate deep learning and make meaningful connections despite minimal verbal contributions. Their quietness may be due to personality, cultural background, or a preference for internal processing.",
-        needs: ["Alternative ways to show understanding", "Low-pressure participation opportunities", "Recognition for non-verbal contributions"],
-        strategies: ["Use think-pair-share activities.", "Offer participation options like written responses, digital polls, or small group discussions.", "Provide positive reinforcement for their written work or insightful questions.", "Avoid putting them on the spot in front of the whole class."],
-        videos: [
-            { title: "Strategies for Quiet Students", url: "https://www.youtube.com/watch?v=4J-gO__XVag" },
-            { title: "Helping Shy Students Participate", url: "https://www.youtube.com/watch?v=PP4KKWBma2o" }
-        ]
-    },
-    disengaged: {
-        title: "The Disengaged Learner",
-        description: "Appears checked out, apathetic, or unmotivated. This is often a symptom of an unmet need, such as learning gaps, personal struggles, or a curriculum that feels irrelevant.",
-        needs: ["A sense of relevance and connection", "Support for underlying academic or personal issues", "A positive relationship with the teacher"],
-        strategies: ["First, try to diagnose the root cause privately and with empathy.", "Connect curriculum to their interests and real-world experiences.", "Offer second chances and build confidence with small wins.", "Refer to school support services if needed (counseling, academic support)."],
-        videos: [
-            { title: "How to Motivate Unmotivated Students", url: "https://www.youtube.com/watch?v=ddWdNCtLz5Q" },
-            { title: "Understanding Unmotivated Teens", url: "https://www.youtube.com/watch?v=stEZqn4VxHM" }
-        ]
-    },
-    socialLeader: {
-        title: "The Social Leader",
-        description: "Possesses strong interpersonal skills and can profoundly shape classroom dynamics, for better or for worse. They are influential among their peers.",
-        needs: ["Constructive outlets for their social energy", "Positive leadership opportunities", "Clear boundaries"],
-        strategies: ["Assign them positive leadership roles (e.g., group facilitator, peer tutor).", "Channel their energy into collaborative projects.", "Have private conversations to establish them as a partner in creating a positive class culture.", "Give them tasks that leverage their social skills, like welcoming new students."],
-        videos: []
-    },
-    creativeLearner: {
-        title: "The Creative Thinker",
-        description: "Thinks outside conventional boundaries and often excels in areas like arts or creative writing, but may struggle with rigid structures and organizational tasks.",
-        needs: ["A balance of freedom and structure", "Outlets for creative expression", "Support with organizational skills"],
-        strategies: ["Design open-ended projects that allow for creative mediums.", "Help them break down large tasks into smaller, manageable steps.", "Celebrate their unique perspectives and ideas.", "Pair creative freedom with clear rubrics and deadlines."],
-        videos: []
-    },
-    adhd: {
-        title: "The Student with ADHD",
-        description: "Often struggles with executive functions like organization, focus, and impulse control. They can be highly creative and energetic.",
-        needs: ["Structure and predictability", "Opportunities for movement", "Support for executive function deficits"],
-        strategies: ["Break large tasks into smaller chunks with shorter deadlines.", "Incorporate planned movement breaks into the routine.", "Use visual aids, checklists, and predictable schedules.", "Allow access to appropriate fidget tools to aid concentration."],
-        videos: [
-            { title: "Teaching Strategies for ADHD", url: "https://www.youtube.com/watch?v=K-qh4NRdmGU" },
-            { title: "Supporting Children with ADHD", url: "https://www.youtube.com/watch?v=KoX7vATVjhU" }
-        ]
-    },
-    perfectionist: {
-        title: "The Perfectionist / Overachiever",
-        description: "Holds themselves to extremely high standards, which can lead to anxiety, fear of failure, and burnout. They may struggle to start tasks or see them as complete.",
-        needs: ["To learn self-compassion and resilience", "A focus on process over outcome", "A safe environment to make mistakes"],
-        strategies: ["Promote a 'growth mindset' and normalize mistakes as learning opportunities.", "Adopt the motto 'Excellent is Good Enough'.", "Help them set realistic, balanced goals.", "Focus feedback on effort and learning, not just the final grade.", "Teach coping strategies for frustration."],
-        videos: [
-            { title: "Supporting Gifted Students & Perfectionists", url: "https://www.youtube.com/watch?v=-HJAL0p4QAE" },
-            { title: "Guidance for Perfectionistic Tendencies", url: "https://www.youtube.com/watch?v=om16SBMOro4" }
-        ]
-    },
-    ell: {
-        title: "The English Language Learner (ELL)",
-        description: "Is learning English while also learning academic content. They require specialized support to access the curriculum and participate fully.",
-        needs: ["Explicit language instruction", "Comprehensible input", "Low-anxiety opportunities to practice language"],
-        strategies: ["Use visual aids, diagrams, and gestures extensively.", "Speak slowly and clearly, and provide extra wait time for responses.", "Use sentence frames and scaffolded instruction.", "Encourage peer-to-peer interaction in pairs or small groups."],
-        videos: [
-            { title: "Effective Strategies for ELLs", url: "https://www.youtube.com/watch?v=wb-cukSzuIA" }
-        ]
-    }
-};
+    <div class="container">
+        <header>
+            <h1 class="logo">छात्र शक्ती</h1>
+            <p class="tagline">Your voice matters! Register complaints and track their resolution</p>
+        </header>
 
-const behaviorData = {
-    annoying: {
-        title: "Annoying Behaviors",
-        description: "These behaviors are common and cause discomfort, but are not immediately disruptive or threatening. However, they can escalate if left unaddressed.",
-        examples: ["Staring", "Not picking up social cues", "Invading personal space", "Frequent non-relevant questions", "Inappropriate phone usage", "Doing other classwork"],
-        response: ["Use non-verbal cues (e.g., eye contact, moving closer).", "Address the student privately and calmly after class.", "Redirect their attention back to the task.", "Provide positive attention for on-task behavior.", "Review class expectations with the individual or whole class."]
-    },
-    disruptive: {
-        title: "Disruptive Behaviors",
-        description: "These behaviors significantly affect the learning environment for others, though they may not pose an immediate physical threat.",
-        examples: ["Repeated crosstalk", "Yelling or excessive loudness", "Openly defiant or disrespectful talk", "Arguing grades in class", "Refusing a reasonable request from the teacher"],
-        response: ["Address the behavior immediately, directly, and specifically.", "Speak with the student privately away from other students.", "Set clear limits and state the consequences if the behavior continues.", "Refer to the syllabus or class rules.", "If necessary, ask the student to leave the classroom. Contact administration if they refuse."]
-    },
-    dangerous: {
-        title: "Dangerous Behaviors",
-        description: "These behaviors indicate a possible threat of violence or cause immediate concern for the safety of the student or others. They require swift intervention.",
-        examples: ["Direct threats of harm to self or others", "Throwing objects or slamming doors in anger", "Self-injurious behavior (e.g., cutting)", "Harassing or stalking", "Physical assault", "Psychotic or delusional speech"],
-        response: ["**Do not handle the situation alone.**", "Contact school security or police immediately (e.g., call 911 or the campus police number).", "If a student poses an immediate danger to others, dismiss the class.", "Speak calmly and avoid escalating the situation.", "Document the incident in detail after the situation is resolved."]
-    }
-};
+        <div class="complaint-box">
+            <h2>Register Your Complaint</h2>
+            <form id="complaintForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                </div>
 
-document.addEventListener('DOMContentLoaded', () => {
-    const profileGrid = document.getElementById('profile-grid');
-    Object.keys(studentData).forEach(key => {
-        const profile = studentData[key];
-        const card = document.createElement('div');
-        card.className = 'profile-card bg-white p-4 rounded-lg cursor-pointer text-center';
-        card.innerHTML = `<h3 class="font-semibold text-gray-800">${profile.title}</h3>`;
-        card.onclick = () => showProfileDetails(key);
-        profileGrid.appendChild(card);
-    });
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
+                </div>
 
-    showTab('annoying');
-    
-    const accordionToggles = document.querySelectorAll('.accordion-toggle');
-    accordionToggles.forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            const content = toggle.nextElementSibling;
-            const icon = toggle.querySelector('span:last-child');
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
-                document.querySelectorAll('.accordion-toggle span:last-child').forEach(i => i.style.transform = 'rotate(0deg)');
-                content.style.maxHeight = content.scrollHeight + "px";
-                icon.style.transform = 'rotate(180deg)';
-            }
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="college">College/University</label>
+                    <input type="text" id="college" class="form-control"
+                        placeholder="Enter your college/university name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select id="state" class="form-control" required>
+                        <option value="">Select State</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" class="form-control" placeholder="Enter your city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Complaint Category</label>
+                    <select id="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Academic Issues">Academic Issues</option>
+                        <option value="Infrastructure">Infrastructure Problems</option>
+                        <option value="Hostel Facilities">Hostel Facilities</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Fees Related">Fees Related</option>
+                        <option value="Faculty Behavior">Faculty Behavior</option>
+                        <option value="Administration">Administration</option>
+                        <option value="Safety Concerns">Safety Concerns</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="complaint">Complaint Details</label>
+                    <textarea id="complaint" class="form-control" placeholder="Describe your complaint in detail..."
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="attachment">Attachment (Optional)</label>
+                    <input type="file" id="attachment" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-block">Submit Complaint</button>
+            </form>
+        </div>
+
+        <div class="status-box">
+            <h2>Track Your Complaints</h2>
+
+            <div class="status-item">
+                <h3>Campus Library Timings</h3>
+                <div class="meta">
+                    <span>SGSITS Indore</span> • <span>04 June 2023</span>
+                </div>
+                <p>Library closes too early at 5 PM. Request to extend timings to at least 8 PM for students preparing
+                    for exams.</p>
+                <span class="status status-resolved">Resolved</span>
+            </div>
+
+            <div class="status-item">
+                <h3>Hostel Water Supply</h3>
+                <div class="meta">
+                    <span>Holkar Science College Indore</span> • <span>28 May 2023</span>
+                </div>
+                <p>Irregular water supply in boys hostel Block A. Water is not available for most of the daytime.</p>
+                <span class="status status-processing">Processing</span>
+            </div>
+
+            <div class="status-item">
+                <h3>Security at Parking Area</h3>
+                <div class="meta">
+                    <span>DAVV Indore</span> • <span>20 May 2023</span>
+                </div>
+                <p>Multiple cases of bicycle thefts reported from college parking area. Need better security measures.
+                </p>
+                <span class="status status-pending">Pending</span>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 छात्र शक्ती - Student Complaint Portal. All rights reserved.</p>
+            <p>Powered by student leaders for students across India</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('complaintForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const college = document.getElementById('college').value;
+            const state = document.getElementById('state').value;
+            const city = document.getElementById('city').value;
+            const category = document.getElementById('category').value;
+            const complaint = document.getElementById('complaint').value;
+
+            // In a real app, you would send this data to a server
+            console.log({
+                name,
+                email,
+                phone,
+                college,
+                state,
+                city,
+                category,
+                complaint
+            });
+
+            // Show success message
+            alert('Your complaint has been registered successfully! You will receive a confirmation email shortly.');
+
+            // Reset form
+            this.reset();
         });
-    });
 
-    renderTeacherImpactChart();
-});
-
-function showProfileDetails(key) {
-    const profile = studentData[key];
-    const container = document.getElementById('profile-details-container');
-
-    let needsHtml = profile.needs.map(need => `<li class="flex items-start"><span class="text-green-500 mr-2">✓</span><span>${need}</span></li>`).join('');
-    let strategiesHtml = profile.strategies.map(strategy => `<li class="flex items-start"><span class="text-blue-500 mr-2">►</span><span>${strategy}</span></li>`).join('');
-    let videosHtml = profile.videos.map(video => `
-        <a href="${video.url}" target="_blank" rel="noopener noreferrer" class="inline-block bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700 transition-colors">
-            ▶️ ${video.title}
-        </a>`).join('');
-
-    container.innerHTML = `
-        <h3 class="text-2xl font-bold text-gray-800 mb-2">${profile.title}</h3>
-        <p class="text-gray-600 mb-6">${profile.description}</p>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div>
-                <h4 class="font-semibold text-lg mb-2 text-gray-700">Underlying Needs</h4>
-                <ul class="space-y-2 text-gray-600">${needsHtml}</ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-lg mb-2 text-gray-700">Effective Strategies</h4>
-                <ul class="space-y-2 text-gray-600">${strategiesHtml}</ul>
-            </div>
-        </div>
-        ${profile.videos.length > 0 ? `
-        <div class="mt-8">
-            <h4 class="font-semibold text-lg mb-2 text-gray-700">Helpful Videos</h4>
-            <div class="flex flex-wrap gap-2">${videosHtml}</div>
-        </div>` : ''}
-    `;
-    
-    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function showSection(sectionId) {
-    document.getElementById('profiles-section').classList.add('hidden');
-    document.getElementById('behaviors-section').classList.add('hidden');
-    document.getElementById('foundations-section').classList.add('hidden');
-    
-    document.getElementById(`${sectionId}-section`).classList.remove('hidden');
-
-    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.nav-button[onclick="showSection('${sectionId}')"]`).classList.add('active');
-}
-
-function showTab(tabId) {
-    const tabData = behaviorData[tabId];
-    const container = document.getElementById('tab-content-container');
-
-    const examplesHtml = tabData.examples.map(ex => `<li class="text-gray-600">${ex}</li>`).join('');
-    const responseHtml = tabData.response.map(res => `<li class="flex items-start"><span class="text-orange-500 font-bold mr-2">!</span><span>${res}</span></li>`).join('');
-    
-    let bgColorClass, textColorClass;
-    if (tabId === 'annoying') { bgColorClass = 'bg-yellow-100'; textColorClass = 'text-yellow-800'; }
-    else if (tabId === 'disruptive') { bgColorClass = 'bg-orange-100'; textColorClass = 'text-orange-800'; }
-    else { bgColorClass = 'bg-red-100'; textColorClass = 'text-red-800'; }
-
-    container.innerHTML = `
-        <div class="p-4 rounded-lg ${bgColorClass} ${textColorClass} mb-6">
-            <h3 class="font-bold text-xl mb-1">${tabData.title}</h3>
-            <p>${tabData.description}</p>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div>
-                <h4 class="font-semibold text-lg mb-2 text-gray-700">Common Examples</h4>
-                <ul class="list-disc list-inside space-y-1">${examplesHtml}</ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-lg mb-2 text-gray-700">Recommended Response</h4>
-                <ul class="space-y-2 text-gray-700">${responseHtml}</ul>
-            </div>
-        </div>
-    `;
-
-    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`tab-${tabId}`).classList.add('active');
-}
-
-function renderTeacherImpactChart() {
-    const ctx = document.getElementById('teacherImpactChart').getContext('2d');
-    const teacherImpactChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Positive Motivators (Praise, Encouragement)', 'Negative Motivators (Fear, Guilt)'],
-            datasets: [{
-                label: 'Student Engagement/Behavior Outcome',
-                data: [85, 25],
-                backgroundColor: [
-                    'rgba(52, 211, 153, 0.6)', // Green
-                    'rgba(239, 68, 68, 0.6)' // Red
-                ],
-                borderColor: [
-                    'rgba(5, 150, 105, 1)',
-                    'rgba(185, 28, 28, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    title: {
-                        display: true,
-                        text: 'Positive Engagement Outcome (%)'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.y !== null) {
-                                label += context.parsed.y + '% Likelihood of Positive Outcome';
-                            }
-                            return label;
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-</script>
+        // Dynamic background for the hero image
+        document.querySelector('.hero-image img').addEventListener('error', function () {
+            this.style.display = 'none';
+            document.body.style.backgroundImage = 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))';
+        });
+    </script>
 </body>
+
 </html>
